@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Find electronics repair services, compare estimated costs, save money and reduce electronic waste with re:power in Myanmar.">
+    <title>re:power | Repair Smart. Save More. Waste Less.</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+    <header class="header">
+        <div class="container navbar">
+
+            <a href="index.html" class="logo-area">
+                <img src="assets/images/re-power-logo.png" alt="re:power Logo" class="logo-image">
+                <span class="logo-tagline">Repair, Reuse and Community Support</span>
+            </a>
+
+            <button class="menu-toggle" id="menuToggle"
+                aria-label="Toggle navigation" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <nav class="navigation" id="navigation">
+                <a href="index.html" class="nav-link active">Home</a>
+                <a href="repair-shops.html" class="nav-link">Find a Repair Shop</a>
+                <a href="collection-delivery.html" class="nav-link">Collection & Delivery</a>
+                <a href="weather-device-care.html" class="nav-link">Weather & Device Care</a>
+                <a href="partnerships.html" class="nav-link">Business Partnerships</a>
+                <a href="community.html" class="nav-link">Community & Donations</a>
+                <a href="about.html" class="nav-link">About & Trust</a>
+                <a href="contact.html" class="nav-link">Contact & Support</a>
+            </nav>
+
+            <div class="header-actions">
+
+                <a class="header-search" aria-label="Search">
+                    <i class="fas fa-search"></i>
+                </a>
+
+                <a href="contact.html" class="btn btn-support">
+                    <span>Get Support</span>
+                    <i class="fas fa-headset"></i>
+                </a>
+
+            </div>
+
+        </div>
+
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container hero-content">
+                <div class="hero-text">
+                    <span class="eyebrow">A smarter way to repair</span>
+                    <h1>Repair Smart.<br>Save More.<br><span>Waste Less.</span></h1>
+                    <p>Give your electronics a second life. Discover repair providers, compare estimated costs and make more sustainable choices with re:power.</p>
+
+                    <div class="hero-actions">
+                        <a href="repair-shops.html" class="btn btn-orange"><i class="fas fa-search"></i>Find a Repair Shop <span>→</span></a>
+                        <a href="#how-it-works" class="btn btn-primary"><i class="fas fa-play"></i> How It Works</a>
+                    </div>
+                </div>
+
+                <div class="hero-image">
+                    <img src="https://images.unsplash.com/photo-1581092921461-eab62e97a780?auto=format&fit=crop&w=1000&q=85" alt="Technician working on electronics repair">
+                    <div class="floating-icon floating-icon-one">🔧</div>
+                    <div class="floating-icon floating-icon-two">♻</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="quick-search-section">
+            <div class="container">
+    <div class="quick-search">
+
+        <div class="search-heading">
+            <span class="section-icon">
+                <i class="fas fa-search"></i>
+            </span>
+            <div>
+                <h2>Quick Repair Search</h2>
+                <p>Find trusted repair services for your devices.</p>
+            </div>
+        </div>
+
+        <form id="homeSearchForm">
+
+            <div class="search-layout">
+
+                <div class="search-field category-field">
+                    <label>Device Category</label>
+
+                    <div class="category-options">
+                        <label class="category-option">
+                            <input type="radio" name="category" value="household" required>
+                            <span>
+                                <i class="fas fa-tv"></i>
+                                Household Electronics
+                            </span>
+                        </label>
+
+                        <label class="category-option">
+                            <input type="radio" name="category" value="personal">
+                            <span>
+                                <i class="fas fa-laptop"></i>
+                                Personal Technology
+                            </span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="location-device-row">
+
+                    <div class="search-field">
+                        <label for="location">Township or Location</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <input type="text" id="location" name="location"
+                                placeholder="e.g. Yangon" required>
+                        </div>
+                    </div>
+
+                    <div class="search-field">
+                        <label for="device">Your Device</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-mobile-alt"></i>
+                            <select id="device" name="device" required>
+                                <option value="">Choose device</option>
+                            </select>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="search-submit">
+                <button type="submit" class="btn btn-primary search-button">
+                    <i class="fas fa-search"></i>
+                    Search Repair Shops
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+
+        </form>
+
+    </div>
+</div>
+
+            </div>
+        </section>
+
+        <section class="section categories-section" id="categories">
+            <div class="container">
+                <div class="section-heading">
+                    <div>
+                        <span class="eyebrow">What needs fixing?</span>
+                        <h2>Repair What Matters</h2>
+                        <p>Choose your device category to explore suitable repair services.</p>
+                    </div>
+                    <a href="repair-shops.html" class="text-link">Explore all repairs →</a>
+                </div>
+
+                <div class="category-grid">
+                    <article class="category-card household-card">
+                        <div class="category-image">
+                            <img src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&w=900&q=85" alt="Household electrical equipment being inspected">
+                            <span class="category-label">Home Essentials</span>
+                        </div>
+                        <div class="category-body">
+                            <div class="category-title">
+                                <span class="category-icon">⌂</span>
+                                <h3>Household Electronics</h3>
+                            </div>
+                            <p>Find repair services for the appliances you depend on every day.</p>
+                            <div class="device-tags">
+                                <span>Fans</span>
+                                <span>Refrigerators</span>
+                                <span>Washing Machines</span>
+                                <span>TVs</span>
+                            </div>
+                            <a href="repair-shops.html?category=household" class="card-link">Explore Household Repairs <span>→</span></a>
+                        </div>
+                    </article>
+
+                    <article class="category-card personal-card">
+                        <div class="category-image">
+                            <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=900&q=85" alt="Laptops and personal technology on a desk">
+                            <span class="category-label">Everyday Technology</span>
+                        </div>
+                        <div class="category-body">
+                            <div class="category-title">
+                                <span class="category-icon">⌘</span>
+                                <h3>Personal Technology</h3>
+                            </div>
+                            <p>Keep your essential personal devices working for longer.</p>
+                            <div class="device-tags">
+                                <span>Phones</span>
+                                <span>Laptops</span>
+                                <span>Tablets</span>
+                                <span>Accessories</span>
+                            </div>
+                            <a href="repair-shops.html?category=personal" class="card-link">Explore Personal Repairs <span>→</span></a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="calculator-section section" id="calculator">
+            <div class="container">
+
+                <div class="calculator-intro">
+                    <span class="eyebrow">Make an informed choice</span>
+                    <h2>Repair or Replace?</h2>
+                    <p>Before buying a new device, compare its replacement cost with the estimated repair cost. A repair may help you save money and reduce electronic waste.</p>
+                </div>
+
+                <div class="calculator-card">
+
+                    <div class="calculator-card-header">
+                        <div>
+                            <span class="calculator-symbol">₭</span>
+                            <h3>Smart Saving Calculator</h3>
+                        </div>
+                        <span class="sample-label">Estimate</span>
+                    </div>
+
+                    <form id="calculatorForm">
+
+                        <div class="calculator-inputs">
+
+                            <div class="form-group">
+                                <label for="repairCost">Estimated Repair Cost (MMK)</label>
+                                <input type="number" id="repairCost" min="0" step="1"
+                                    placeholder="e.g. 50000" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="replacementCost">Replacement Cost (MMK)</label>
+                                <input type="number" id="replacementCost" min="0" step="1"
+                                    placeholder="e.g. 200000" required>
+                            </div>
+
+                        </div>
+
+                        <button type="submit" class="btn btn-primary calculator-button">
+                            Calculate Savings
+                            <span>→</span>
+                        </button>
+
+                    </form>
+
+                    <div class="calculator-result" id="calculatorResult" aria-live="polite" hidden>
+                        <span class="result-label">Estimated Difference</span>
+                        <strong id="savingAmount">MMK 0</strong>
+                        <p id="savingMessage"></p>
+                    </div>
+
+                    <p class="calculator-note">
+                        This calculator provides an illustrative comparison, not a guaranteed saving.
+                        Diagnostic fees, delivery charges, parts and additional repairs may change the final cost.
+                    </p>
+
+                </div>
+            </div>
+        </section>
+
+        <section class="section services-section">
+            <div class="container">
+
+                <div class="section-heading centered-heading">
+                    <span class="eyebrow">More than just repairs</span>
+                    <h2>Everything You Need in One Place</h2>
+                    <p>
+                        From finding trusted repair professionals to supporting sustainable
+                        communities, explore services designed to help your electronics
+                        last longer and make a positive difference.
+                    </p>
+                </div>
+
+                <div class="services-grid">
+
+                    <article class="service-card">
+                        <div class="service-card-top">
+                            <div class="service-icon green-icon">
+                                <i class="fas fa-tools"></i>
+                            </div>
+                        </div>
+
+                        <span class="service-label">Repair Solutions</span>
+
+                        <h3>Find a Trusted Repair Shop</h3>
+
+                        <p>
+                            Connect with local electronics repair professionals.
+                            Explore available services, compare indicative repair prices
+                            and find suitable providers for your device.
+                        </p>
+
+                        <a href="repair-shops.html" class="card-link">
+                            Explore Repair Shops
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </article>
+
+                    <article class="service-card">
+                        <div class="service-card-top">
+                            <div class="service-icon orange-icon">
+                                <i class="fas fa-truck"></i>
+                            </div>
+                        </div>
+
+                        <span class="service-label">Convenient Service</span>
+
+                        <h3>Collection & Delivery</h3>
+
+                        <p>
+                            Discover convenient collection and delivery options offered
+                            by participating repair providers. Learn how to arrange
+                            device collection and receive your repaired electronics.
+                        </p>
+
+                        <a href="collection-delivery.html" class="card-link">
+                            Explore Delivery Options
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </article>
+
+                    <article class="service-card">
+                        <div class="service-card-top">
+                            <div class="service-icon green-icon">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                        </div>
+
+                        <span class="service-label">Care & Protection</span>
+
+                        <h3>Weather & Device Care</h3>
+
+                        <p>
+                            Keep your electronics in better condition with practical
+                            maintenance advice. Discover ways to protect devices from
+                            heat, humidity, heavy rain, dust and everyday wear.
+                        </p>
+
+                        <a href="weather-device-care.html" class="card-link">
+                            Discover Care Guides
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </article>
+
+                    <article class="service-card">
+                        <div class="service-card-top">
+                            <div class="service-icon orange-icon">
+                                <i class="fas fa-hand-holding-heart"></i>
+                            </div>
+                        </div>
+
+                        <span class="service-label">Community Impact</span>
+
+                        <h3>Community & Donations</h3>
+
+                        <p>
+                            Be part of a community that values reuse and responsible
+                            electronics management. Discover donation opportunities,
+                            volunteer activities and initiatives that support others.
+                        </p>
+
+                        <a href="community.html" class="card-link">
+                            Join the Community
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </article>
+
+                </div>
+
+            </div>
+        </section>
+        
+        <section class="community-section section">
+            <div class="container">
+
+                <div class="section-heading community-heading">
+                    <div>
+                        <span class="eyebrow">Make a Difference Together</span>
+                        <h2>Community Highlights</h2>
+                        <p>
+                            Discover upcoming volunteer events, community activities
+                            and opportunities to support a more sustainable future.
+                        </p>
+                    </div>
+
+                    <a href="community.html" class="view-all-link">
+                        View All Events
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <div class="community-grid">
+
+                    <article class="community-card">
+                        <div class="community-image">
+                            <img src="assets/images/volunteer-repair.jpg"
+                                alt="Volunteers repairing electronic devices">
+                            <span class="event-category">Volunteer Event</span>
+                        </div>
+
+                        <div class="community-content">
+                            <div class="event-info">
+                                <span><i class="far fa-calendar"></i> 15 November 2026</span>
+                                <span><i class="fas fa-map-marker-alt"></i> Yangon</span>
+                            </div>
+
+                            <h3>Community Repair Workshop</h3>
+
+                            <p>
+                                Join volunteers and local repair enthusiasts to learn
+                                basic electronics repair skills and help extend the
+                                life of everyday devices.
+                            </p>
+
+                            <a href="community.html" class="event-button">
+                                View Details
+                                <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </article>
+
+                    <article class="community-card">
+                        <div class="community-image">
+                            <img src="assets/images/device-donation.jpg"
+                                alt="Electronic devices prepared for donation">
+                            <span class="event-category donation-category">Donation Drive</span>
+                        </div>
+
+                        <div class="community-content">
+                            <div class="event-info">
+                                <span><i class="far fa-calendar"></i> 22 November 2026</span>
+                                <span><i class="fas fa-map-marker-alt"></i> Mandalay</span>
+                            </div>
+
+                            <h3>Give Your Old Devices a New Life</h3>
+
+                            <p>
+                                Support responsible reuse by donating suitable
+                                electronic devices that can be repaired, reused
+                                or shared with people who need them.
+                            </p>
+
+                            <a href="community.html" class="event-button">
+                                View Details
+                                <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </article>
+
+                    <article class="community-card">
+                        <div class="community-image">
+                            <img src="assets/images/ewaste-awareness.jpg"
+                                alt="Community members learning about electronic waste">
+                            <span class="event-category awareness-category">Awareness Event</span>
+                        </div>
+
+                        <div class="community-content">
+                            <div class="event-info">
+                                <span><i class="far fa-calendar"></i> 29 November 2026</span>
+                                <span><i class="fas fa-map-marker-alt"></i> Nay Pyi Taw</span>
+                            </div>
+
+                            <h3>Responsible E-Waste Awareness Day</h3>
+
+                            <p>
+                                Learn about the environmental impact of electronic
+                                waste and discover practical ways to reduce,
+                                reuse and recycle unwanted electronics.
+                            </p>
+
+                            <a href="community.html" class="event-button">
+                                View Details
+                                <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </article>
+
+                </div>
+
+            </div>
+        </section>
+
+        <section class="how-section section" id="how-it-works">
+            <div class="container">
+                <div class="section-heading centered-heading">
+                    <span class="eyebrow">Simple steps, smarter repairs</span>
+                    <h2>How re:power Works</h2>
+                    <p>Finding a repair provider should be simple and transparent.</p>
+                </div>
+
+                <div class="steps-grid">
+                    <article class="step-card">
+                        <div class="step-number">01</div>
+                        <div class="step-icon">⌕</div>
+                        <h3>Select Your Device</h3>
+                        <p>Choose your device category and enter your location to begin your search.</p>
+                    </article>
+
+                    <article class="step-card">
+                        <div class="step-number">02</div>
+                        <div class="step-icon">▤</div>
+                        <h3>Compare Providers</h3>
+                        <p>Review indicative repair prices, available services and possible extra charges.</p>
+                    </article>
+
+                    <article class="step-card">
+                        <div class="step-number">03</div>
+                        <div class="step-icon">☎</div>
+                        <h3>Contact a Provider</h3>
+                        <p>Ask about diagnosis, parts, warranty, repair time and the final price.</p>
+                    </article>
+
+                    <article class="step-card">
+                        <div class="step-number">04</div>
+                        <div class="step-icon">↻</div>
+                        <h3>Give It a Second Life</h3>
+                        <p>Arrange the repair directly with your selected provider and reduce unnecessary waste.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+                <section class="community-cta">
+                    <div class="container community-cta-content">
+                        <div class="community-cta-text">
+                            <span class="eyebrow">Your Next Repair Starts Here</span>
+                            <h2>Give Your Device<br>A Second Chance.</h2>
+                            <p>
+                                Don't replace it just yet. Explore trusted repair options,
+                                compare services and find the right solution for your device and budget.
+                            </p>
+                        </div>
+
+                        <div class="community-cta-action">
+                            <a href="repair-shops.html" class="community-cta-button">
+                                Find a Repair Shop
+                                <i class="fas fa-arrow-right"></i>
+                            </a>
+                            <span class="community-cta-note">
+                                Repair more. Waste less.
+                            </span>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="repair-cta">
+                    <div class="container repair-cta-content">
+                        <div class="repair-cta-image">
+                            <img src="assets/images/community-volunteer.jpg"
+                                alt="Volunteers working together to repair electronic devices">
+                        </div>
+
+                        <div class="repair-cta-text">
+                            <span class="eyebrow">Be Part of the Change</span>
+                            <h2>Repair More. Waste Less.</h2>
+                            <p>Build a Greener Myanmar Together.</p>
+                        </div>
+
+                        <div class="repair-cta-action">
+                            <a href="community.html" class="btn btn-orange">
+                                Get Involved
+                                <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container footer-main">
+
+            <div class="footer-brand">
+                <a href="index.html" class="footer-logo">
+                    <img src="assets/images/re-power-logo.png" alt="re:power Logo">
+                </a>
+
+                <p class="footer-tagline">Repair, Reuse and Community Support</p>
+
+                <div class="footer-group">
+                    <h4>Group 2</h4>
+                    <p>Aye Kay Thi</p>
+                    <p>Hein Lyan Htet</p>
+                    <p>Htet Tin Zar Aung</p>
+                    <p>John John</p>
+                    <p>Tatta Toe</p>
+                </div>
+
+                <div class="footer-social">
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-column">
+                <h4>Quick Links</h4>
+                <a href="index.html">Home</a>
+                <a href="repair-shops.html">Find a Repair Shop</a>
+                <a href="index.html#calculator">Smart Saving Calculator</a>
+                <a href="weather-device-care.html">Weather & Device Care</a>
+                <a href="repair-shops.html">Repair Shop</a>
+                <a href="partnerships.html">Partnerships</a>
+                <a href="collection-delivery.html">Collection & Delivery</a>
+                <a href="partnerships.html#sponsorship">Become a Sponsor</a>
+            </div>
+
+            <div class="footer-column">
+                <h4>About</h4>
+                <a href="community.html#volunteer-board">Volunteer Board</a>
+                <a href="community.html#community-ideas">Community Ideas & Impact</a>
+                <a href="community.html#donations">Donation Opportunities</a>
+                <a href="about.html">About re:power</a>
+                <a href="contact.html#faqs">FAQs</a>
+                <a href="contact.html">Contact Us</a>
+                <a href="about.html#privacy">Privacy & Terms</a>
+            </div>
+
+            <div class="footer-column footer-contact">
+                <h4>Contact</h4>
+                <p><i class="fas fa-phone"></i> +95 9 123 456 789</p>
+                <p><i class="fas fa-globe"></i> hello@repower.mm</p>
+                <p><i class="fas fa-map-marker-alt"></i> Yangon, Myanmar</p>
+            </div>
+
+            <div class="footer-campaign">
+                <img src="assets/images/cleaner-myanmar.jpg"
+                    alt="A cleaner and greener Myanmar">
+
+                <h3>A Cleaner Myanmar for Brighter Generations.</h3>
+            </div>
+
+        </div>
+
+        <div class="footer-bottom">
+            <div class="container footer-bottom-content">
+                <p>© 2026 re:power. All Rights Reserved.</p>
+
+                <div class="footer-legal">
+                    <a href="about.html#privacy">Privacy Policy</a>
+                    <span>|</span>
+                    <a href="about.html#terms">Terms & Conditions</a>
+                    <span>|</span>
+                    <a href="sitemap.html">Sitemap</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="assets/js/main.js"></script>
+</body>
+</html>
