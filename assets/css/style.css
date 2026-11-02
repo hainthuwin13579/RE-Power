@@ -584,7 +584,11 @@ p {
     display: flex;
     align-items: center;
     gap: 15px;
+    border-left: 1px solid #ccc;
+    height: 200px;
+    padding-left: 25px;
 }
+
 
 .footer-campaign img {
     width: 48%;
