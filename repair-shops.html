@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description"
+        content="Find electronics repair shops in Myanmar, compare estimated repair costs and discover local repair services with re:power.">
+
+    <title>Find a Repair Shop | re:power</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+
+    <link rel="stylesheet" href="assets/css/style.css">
+
+    <link rel="stylesheet" href="testing.css">
+
+    
+</head>
+
+    <body>
+
+        <!-- HEADER -->
+
+        <header class="header">
+            <div class="container navbar">
+
+                <a href="index.html" class="logo-area">
+                    <img src="assets/images/re-power-logo.png" alt="re:power Logo" class="logo-image">
+                    <span class="logo-tagline">Repair, Reuse and Community Support</span>
+                </a>
+
+                <button class="menu-toggle" id="menuToggle"
+                    aria-label="Toggle navigation" aria-expanded="false">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+
+                <nav class="navigation" id="navigation">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="repair-shops.html" class="nav-link active">Find a Repair Shop</a>
+                    <a href="collection-delivery.html" class="nav-link">Collection & Delivery</a>
+                    <a href="weather-device-care.html" class="nav-link">Weather & Device Care</a>
+                    <a href="partnerships.html" class="nav-link">Business Partnerships</a>
+                    <a href="community.html" class="nav-link">Community & Donations</a>
+                    <a href="about.html" class="nav-link">About & Trust</a>
+                    <a href="contact.html" class="nav-link">Contact & Support</a>
+                </nav>
+
+                <div class="header-actions">
+
+                    <a href="repair-shops.html" class="header-search" aria-label="Search repair shops">
+                        <i class="fas fa-search"></i>
+                    </a>
+
+                    <a href="contact.html" class="btn btn-support">
+                        <span>Get Support</span>
+                        <i class="fas fa-headset"></i>
+                    </a>
+
+                </div>
+
+            </div>
+        </header>
+
+        <main class="shop-page">
+
+            <!-- HERO SECTION -->
+
+            <section class="shop-hero">
+
+                <div class="container shop-hero-content">
+
+                    <div class="shop-hero-text">
+
+                        <span class="shop-eyebrow">
+                            <span></span>
+                            REPAIR, NOT REPLACE
+                        </span>
+
+                        <h1>
+                            Find the right repair
+                            <span>option near you.</span>
+                        </h1>
+
+                        <p>
+                            Discover local repair shops, compare estimated costs
+                            and find convenient repair options for your electronic devices.
+                        </p>
+
+                        <div class="shop-hero-note">
+                            <i class="fas fa-circle-info"></i>
+                            <p>
+                                Prices and repair shops shown are illustrative prototype data.
+                                Always confirm the final price directly with the repair provider.
+                            </p>
+                        </div>
+
+                        <a href="#shopSearch" class="shop-primary-button">
+                            Find a Repair Shop
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+
+                    </div>
+
+
+                    <div class="shop-hero-visual">
+
+                        <div class="shop-visual-circle circle-one"></div>
+                        <div class="shop-visual-circle circle-two"></div>
+
+                        <div class="shop-visual-card">
+
+                            <div class="shop-visual-header">
+                                <span>REPAIR GUIDE</span>
+                                <i class="fas fa-screwdriver-wrench"></i>
+                            </div>
+
+                            <div class="shop-visual-icon">
+                                <i class="fas fa-laptop"></i>
+                            </div>
+
+                            <div class="shop-visual-lines">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+
+                            <div class="shop-visual-footer">
+                                <span>Keep it working.</span>
+                                <i class="fas fa-recycle"></i>
+                            </div>
+
+                        </div>
+
+                        <span class="shop-floating-label label-one">
+                            <i class="fas fa-leaf"></i>
+                            Less waste
+                        </span>
+
+                        <span class="shop-floating-label label-two">
+                            <i class="fas fa-location-dot"></i>
+                            Local repair
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- SEARCH SECTION -->
+
+            <section class="shop-search-section" id="shopSearch">
+
+                <div class="container">
+
+                    <div class="shop-section-heading">
+
+                        <div>
+                            <span class="shop-eyebrow">YOUR REPAIR, YOUR WAY</span>
+                            <h2>What needs fixing?</h2>
+                            <p>Select your device category and provide a few details to discover repair options.</p>
+                        </div>
+
+                        <span class="shop-step-label">
+                            01 <span>/</span> FIND A MATCH
+                        </span>
+
+                    </div>
+
+
+                    <!-- CATEGORY SELECTION -->
+
+                    <div class="shop-category-switch">
+
+                        <button type="button"
+                            class="shop-category-option active"
+                            data-category="household"
+                            aria-pressed="true">
+
+                            <span class="shop-category-icon">
+                                <i class="fas fa-tv"></i>
+                            </span>
+
+                            <span class="shop-category-text">
+                                <strong>Household Electronics</strong>
+                                <small>Appliances and home devices</small>
+                            </span>
+
+                            <span class="shop-radio"></span>
+
+                        </button>
+
+
+                        <button type="button"
+                            class="shop-category-option"
+                            data-category="personal"
+                            aria-pressed="false">
+
+                            <span class="shop-category-icon">
+                                <i class="fas fa-laptop"></i>
+                            </span>
+
+                            <span class="shop-category-text">
+                                <strong>Personal Technology</strong>
+                                <small>Phones, laptops and tablets</small>
+                            </span>
+
+                            <span class="shop-radio"></span>
+
+                        </button>
+
+                    </div>
+
+
+                    <!-- SEARCH FILTER FORM -->
+
+                    <form class="shop-filter-panel" id="shopSearchForm">
+
+                        <div class="shop-filter-heading">
+                            <div>
+                                <h3>Find your repair match</h3>
+                                <p>Enter your location and device information.</p>
+                            </div>
+
+                            <span class="shop-filter-number">SEARCH FILTERS</span>
+                        </div>
+
+
+                        <div class="shop-filter-grid">
+
+                            <div class="shop-form-group">
+
+                                <label for="shopLocation">City or Township</label>
+
+                                <div class="shop-input-wrapper">
+                                    <i class="fas fa-location-dot"></i>
+
+                                    <input type="text"
+                                        id="shopLocation"
+                                        placeholder="e.g. Sanchaung">
+                                </div>
+
+                            </div>
+
+
+                            <div class="shop-form-group">
+
+                                <label for="shopDevice">Device Type</label>
+
+                                <select id="shopDevice">
+                                    <option value="">All supported devices</option>
+                                </select>
+
+                            </div>
+
+
+                            <div class="shop-form-group">
+
+                                <label for="shopProblem">Problem Type</label>
+
+                                <select id="shopProblem">
+
+                                    <option value="">Any problem</option>
+                                    <option value="power">Power or charging</option>
+                                    <option value="screen">Screen or display</option>
+                                    <option value="water">Water damage</option>
+                                    <option value="performance">Performance or software</option>
+                                    <option value="mechanical">Mechanical fault</option>
+                                    <option value="other">Other / Not sure</option>
+
+                                </select>
+
+                            </div>
+
+
+                            <div class="shop-form-group">
+
+                                <label for="shopBudget">Maximum Budget (MMK)</label>
+
+                                <div class="shop-input-wrapper">
+                                    <span class="currency-label">Ks</span>
+
+                                    <input type="number"
+                                        id="shopBudget"
+                                        min="0"
+                                        step="1000"
+                                        placeholder="Any budget">
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="shop-filter-footer">
+
+                            <label class="shop-checkbox">
+
+                                <input type="checkbox" id="shopDelivery">
+
+                                <span class="shop-custom-checkbox"></span>
+
+                                Offers delivery or collection
+
+                            </label>
+
+
+                            <div class="shop-filter-actions">
+
+                                <button type="button"
+                                    class="shop-reset-button"
+                                    id="resetShopFilters">
+
+                                    <i class="fas fa-rotate-left"></i>
+                                    Reset filters
+
+                                </button>
+
+
+                                <button type="submit" class="shop-search-button">
+
+                                    Search Shops
+                                    <i class="fas fa-arrow-right"></i>
+
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </section>
+
+
+            <!-- RESULTS SECTION -->
+
+            <section class="shop-results-section">
+
+                <div class="container">
+
+                    <div class="shop-results-layout">
+
+                        <!-- SHOP LIST COLUMN -->
+
+                        <div class="shop-list-column">
+
+                            <div class="shop-control-card">
+
+                                <div class="shop-control-heading">
+
+                                    <div class="shop-control-title">
+                                        <span class="shop-eyebrow">SEARCH RESULTS</span>
+                                        <h2>Repair Shops Near You</h2>
+                                    </div>
+
+                                    <div class="shop-control-bottom">
+
+                                        <p id="shopResultsSummary">3 Shops Found</p>
+
+                                        <label class="shop-sort-control">
+                                            <span>Sort by</span>
+
+                                            <select id="shopSort">
+                                                <option value="recommended">Recommended</option>
+                                                <option value="cost">Lowest estimated cost</option>
+                                            </select>
+                                        </label>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="shop-filter-buttons">
+
+                                    <button type="button"
+                                        class="shop-filter-button active"
+                                        data-shop-filter="all"
+                                        aria-pressed="true">
+                                        All Shops
+                                    </button>
+
+                                    <button type="button"
+                                        class="shop-filter-button"
+                                        data-shop-filter="phone"
+                                        aria-pressed="false">
+                                        Phone Repair
+                                    </button>
+
+                                    <button type="button"
+                                        class="shop-filter-button"
+                                        data-shop-filter="laptop"
+                                        aria-pressed="false">
+                                        Laptop Repair
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- SHOP RESULTS -->
+
+                            <div class="shop-card-grid" id="shopResults"></div>
+
+                            <!-- EMPTY STATE -->
+
+                            <div class="shop-empty-state" id="shopEmptyState" hidden>
+
+                                <div class="shop-empty-icon">
+                                    <i class="fas fa-magnifying-glass"></i>
+                                </div>
+
+                                <h3>No matching shops found</h3>
+
+                                <p>
+                                    Try changing your township, device or budget.
+                                    You can also reset your filters to see all sample options.
+                                </p>
+
+                                <button type="button"
+                                    class="shop-outline-button"
+                                    id="shopEmptyReset">
+                                    Clear Filters
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                        <!-- MAP COLUMN -->
+
+                        <div class="shop-map-column" id="shopMapPanel">
+
+                            <div class="shop-map-heading">
+
+                                <div>
+                                    <strong>Explore the map</strong>
+                                    <span>Markers match the sample listings.</span>
+                                </div>
+
+                                <span class="shop-map-legend">
+                                    <i></i>
+                                    Sample location
+                                </span>
+
+                            </div>
+
+                            <div id="shopMap"
+                                aria-label="Map showing sample repair shop locations">
+                            </div>
+
+                            <p class="shop-map-footnote">
+                                Map data © OpenStreetMap contributors.
+                                Sample pins are approximate prototype locations.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+            <section class="shop-detail-section" id="shopDetails">
+
+                <div class="container">
+                    
+
+
+                    <!-- SELECTED SHOP DETAILS -->
+                    <div class="shop-detail-content" id="shopDetailContent" hidden>
+
+                        <div class="shop-detail-layout">
+
+                            <!-- LEFT COLUMN -->
+                            <div class="shop-detail-left">
+
+                                <!-- SHOP IMAGE AND BASIC INFORMATION -->
+                                <div class="shop-detail-header">
+
+                                    <div class="shop-detail-image">
+                                        <img src="assets/images/repair-shop.jpg"
+                                            alt="Repair shop interior">
+                                    </div>
+
+                                    <div class="shop-detail-basic">
+
+                                        <div class="shop-detail-name">
+                                            <h2>TechCare Repair Centre</h2>
+
+                                            <span class="shop-partner-badge">
+                                                <i class="fas fa-circle-check"></i>
+                                                Verified Partner
+                                            </span>
+                                        </div>
+
+                                        <p class="shop-detail-location">
+                                            <i class="fas fa-location-dot"></i>
+                                            Sanchaung Township, Yangon
+                                        </p>
+
+                                        <div class="shop-supported-devices">
+                                            <span>Supported Devices</span>
+
+                                            <div class="shop-device-tags">
+                                                <span><i class="fas fa-mobile-screen"></i> Phones</span>
+                                                <span><i class="fas fa-laptop"></i> Laptops</span>
+                                                <span><i class="fas fa-tablet-screen-button"></i> Tablets</span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+
+                                <!-- SHOP DESCRIPTION -->
+                                <div class="shop-detail-about">
+
+                                    <h3>About This Shop</h3>
+
+                                    <p>
+                                        TechCare Repair Centre provides reliable repair
+                                        services for smartphones, laptops and other
+                                        electronic devices. The shop focuses on quality
+                                        repairs, reasonable prices and friendly customer
+                                        support.
+                                    </p>
+
+                                </div>
+
+
+                                <!-- SHOP MAP -->
+                                <div class="shop-detail-map-section">
+
+                                    <h3>
+                                        <i class="fas fa-map-marked-alt"></i>
+                                        Shop Location
+                                    </h3>
+
+                                    <div id="shopDetailMap"></div>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- VERTICAL DIVIDER -->
+                            <div class="shop-detail-divider"></div>
+
+
+                            <!-- RIGHT COLUMN -->
+                            <div class="shop-detail-right">
+
+                                <!-- SERVICES -->
+                                <div class="shop-info-group">
+                                    <h3><i class="fas fa-screwdriver-wrench"></i> Services</h3>
+
+                                    <ul>
+                                        <li>Screen replacement</li>
+                                        <li>Battery replacement</li>
+                                        <li>Charging port repair</li>
+                                        <li>Software troubleshooting</li>
+                                        <li>Water damage inspection</li>
+                                    </ul>
+                                </div>
+
+
+                                <!-- ADDRESS -->
+                                <div class="shop-info-group">
+                                    <h3><i class="fas fa-location-dot"></i> Address</h3>
+
+                                    <p>
+                                        No. 25, Pyay Road, Sanchaung Township,
+                                        Yangon, Myanmar.
+                                    </p>
+                                </div>
+
+
+                                <!-- OPENING HOURS -->
+                                <div class="shop-info-group">
+                                    <h3><i class="fas fa-clock"></i> Opening Hours</h3>
+
+                                    <div class="shop-opening-hours">
+                                        <div>
+                                            <span>Monday – Friday</span>
+                                            <strong>9:00 AM – 6:00 PM</strong>
+                                        </div>
+
+                                        <div>
+                                            <span>Saturday</span>
+                                            <strong>9:00 AM – 4:00 PM</strong>
+                                        </div>
+
+                                        <div>
+                                            <span>Sunday</span>
+                                            <strong>Closed</strong>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <!-- PRICE NOTES -->
+                                <div class="shop-info-group">
+                                    <h3><i class="fas fa-money-bill-wave"></i> Price Notes</h3>
+
+                                    <p>
+                                        Prices depend on the device model and damage
+                                        condition. Contact the shop for a final quotation.
+                                    </p>
+                                </div>
+
+
+                                <!-- CONTACT DETAILS -->
+                                <div class="shop-info-group">
+                                    <h3><i class="fas fa-address-book"></i> Contact Details</h3>
+
+                                    <p>
+                                        <i class="fas fa-phone"></i>
+                                        +95 9 123 456 789
+                                    </p>
+
+                                    <p>
+                                        <i class="fas fa-envelope"></i>
+                                        techcare@example.com
+                                    </p>
+
+                                    <p>
+                                        <i class="fab fa-facebook"></i>
+                                        TechCare Repair Centre
+                                    </p>
+                                </div>
+
+
+                                <!-- LAST CHECKED -->
+                                <div class="shop-last-checked">
+                                    <i class="fas fa-circle-check"></i>
+                                    Last checked: 1 November 2026
+                                </div>
+
+
+                                <!-- REPORT SHOP -->
+                                <button type="button" class="shop-report-button">
+                                    <i class="fas fa-flag"></i>
+                                    Report This Shop
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+            <section class="shop-cost-section">
+
+            <div class="container">
+
+                <div class="shop-cost-heading">
+                    <span class="shop-cost-label">REPAIR PRICE GUIDE</span>
+                    <h2>Example Repair Cost Breakdown</h2>
+                    <p>
+                        Understand the possible costs involved in repairing common
+                        electronic devices before choosing a repair service.
+                    </p>
+                </div>
+
+                <div class="shop-cost-grid">
+
+                    <!-- COST CARD 1 -->
+                    <div class="shop-cost-card">
+
+                        <div class="shop-cost-icon">
+                            <i class="fas fa-mobile-screen-button"></i>
+                        </div>
+
+                        <h3>Mobile Phone Repair</h3>
+                        <p class="shop-cost-description">
+                            Example cost for a common smartphone repair.
+                        </p>
+
+                        <div class="shop-cost-price">
+                            <span>Estimated total</span>
+                            <strong>45,000 MMK</strong>
+                        </div>
+
+                        <div class="shop-cost-divider"></div>
+
+                        <div class="shop-cost-item">
+                            <span>Replacement part</span>
+                            <strong>30,000 MMK</strong>
+                        </div>
+
+                        <div class="shop-cost-item">
+                            <span>Labour charge</span>
+                            <strong>10,000 MMK</strong>
+                        </div>
+
+                        <div class="shop-cost-item">
+                            <span>Testing fee</span>
+                            <strong>5,000 MMK</strong>
+                        </div>
+
+                        <div class="shop-cost-note">
+                            <i class="fas fa-info-circle"></i>
+                            Example: Charging port replacement.
+                        </div>
+
+                    </div>
+
+                    <!-- COST CARD 2 -->
+                    <div class="shop-cost-card shop-cost-featured">
+
+                        <span class="shop-cost-popular">COMMON REPAIR</span>
+
+                        <div class="shop-cost-icon">
+                            <i class="fas fa-laptop"></i>
+                        </div>
+
+                        <h3>Laptop Repair</h3>
+                        <p class="shop-cost-description">
+                            Example cost for a laptop hardware repair.
+                        </p>
+
+                        <div class="shop-cost-price">
+                            <span>Estimated total</span>
+                            <strong>85,000 MMK</strong>
+                        </div>
+
+                        <div class="shop-cost-divider"></div>
+
+                        <div class="shop-cost-item">
+                            <span>Replacement part</span>
+                            <strong>60,000 MMK</strong>
+                        </div>
+
+                        <div class="shop-cost-item">
+                            <span>Labour charge</span>
+                            <strong>15,000 MMK</strong>
+                        </div>
+
+                        <div class="shop-cost-item">
+                            <span>Testing fee</span>
+                            <strong>10,000 MMK</strong>
+                        </div>
+
+                        <div class="shop-cost-note">
+                            <i class="fas fa-info-circle"></i>
+                            Example: Laptop keyboard replacement.
+                        </div>
+
+                    </div>
+
+                    <!-- COST CARD 3 -->
+                    <div class="shop-cost-card">
+
+                        <div class="shop-cost-icon">
+                            <i class="fas fa-blender"></i>
+                        </div>
+
+                        <h3>Home Appliance Repair</h3>
+                        <p class="shop-cost-description">
+                            Example cost for a small household appliance repair.
+                        </p>
+
+                        <div class="shop-cost-price">
+                            <span>Estimated total</span>
+                            <strong>65,000 MMK</strong>
+                        </div>
+
+                        <div class="shop-cost-divider"></div>
+
+                        <div class="shop-cost-item">
+                            <span>Replacement part</span>
+                            <strong>40,000 MMK</strong>
+                        </div>
+
+                        <div class="shop-cost-item">
+                            <span>Labour charge</span>
+                            <strong>15,000 MMK</strong>
+                        </div>
+
+                        <div class="shop-cost-item">
+                            <span>Testing fee</span>
+                            <strong>10,000 MMK</strong>
+                        </div>
+
+                        <div class="shop-cost-note">
+                            <i class="fas fa-info-circle"></i>
+                            Example: Blender motor replacement.
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- COST EXPLANATION -->
+                <div class="shop-cost-explanation">
+
+                    <div class="shop-cost-explanation-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+
+                    <div>
+                        <h3>How is the repair cost calculated?</h3>
+
+                        <p>
+                            A typical repair quotation may include the cost of
+                            replacement parts, technician labour and testing.
+                            The final price depends on the device model, damage
+                            severity, part availability and repair shop.
+                            These figures are examples for guidance only.
+                            Always request a quotation from the repair shop
+                            before approving any repair work.
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+        
+        <!-- SHOP DETAILS CTA -->
+    <section class="shop-details-cta">
+
+        <div class="container">
+
+            <div class="shop-details-cta-content">
+
+                <div class="shop-details-cta-text">
+                    <span class="shop-eyebrow">
+                        REPAIR WITH CONFIDENCE
+                    </span>
+
+                    <h2>
+                        Give Your Device a Second Life.
+                    </h2>
+
+                    <p>
+                        Find the right repair service, compare estimated
+                        costs and choose a trusted solution to keep your
+                        electronics working for longer.
+                    </p>
+
+                    <a href="#shopSearch" class="shop-details-cta-button">
+                        Find a Repair Shop
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <div class="shop-details-cta-icon">
+                    <i class="fas fa-screwdriver-wrench"></i>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+            <section class="repair-cta">
+                        <div class="container repair-cta-content">
+                            <div class="repair-cta-image">
+                                <img src="assets/images/community-volunteer.jpg"
+                                    alt="Volunteers working together to repair electronic devices">
+                            </div>
+
+                            <div class="repair-cta-text">
+                                <span class="eyebrow">Be Part of the Change</span>
+                                <h2>Repair More. Waste Less.</h2>
+                                <p>Build a Greener Myanmar Together.</p>
+                            </div>
+
+                            <div class="repair-cta-action">
+                                <a href="community.html" class="btn btn-orange">
+                                    Get Involved
+                                    <i class="fas fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </section>
+
+        </main>
+
+
+        <!-- FOOTER -->
+
+        <footer class="footer">
+
+            <div class="container footer-main">
+
+                <div class="footer-brand">
+
+                    <a href="index.html" class="footer-logo">
+                        <img src="assets/images/re-power-logo.png" alt="re:power Logo">
+                    </a>
+
+                    <p class="footer-tagline">
+                        Repair, Reuse and Community Support
+                    </p>
+
+
+                    <div class="footer-group">
+
+                        <h4>Group 2</h4>
+
+                        <p>Aye Kay Thi</p>
+                        <p>Hein Lyan Htet</p>
+                        <p>Htet Tin Zar Aung</p>
+                        <p>John John</p>
+                        <p>Tatta Toe</p>
+
+                    </div>
+
+
+                    <div class="footer-social">
+
+                        <div class="social-links">
+
+                            <a href="#" aria-label="Facebook">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+
+                            <a href="#" aria-label="Instagram">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+
+                            <a href="#" aria-label="TikTok">
+                                <i class="fab fa-tiktok"></i>
+                            </a>
+
+                            <a href="#" aria-label="YouTube">
+                                <i class="fab fa-youtube"></i>
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="footer-column">
+
+                    <h4>Quick Links</h4>
+
+                    <a href="index.html">Home</a>
+                    <a href="repair-shops.html">Find a Repair Shop</a>
+                    <a href="index.html#calculator">Smart Saving Calculator</a>
+                    <a href="weather-device-care.html">Weather & Device Care</a>
+                    <a href="repair-shops.html">Repair Shop</a>
+                    <a href="partnerships.html">Partnerships</a>
+                    <a href="collection-delivery.html">Collection & Delivery</a>
+                    <a href="partnerships.html#sponsorship">Become a Sponsor</a>
+
+                </div>
+
+
+                <div class="footer-column">
+
+                    <h4>About</h4>
+
+                    <a href="community.html#volunteer-board">Volunteer Board</a>
+                    <a href="community.html#community-ideas">Community Ideas & Impact</a>
+                    <a href="community.html#donations">Donation Opportunities</a>
+                    <a href="about.html">About re:power</a>
+                    <a href="contact.html#faqs">FAQs</a>
+                    <a href="contact.html">Contact Us</a>
+                    <a href="about.html#privacy">Privacy & Terms</a>
+
+                </div>
+
+
+                <div class="footer-column footer-contact">
+
+                    <h4>Contact</h4>
+
+                    <p><i class="fas fa-phone"></i> +95 9 123 456 789</p>
+                    <p><i class="fas fa-globe"></i> hello@repower.mm</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Yangon, Myanmar</p>
+
+                </div>
+
+
+                <div class="footer-campaign">
+
+                    <img src="assets/images/cleaner-myanmar.jpg"
+                        alt="A cleaner and greener Myanmar">
+
+                    <h3>A Cleaner Myanmar for Brighter Generations.</h3>
+
+                </div>
+
+            </div>
+
+
+            <div class="footer-bottom">
+
+                <div class="container footer-bottom-content">
+
+                    <p>© 2026 re:power. All Rights Reserved.</p>
+
+                    <div class="footer-legal">
+
+                        <a href="about.html#privacy">Privacy Policy</a>
+                        <span>|</span>
+                        <a href="about.html#terms">Terms & Conditions</a>
+                        <span>|</span>
+                        <a href="sitemap.html">Sitemap</a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </footer>
+        <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" ></script>
+        <script src="assets/js/main.js" ></script>
+        <script src="testing.js"></script>
+    </body>
+</html>
