@@ -2865,3 +2865,90 @@ document.addEventListener("DOMContentLoaded", function () {
     updatePartnershipForm();
 
 });
+
+// RE:Power - Collection & Delivery page interactions
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.getElementById("collectionEnquiryForm");
+  const message = document.getElementById("formMessage");
+  const dateInput = document.getElementById("collectionDate");
+  const preferenceHint = document.getElementById("preferenceHint");
+
+  if (!form) return;
+
+  // Do not allow a preferred collection date in the past.
+  if (dateInput) {
+    const today = new Date();
+    const localToday = new Date(
+      today.getTime() - today.getTimezoneOffset() * 60000,
+    )
+      .toISOString()
+      .split("T")[0];
+    dateInput.min = localToday;
+  }
+
+  // Highlight the selected collection preference.
+  form.querySelectorAll('input[name="preference"]').forEach((radio) => {
+    radio.addEventListener("change", () => {
+      preferenceHint.textContent = "Selected: " + radio.value + ".";
+      preferenceHint.classList.remove("text-danger");
+    });
+  });
+
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+    message.className = "alert d-none mt-3";
+    let valid = form.checkValidity();
+
+    const selectedPreference = form.querySelector(
+      'input[name="preference"]:checked',
+    );
+    if (!selectedPreference) {
+      valid = false;
+      preferenceHint.textContent = "Please select a collection preference.";
+      preferenceHint.classList.add("text-danger");
+    }
+
+    if (!valid) {
+      form.classList.add("was-validated");
+      const firstInvalid = form.querySelector(":invalid");
+      if (firstInvalid) firstInvalid.focus();
+      message.textContent =
+        "Please complete all required fields before submitting.";
+      message.className = "alert alert-warning mt-3";
+      return;
+    }
+
+    const formData = new FormData(form);
+    const enquiry = Object.fromEntries(formData.entries());
+    enquiry.submittedAt = new Date().toISOString();
+
+    // Demo behaviour: store the enquiry in this browser.
+    // Connect this section to a backend/email service for real submissions.
+    try {
+      const saved = JSON.parse(
+        localStorage.getItem("repowerCollectionEnquiries") || "[]",
+      );
+      saved.push(enquiry);
+      localStorage.setItem("repowerCollectionEnquiries", JSON.stringify(saved));
+      message.textContent =
+        "Enquiry saved successfully on this device. This is a demo submission; the RE:Power team has not received it yet.";
+      message.className = "alert alert-success mt-3";
+      form.classList.remove("was-validated");
+    } catch (error) {
+      message.textContent =
+        "The enquiry could not be saved in this browser. Please try again.";
+      message.className = "alert alert-danger mt-3";
+    }
+  });
+
+  form.addEventListener("reset", () => {
+    window.setTimeout(() => {
+      form.classList.remove("was-validated");
+      message.className = "alert d-none mt-3";
+      message.textContent = "";
+      preferenceHint.textContent = "Select one service preference.";
+      preferenceHint.classList.remove("text-danger");
+    }, 0);
+  });
+});
+
