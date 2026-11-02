@@ -298,15 +298,23 @@ p {
     border-radius: 2px;
 }
 
-.type {
-    text-wrap: no wrap;
+.typewriter {
+    width: 10ch;
+    border-right: 3px solid green; 
     overflow: hidden;
-    animation: typing 2s steps(30) infinite alternative-reverse;
+    animation: animate1 1s steps(10) forwards;
+    animate2.5s infinite alternate;
 }
-@keyframes typing {
+@keyframes animate2 {
+    from {
+        border-right: transparent;
+    }
+}
+
+@keyframes animate1 {
     from {
         width: 0;
-    }
+   }
 }
 
 
