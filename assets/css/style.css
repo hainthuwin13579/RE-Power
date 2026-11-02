@@ -304,7 +304,9 @@ p {
     overflow: hidden;
     white-space: nowrap;
     border-right: 3px solid var(--forest);
-    animation: typing 2s steps(20) forwards,
+    animation: typing 2s steps(20) forwards infinite alternative,
+        blink-caret 0.75 step-end infinite;
+        
                
 }
 
