@@ -2501,3 +2501,367 @@ document.addEventListener("DOMContentLoaded", function () {
 
 })();
 
+/* partnerships.html */
+
+document.addEventListener("DOMContentLoaded", function () {
+
+/* GET FORM ELEMENTS */
+
+    const partnershipForm = document.getElementById("partnershipEnquiryForm");
+
+    // Stop if this is not the Business Partnerships page.
+    if (!partnershipForm) return;
+
+    const partnerType = document.getElementById("partnerType");
+    const servicesGroup = document.getElementById("partnerServicesGroup");
+    const servicesInput = document.getElementById("partnerServices");
+    const consentCheckbox = document.getElementById("partnerConsent");
+    const consentError = document.getElementById("partnerConsentError");
+    const successMessage = document.getElementById("partnershipFormSuccess");
+
+    const enquiryButtons = document.querySelectorAll("[data-enquiry-type]");
+
+
+/* CHECK REQUIRED ELEMENTS */
+
+    if (
+        !partnerType ||
+        !servicesGroup ||
+        !servicesInput ||
+        !consentCheckbox ||
+        !consentError ||
+        !successMessage
+    ) {
+        console.error("Partnership form elements are missing.");
+        return;
+    }
+
+
+/* UPDATE PARTNERSHIP FORM */
+
+    function updatePartnershipForm() {
+
+        const selectedType = partnerType.value;
+        const servicesLabel = servicesGroup.querySelector("label");
+
+        const partnershipOptions = {
+
+            repair: {
+                placeholder:
+                    "e.g. Mobile phones, laptops, screen replacement, diagnostics",
+
+                label:
+                    "Supported Devices / Repair Services *"
+            },
+
+            delivery: {
+                placeholder:
+                    "e.g. Device collection, return delivery, service areas",
+
+                label:
+                    "Delivery Services / Coverage *"
+            },
+
+            sponsor: {
+                placeholder:
+                    "e.g. Repair awareness, educational campaigns, reuse initiatives",
+
+                label:
+                    "Campaign / Sponsorship Interests *"
+            }
+
+        };
+
+        const selectedOption = partnershipOptions[selectedType] || {
+            placeholder:
+                "e.g. Mobile phones, laptops, screen replacement",
+
+            label:
+                "Supported Devices / Services *"
+        };
+
+        servicesInput.placeholder = selectedOption.placeholder;
+
+        if (servicesLabel) {
+            servicesLabel.textContent = selectedOption.label;
+        }
+
+        clearFieldError(partnerType);
+    }
+
+
+    partnerType.addEventListener("change", updatePartnershipForm);
+
+
+/* PARTNERSHIP TYPE BUTTONS */
+
+    enquiryButtons.forEach(function (button) {
+
+        button.addEventListener("click", function () {
+
+            const selectedType = button.dataset.enquiryType;
+
+            if (!["repair", "delivery", "sponsor"].includes(selectedType)) {
+                return;
+            }
+
+            partnerType.value = selectedType;
+
+            updatePartnershipForm();
+
+        });
+
+    });
+
+
+/* SHOW FIELD ERROR */
+
+    function showFieldError(field, message) {
+
+        const formGroup = field.closest(".partnership-form-group");
+
+        if (!formGroup) return;
+
+        formGroup.classList.add("is-invalid");
+
+        const errorElement = formGroup.querySelector(
+            ".partnership-field-error"
+        );
+
+        if (errorElement) {
+            errorElement.textContent = message;
+        }
+
+        field.setAttribute("aria-invalid", "true");
+
+    }
+
+
+/* CLEAR FIELD ERROR */
+
+    function clearFieldError(field) {
+
+        const formGroup = field.closest(".partnership-form-group");
+
+        if (!formGroup) return;
+
+        formGroup.classList.remove("is-invalid");
+
+        const errorElement = formGroup.querySelector(
+            ".partnership-field-error"
+        );
+
+        if (errorElement) {
+            errorElement.textContent = "";
+        }
+
+        field.removeAttribute("aria-invalid");
+
+    }
+
+
+/* VALIDATE EMAIL ADDRESS */
+
+    function isValidEmail(email) {
+
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        return emailPattern.test(email);
+
+    }
+
+
+/* VALIDATE PARTNERSHIP FORM */
+
+    function validatePartnershipForm() {
+
+        let isValid = true;
+
+        const requiredFields = partnershipForm.querySelectorAll(
+            "input[required], select[required], textarea[required]"
+        );
+
+
+        requiredFields.forEach(function (field) {
+
+            // Clear previous validation messages.
+            clearFieldError(field);
+
+            // Consent is checked separately.
+            if (field.type === "checkbox") {
+                return;
+            }
+
+            const fieldValue = field.value.trim();
+
+
+            // Check empty required fields.
+            if (!fieldValue) {
+
+                showFieldError(
+                    field,
+                    "This field is required."
+                );
+
+                isValid = false;
+
+                return;
+            }
+
+
+            // Check email format.
+            if (field.type === "email" && !isValidEmail(fieldValue)) {
+
+                showFieldError(
+                    field,
+                    "Please enter a valid email address."
+                );
+
+                isValid = false;
+
+            }
+
+        });
+
+
+        // Validate consent checkbox.
+        if (!consentCheckbox.checked) {
+
+            consentError.textContent =
+                "Please confirm that the information provided is accurate.";
+
+            consentCheckbox.setAttribute("aria-invalid", "true");
+
+            isValid = false;
+
+        } else {
+
+            consentError.textContent = "";
+
+            consentCheckbox.removeAttribute("aria-invalid");
+
+        }
+
+
+        return isValid;
+
+    }
+
+
+/* CLEAR ERRORS WHEN USERS EDIT FIELDS */
+
+    const formFields = partnershipForm.querySelectorAll(
+        "input, select, textarea"
+    );
+
+
+    formFields.forEach(function (field) {
+
+        field.addEventListener("input", function () {
+
+            if (field.type !== "checkbox") {
+                clearFieldError(field);
+            }
+
+            successMessage.hidden = true;
+
+        });
+
+
+        field.addEventListener("change", function () {
+
+            if (field.type !== "checkbox") {
+                clearFieldError(field);
+            }
+
+            successMessage.hidden = true;
+
+        });
+
+    });
+
+
+    // Clear consent error when checkbox is selected.
+    consentCheckbox.addEventListener("change", function () {
+
+        consentError.textContent = "";
+
+        consentCheckbox.removeAttribute("aria-invalid");
+
+        successMessage.hidden = true;
+
+    });
+
+
+/* FORM SUBMISSION */
+
+    partnershipForm.addEventListener("submit", function (event) {
+
+        event.preventDefault();
+
+        // Hide previous success message.
+        successMessage.hidden = true;
+
+
+        // Stop submission if validation fails.
+        if (!validatePartnershipForm()) {
+
+            const firstInvalidField = partnershipForm.querySelector(
+                '[aria-invalid="true"]'
+            );
+
+            if (firstInvalidField) {
+
+                firstInvalidField.focus();
+
+            }
+
+            return;
+
+        }
+
+
+/* SHOW SUCCESS MESSAGE */
+
+        successMessage.hidden = false;
+
+        successMessage.scrollIntoView({
+            behavior: "smooth",
+            block: "nearest"
+        });
+
+
+/* RESET FORM */
+
+        partnershipForm.reset();
+
+        updatePartnershipForm();
+
+    });
+
+
+/* READ URL PARAMETERS */
+
+    const pageParams = new URLSearchParams(window.location.search);
+
+    const requestedType = pageParams.get("type");
+
+    const validPartnershipTypes = [
+        "repair",
+        "delivery",
+        "sponsor"
+    ];
+
+
+    if (validPartnershipTypes.includes(requestedType)) {
+
+        partnerType.value = requestedType;
+
+    }
+
+
+/* INITIALISE FORM */
+
+    updatePartnershipForm();
+
+});
