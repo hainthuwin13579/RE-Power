@@ -298,7 +298,7 @@ p {
     border-radius: 2px;
 }
 
-.type{
+.type {
     animation: typing 4s steps(20) infinite,
     blink .6s infinite;
 }
