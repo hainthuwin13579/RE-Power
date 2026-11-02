@@ -2064,3 +2064,440 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 });
+/* weather-device-care.html */
+(() => {
+
+    "use strict";
+
+    /* PAGE INITIALISATION */
+
+    const page = document.querySelector(".weather-care-page");
+
+    if (!page) return;
+
+
+    /* ELEMENT REFERENCES */
+
+    const filterButtons = page.querySelectorAll(
+        ".weather-filter-btn"
+    );
+
+    const guideCards = page.querySelectorAll(
+        ".weather-guide-card"
+    );
+
+    const guideDetails = page.querySelectorAll(
+        ".weather-guide-detail"
+    );
+
+    const readButtons = page.querySelectorAll(
+        "[data-open-guide]"
+    );
+
+    const closeButtons = page.querySelectorAll(
+        "[data-close-guide]"
+    );
+
+    const emptyMessage = page.querySelector(
+        "#weatherFilterEmpty"
+    );
+
+
+    /* STATE */
+
+    let activeGuide = null;
+
+
+    /* HELPER: GET GUIDE DETAIL */
+
+    function getGuideDetail(guideName) {
+
+        return Array.from(guideDetails).find(detail => {
+            return detail.dataset.detail === guideName;
+        });
+
+    }
+
+
+    /* HELPER: GET GUIDE BUTTON */
+
+    function getGuideButton(guideName) {
+
+        return Array.from(readButtons).find(button => {
+            return button.dataset.openGuide === guideName;
+        });
+
+    }
+
+
+    /* HELPER: GET GUIDE CARD */
+
+    function getGuideCard(guideName) {
+
+        const button = getGuideButton(guideName);
+
+        return button
+            ? button.closest(".weather-guide-card")
+            : null;
+
+    }
+
+
+    /* UPDATE GUIDE BUTTON */
+
+    function updateGuideButton(button, isOpen) {
+
+        if (!button) return;
+
+        button.setAttribute(
+            "aria-expanded",
+            String(isOpen)
+        );
+
+        const icon = button.querySelector("i");
+
+        if (icon) {
+
+            icon.classList.remove(
+                "fa-arrow-right",
+                "fa-arrow-down"
+            );
+
+            icon.classList.add(
+                isOpen ? "fa-arrow-down" : "fa-arrow-right"
+            );
+
+        }
+
+        const label = button.querySelector(
+            ".weather-button-text"
+        );
+
+        if (label) {
+
+            label.textContent = isOpen
+                ? "Close Guide"
+                : "Read Guide";
+
+        }
+
+    }
+
+
+    /* CLOSE ALL GUIDE DETAILS */
+
+    function closeAllGuides() {
+
+        guideDetails.forEach(detail => {
+
+            detail.hidden = true;
+
+        });
+
+        readButtons.forEach(button => {
+
+            updateGuideButton(button, false);
+
+        });
+
+        activeGuide = null;
+
+    }
+
+
+    /* OPEN SELECTED GUIDE */
+
+    function openGuide(guideName) {
+
+        const selectedDetail = getGuideDetail(guideName);
+
+        const selectedButton = getGuideButton(guideName);
+
+        const selectedCard = getGuideCard(guideName);
+
+        // Stop if the guide does not exist.
+
+        if (
+            !selectedDetail ||
+            !selectedButton ||
+            !selectedCard ||
+            selectedCard.hidden
+        ) {
+            return;
+        }
+
+        // Close the current guide if it is already open.
+
+        if (activeGuide === guideName) {
+
+            closeAllGuides();
+
+            return;
+
+        }
+
+        // Close any previously opened guide.
+
+        closeAllGuides();
+
+        // Display the selected guide.
+
+        selectedDetail.hidden = false;
+
+        updateGuideButton(selectedButton, true);
+
+        activeGuide = guideName;
+
+
+        // Scroll to the selected guide.
+
+        const prefersReducedMotion = window.matchMedia(
+            "(prefers-reduced-motion: reduce)"
+        ).matches;
+
+        window.requestAnimationFrame(() => {
+
+            selectedDetail.scrollIntoView({
+
+                behavior: prefersReducedMotion
+                    ? "auto"
+                    : "smooth",
+
+                block: "start"
+
+            });
+
+        });
+
+    }
+
+
+    /* GUIDE BUTTON EVENTS */
+
+    readButtons.forEach(button => {
+
+        button.addEventListener("click", () => {
+
+            const guideName = button.dataset.openGuide;
+
+            if (!guideName) return;
+
+            openGuide(guideName);
+
+        });
+
+    });
+
+
+    /* OPTIONAL CLOSE BUTTON EVENTS */
+
+    closeButtons.forEach(button => {
+
+        button.addEventListener("click", () => {
+
+            closeAllGuides();
+
+        });
+
+    });
+
+
+    /* DEVICE FILTERING */
+
+    function filterGuides(device) {
+
+        let visibleCount = 0;
+
+
+        // Update the active filter button.
+
+        filterButtons.forEach(button => {
+
+            const isActive = button.dataset.device === device;
+
+            button.classList.toggle("active", isActive);
+
+            button.setAttribute(
+                "aria-pressed",
+                String(isActive)
+            );
+
+        });
+
+
+        // Show or hide matching guide cards.
+
+        guideCards.forEach(card => {
+
+            const supportedDevices = (
+                card.dataset.devices || ""
+            )
+                .trim()
+                .split(/\s+/)
+                .filter(Boolean);
+
+            const matches =
+                device === "all" ||
+                supportedDevices.includes(device);
+
+            card.hidden = !matches;
+
+            if (matches) {
+
+                visibleCount++;
+
+            }
+
+        });
+
+
+        // Display the empty message when no guides match.
+
+        if (emptyMessage) {
+
+            emptyMessage.hidden = visibleCount !== 0;
+
+        }
+
+
+        // Close the guide if its card is no longer visible.
+
+        if (activeGuide) {
+
+            const activeCard = getGuideCard(activeGuide);
+
+            if (!activeCard || activeCard.hidden) {
+
+                closeAllGuides();
+
+            }
+
+        }
+
+    }
+
+
+    /* FILTER BUTTON EVENTS */
+
+    filterButtons.forEach(button => {
+
+        button.addEventListener("click", () => {
+
+            const selectedDevice = button.dataset.device;
+
+            if (!selectedDevice) return;
+
+            filterGuides(selectedDevice);
+
+        });
+
+    });
+
+
+    /* KEYBOARD ACCESSIBILITY */
+
+    page.addEventListener("keydown", event => {
+
+        if (event.key === "Escape" && activeGuide) {
+
+            closeAllGuides();
+
+            const button = getGuideButton(activeGuide);
+
+            if (button) {
+
+                button.focus();
+
+            }
+
+        }
+
+    });
+
+
+    /* PDF DOWNLOAD LINKS */
+
+    const downloadLinks = page.querySelectorAll(
+        ".weather-download-btn, " +
+        ".weather-detail-download-btn, " +
+        ".weather-guide-actions .weather-download-btn"
+    );
+
+    downloadLinks.forEach(link => {
+
+        const destination = link.getAttribute("href");
+
+        // Prevent placeholder links from doing nothing.
+
+        if (
+            !destination ||
+            destination.trim() === "" ||
+            destination === "#"
+        ) {
+
+            link.setAttribute("aria-disabled", "true");
+
+            link.addEventListener("click", event => {
+
+                event.preventDefault();
+
+            });
+
+        }
+
+    });
+
+
+    /* REPAIR SUPPORT LINKS */
+
+    const repairLinks = page.querySelectorAll(
+        'a[href="repair-shops.html"]'
+    );
+
+    repairLinks.forEach(link => {
+
+        if (!link.hasAttribute("aria-label")) {
+
+            link.setAttribute(
+                "aria-label",
+                "Find a repair shop on re:power"
+            );
+
+        }
+
+    });
+
+
+    /* INITIALISE GUIDE BUTTONS */
+
+    readButtons.forEach(button => {
+
+        button.setAttribute(
+            "aria-expanded",
+            "false"
+        );
+
+        // Preserve the existing button icon and text.
+
+        const label = button.querySelector(
+            ".weather-button-text"
+        );
+
+        if (label && !label.textContent.trim()) {
+
+            label.textContent = "Read Guide";
+
+        }
+
+    });
+
+
+    /* INITIAL PAGE STATE */
+
+    closeAllGuides();
+
+    filterGuides("all");
+
+
+})();
+
