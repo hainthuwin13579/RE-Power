@@ -16,7 +16,6 @@
 
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/repair-shops.css">
-    <script src="assets/js/testing.js" defer></script>
 
     
 </head>
@@ -292,11 +291,11 @@
                                     <i class="fas fa-location-dot"></i>
 
                                     <select id="shopLocation" name="shopLocation">
-                                        <option value="">Select a city</option>
-                                        <option value="Yangon">Yangon</option>
-                                        <option value="Mandalay">Mandalay</option>
-                                        <option value="Naypyidaw">Naypyidaw</option>
-                                        <option value="Taunggyi">Taunggyi</option>
+                                        <option value="">Select a township</option>
+                                        <option value="Tamwe">Tamwe</option>
+                                        <option value="Sanchaung">Sanchaung</option>
+                                        <option value="Bahan">Bahan</option>
+                                        <option value="Kamayut">Kamayut</option>
                                     </select>
 
                                 </div>
@@ -425,8 +424,13 @@
                                             <span>Sort by</span>
 
                                             <select id="shopSort">
+
                                                 <option value="recommended">Recommended</option>
+
                                                 <option value="cost">Lowest estimated cost</option>
+
+                                                <option value="cost-high">Highest estimated cost</option>
+
                                             </select>
                                         </label>
 
@@ -511,6 +515,23 @@
 
                             <div id="shopMap"
                                 aria-label="Map showing sample repair shop locations">
+                            </div>
+                            <div class="shop-user-location">
+
+                                <button
+                                    type="button"
+                                    id="shopUseMyLocation"
+                                    class="shop-location-button">
+
+                                    <i class="fas fa-location-crosshairs"></i>
+                                    Use My Current Location
+
+                                </button>
+
+                                <p id="shopLocationStatus" aria-live="polite">
+                                    Allow location access to find repair shops near you.
+                                </p>
+
                             </div>
 
                             <p class="shop-map-footnote">
