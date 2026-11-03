@@ -3023,3 +3023,1054 @@ document.addEventListener("DOMContentLoaded", function () {
         message.className = "form-message " + type;
     }
 });
+
+/* community.html */
+/* =========================================
+   PAGE 6: COMMUNITY & DONATIONS
+   ========================================= */
+
+/*
+ * Prototype event data.
+ *
+ * Replace the sample information and registration URLs with
+ * details confirmed by the event organiser.
+ *
+ * status values:
+ * "upcoming" = registration or attendance is currently available
+ * "completed" = the event has finished
+ * "closed" = registration is closed
+ */
+
+const communityEvents = [
+    {
+        id: "event-001",
+        title: "Community Device-Care Workshop",
+        organiser: "Sample Community Organiser",
+        date: "2026-12-12",
+        location: "Yangon, Myanmar",
+        description:
+            "A proposed awareness session covering everyday device care, " +
+            "battery safety, responsible use and when to seek professional repair.",
+        activity:
+            "Attend an awareness session and help participants learn " +
+            "basic, safe device-care practices.",
+        eligibility:
+            "Open to interested community members. Confirm age requirements " +
+            "and accessibility arrangements with the organiser.",
+        status: "upcoming",
+        image: "assets/images/community-workshop.webp",
+        imageAlt: "Placeholder image for a community device-care workshop",
+
+        /*
+         * Replace with the actual organiser-managed Google Form URL.
+         * Keep the empty value until a real registration form is available.
+         */
+        registrationURL: ""
+    },
+
+    {
+        id: "event-002",
+        title: "Responsible Electronics Reuse Campaign",
+        organiser: "Sample Reuse Initiative",
+        date: "2026-10-10",
+        location: "Yangon, Myanmar",
+        description:
+            "A sample completed activity entry. Replace this description " +
+            "with an accurate summary of a real campaign and its outcomes.",
+        activity:
+            "Share information about responsible device reuse and " +
+            "appropriate electronic-waste handling.",
+        eligibility: "Sample completed event record.",
+        status: "completed",
+        image: "assets/images/community-reuse.webp",
+        imageAlt: "Placeholder image for an electronics reuse campaign",
+        registrationURL: ""
+    },
+
+    {
+        id: "event-003",
+        title: "Repair Awareness Volunteer Session",
+        organiser: "Sample Volunteer Group",
+        date: "2026-11-15",
+        location: "Yangon, Myanmar",
+        description:
+            "A prototype event with closed registration. Replace the details " +
+            "with verified information supplied by the organiser.",
+        activity:
+            "Support event preparation and share information about " +
+            "repair options and responsible device use.",
+        eligibility:
+            "Contact the organiser to confirm requirements for future sessions.",
+        status: "closed",
+        image: "assets/images/community-volunteers.webp",
+        imageAlt: "Placeholder image for a volunteer activity",
+        registrationURL: ""
+    }
+];
+
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const eventGrid = document.getElementById("community-event-grid");
+    const emptyState = document.getElementById("community-empty-state");
+    const filterButtons = document.querySelectorAll("[data-event-filter]");
+
+    const eventDetailsSection = document.getElementById("event-details");
+    const eventDetailsContent = document.getElementById("event-details-content");
+
+
+    /* ---------- HELPERS ---------- */
+
+    function escapeHTML(value) {
+        return String(value ?? "").replace(/[&<>"']/g, function (character) {
+            const entities = {
+                "&": "&amp;",
+                "<": "&lt;",
+                ">": "&gt;",
+                '"': "&quot;",
+                "'": "&#039;"
+            };
+
+            return entities[character];
+        });
+    }
+
+
+    function formatEventDate(dateString) {
+        if (!dateString) {
+            return "Date to be confirmed";
+        }
+
+        const date = new Date(dateString + "T12:00:00");
+
+        if (Number.isNaN(date.getTime())) {
+            return "Date to be confirmed";
+        }
+
+        return new Intl.DateTimeFormat("en", {
+            day: "numeric",
+            month: "short",
+            year: "numeric"
+        }).format(date);
+    }
+
+
+    function getStatusLabel(status) {
+        const labels = {
+            upcoming: "Upcoming",
+            completed: "Completed",
+            closed: "Registration Closed"
+        };
+
+        return labels[status] || "Status to be confirmed";
+    }
+
+
+    function getEventImage(event) {
+        /*
+         * Use a local compressed image when available.
+         * The fallback prevents broken image icons if a placeholder
+         * file has not yet been added to the project.
+         */
+        const imagePath = event.image
+            ? escapeHTML(event.image)
+            : "";
+
+        if (!imagePath) {
+            return `
+                <div class="event-image-placeholder" aria-hidden="true">
+                    <i class="fa-solid fa-people-group"></i>
+                </div>
+            `;
+        }
+
+        return `
+            <img
+                class="community-event-image"
+                src="${imagePath}"
+                alt="${escapeHTML(event.imageAlt || event.title)}"
+                loading="lazy"
+                onerror="
+                    this.style.display='none';
+                    this.nextElementSibling.hidden=false;
+                "
+            >
+            <div class="event-image-placeholder" aria-hidden="true" hidden>
+                <i class="fa-solid fa-people-group"></i>
+            </div>
+        `;
+    }
+
+
+    function getRegistrationButton(event) {
+        if (event.status === "completed") {
+            return `
+                <button class="btn btn-outline" type="button" disabled>
+                    Event Completed
+                </button>
+            `;
+        }
+
+        if (event.status === "closed") {
+            return `
+                <button class="btn btn-outline" type="button" disabled>
+                    Registration Closed
+                </button>
+            `;
+        }
+
+        /*
+         * Only allow HTTPS Google Forms URLs.
+         * Do not send users to a made-up or unverified registration form.
+         */
+        let validFormURL = "";
+
+        try {
+            const parsedURL = new URL(event.registrationURL);
+
+            if (
+                parsedURL.protocol === "https:" &&
+                (
+                    parsedURL.hostname === "forms.gle" ||
+                    parsedURL.hostname === "docs.google.com"
+                )
+            ) {
+                validFormURL = parsedURL.href;
+            }
+        } catch (error) {
+            // No valid organiser-managed form has been supplied.
+        }
+
+        if (validFormURL) {
+            return `
+                <a
+                    class="btn btn-primary"
+                    href="${escapeHTML(validFormURL)}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Register for ${escapeHTML(event.title)}"
+                >
+                    Register <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                </a>
+            `;
+        }
+
+        return `
+            <button
+                class="btn btn-primary"
+                type="button"
+                data-registration-unavailable="${escapeHTML(event.id)}"
+            >
+                Registration Details
+            </button>
+        `;
+    }
+
+
+    /* ---------- EVENT CARDS ---------- */
+
+    function renderEvents(filter = "upcoming") {
+        if (!eventGrid) {
+            return;
+        }
+
+        const filteredEvents = communityEvents.filter(function (event) {
+            return event.status === filter;
+        });
+
+        eventGrid.innerHTML = filteredEvents.map(function (event) {
+            return `
+                <article class="community-event-card">
+
+                    <div class="community-event-image-wrap">
+                        ${getEventImage(event)}
+
+                        <span class="event-status-badge status-${escapeHTML(event.status)}">
+                            ${escapeHTML(getStatusLabel(event.status))}
+                        </span>
+                    </div>
+
+                    <div class="community-event-card-content">
+
+                        <div class="event-meta">
+                            <span>
+                                <i class="fa-regular fa-calendar"></i>
+                                ${escapeHTML(formatEventDate(event.date))}
+                            </span>
+
+                            <span>
+                                <i class="fa-solid fa-location-dot"></i>
+                                ${escapeHTML(event.location)}
+                            </span>
+                        </div>
+
+                        <h3>${escapeHTML(event.title)}</h3>
+
+                        <p>${escapeHTML(event.description)}</p>
+
+                        <div class="event-organiser">
+                            <i class="fa-solid fa-user-group"></i>
+                            <span>
+                                Organised by:
+                                ${escapeHTML(event.organiser)}
+                            </span>
+                        </div>
+
+                        <div class="event-card-actions">
+                            <button
+                                class="btn btn-outline"
+                                type="button"
+                                data-view-event="${escapeHTML(event.id)}"
+                            >
+                                View Event
+                            </button>
+
+                            ${getRegistrationButton(event)}
+                        </div>
+
+                    </div>
+                </article>
+            `;
+        }).join("");
+
+        if (emptyState) {
+            emptyState.hidden = filteredEvents.length > 0;
+        }
+    }
+
+
+    /* ---------- EVENT FILTERS ---------- */
+
+    filterButtons.forEach(function (button) {
+        button.addEventListener("click", function () {
+            const filter = button.dataset.eventFilter;
+
+            filterButtons.forEach(function (otherButton) {
+                const isActive = otherButton === button;
+
+                otherButton.classList.toggle("active", isActive);
+                otherButton.setAttribute(
+                    "aria-pressed",
+                    String(isActive)
+                );
+            });
+
+            renderEvents(filter);
+
+            if (eventDetailsSection) {
+                eventDetailsSection.hidden = true;
+            }
+        });
+    });
+
+
+    /* ---------- EVENT DETAILS ---------- */
+
+    function showEventDetails(eventId) {
+        const event = communityEvents.find(function (item) {
+            return item.id === eventId;
+        });
+
+        if (!event || !eventDetailsSection || !eventDetailsContent) {
+            return;
+        }
+
+        const registrationButton = getRegistrationButton(event);
+
+        eventDetailsContent.innerHTML = `
+            <div class="event-detail-header">
+                <div>
+                    <span class="section-eyebrow">COMMUNITY EVENT</span>
+                    <h2>${escapeHTML(event.title)}</h2>
+                    <span class="event-status-badge status-${escapeHTML(event.status)}">
+                        ${escapeHTML(getStatusLabel(event.status))}
+                    </span>
+                </div>
+
+                <button
+                    type="button"
+                    class="event-detail-close"
+                    data-close-event
+                    aria-label="Close event details"
+                >
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div class="event-detail-information">
+                <p>
+                    <i class="fa-regular fa-calendar"></i>
+                    <strong>Date:</strong>
+                    ${escapeHTML(formatEventDate(event.date))}
+                </p>
+
+                <p>
+                    <i class="fa-solid fa-location-dot"></i>
+                    <strong>Location:</strong>
+                    ${escapeHTML(event.location)}
+                </p>
+
+                <p>
+                    <i class="fa-solid fa-user-group"></i>
+                    <strong>Organiser:</strong>
+                    ${escapeHTML(event.organiser)}
+                </p>
+            </div>
+
+            <div class="event-detail-body">
+                <h3>About this activity</h3>
+                <p>${escapeHTML(event.description)}</p>
+
+                <h3>What you will do</h3>
+                <p>${escapeHTML(event.activity)}</p>
+
+                <h3>Eligibility and requirements</h3>
+                <p>${escapeHTML(event.eligibility)}</p>
+
+                <p class="prototype-note">
+                    Confirm the event date, venue, requirements and any
+                    costs directly with the organiser before attending.
+                </p>
+            </div>
+
+            <div class="event-detail-actions">
+                ${registrationButton}
+                <a href="contact.html" class="btn btn-outline">
+                    Contact Community Support
+                </a>
+            </div>
+        `;
+
+        eventDetailsSection.hidden = false;
+
+        eventDetailsSection.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+    }
+
+
+    if (eventGrid) {
+        eventGrid.addEventListener("click", function (event) {
+            const viewButton = event.target.closest("[data-view-event]");
+            const unavailableButton = event.target.closest(
+                "[data-registration-unavailable]"
+            );
+
+            if (viewButton) {
+                showEventDetails(viewButton.dataset.viewEvent);
+                return;
+            }
+
+            if (unavailableButton) {
+                const selectedEvent = communityEvents.find(function (item) {
+                    return item.id ===
+                        unavailableButton.dataset.registrationUnavailable;
+                });
+
+                if (selectedEvent) {
+                    showEventDetails(selectedEvent.id);
+                }
+            }
+        });
+    }
+
+
+    if (eventDetailsContent) {
+        eventDetailsContent.addEventListener("click", function (event) {
+            if (event.target.closest("[data-close-event]")) {
+                eventDetailsSection.hidden = true;
+            }
+        });
+    }
+
+
+    /* ---------- COMMUNITY IDEA FORM ---------- */
+
+    const ideaForm = document.getElementById("community-idea-form");
+    const ideaFeedback = document.getElementById(
+        "community-idea-feedback"
+    );
+
+    if (ideaForm && ideaFeedback) {
+        ideaForm.addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            if (!ideaForm.checkValidity()) {
+                ideaForm.reportValidity();
+                return;
+            }
+
+            const title = document.getElementById("idea-title").value.trim();
+            const category = document.getElementById("idea-category").value;
+            const description = document.getElementById(
+                "idea-description"
+            ).value.trim();
+
+            if (!title || !category || !description) {
+                ideaFeedback.className = "form-feedback error";
+                ideaFeedback.textContent =
+                    "Please complete all required fields.";
+                ideaFeedback.hidden = false;
+                return;
+            }
+
+            /*
+             * Demonstration only:
+             * this code does not transmit or persist any submitted data.
+             */
+            ideaFeedback.className = "form-feedback success";
+            ideaFeedback.innerHTML = `
+                <strong><i class="fa-solid fa-circle-check"></i>
+                Demo submission successful!</strong>
+                <p>
+                    Your idea has passed the form validation demonstration.
+                    It has not been sent or saved. A backend or external form
+                    service is required for real submissions.
+                </p>
+            `;
+
+            ideaFeedback.hidden = false;
+            ideaFeedback.scrollIntoView({
+                behavior: "smooth",
+                block: "nearest"
+            });
+
+            ideaForm.reset();
+        });
+    }
+
+
+    /* ---------- DONATION LINKS ---------- */
+
+    document.querySelectorAll(".donation-contact-link").forEach(
+        function (link) {
+            link.addEventListener("click", function (event) {
+                const donationContact = document.getElementById(
+                    "donation-contact"
+                );
+
+                if (donationContact) {
+                    event.preventDefault();
+
+                    donationContact.scrollIntoView({
+                        behavior: "smooth",
+                        block: "center"
+                    });
+                }
+            });
+        }
+    );
+
+
+    /* ---------- INITIAL RENDER ---------- */
+
+    renderEvents("upcoming");
+
+});
+
+/* contact.html */ 
+/* =========================================
+   PAGE 8: CONTACT & SUPPORT
+   ========================================= */
+
+document.addEventListener("DOMContentLoaded", function () {
+    const contactForm = document.getElementById("repower-contact-form");
+
+    // This script only runs on the Contact & Support page.
+    if (!contactForm) {
+        return;
+    }
+
+    const categorySelect = document.getElementById("support-category");
+    const contactMethodSelect = document.getElementById("support-contact-method");
+
+    const emailGroup = document.getElementById("support-email-group");
+    const phoneGroup = document.getElementById("support-phone-group");
+
+    const emailInput = document.getElementById("support-email");
+    const phoneInput = document.getElementById("support-phone");
+
+    const guidanceTitle = document.getElementById("support-guidance-title");
+    const guidanceText = document.getElementById("support-guidance-text");
+
+    const messageInput = document.getElementById("support-message");
+    const characterCount = document.getElementById("support-character-count");
+
+    const successPanel = document.getElementById("support-form-success");
+    const successMessage = document.getElementById("support-success-message");
+    const newEnquiryButton = document.getElementById("support-new-enquiry");
+
+    const categoryCards = document.querySelectorAll(
+        ".support-category-card[data-enquiry-category]"
+    );
+
+    const categoryGuidance = {
+        "General": {
+            title: "General enquiry",
+            message:
+                "Ask about re:power, website features or how the repair " +
+                "referral process works. Avoid including sensitive personal information."
+        },
+
+        "Repair Listing": {
+            title: "Repair listing support",
+            message:
+                "Include the shop name and the page or listing involved. " +
+                "Describe the incorrect detail without sharing private " +
+                "customer or payment information."
+        },
+
+        "Collection & Delivery": {
+            title: "Collection and delivery",
+            message:
+                "Describe the service area or arrangement you are asking " +
+                "about. Availability, timing and fees must be confirmed " +
+                "with the relevant provider."
+        },
+
+        "Business/Sponsor": {
+            title: "Business or sponsorship enquiry",
+            message:
+                "Tell us whether you represent a repair shop, delivery " +
+                "provider or sponsor. You can also use the dedicated " +
+                "partnership page for more information."
+        },
+
+        "Community/Event": {
+            title: "Community or event enquiry",
+            message:
+                "Include the event or donation opportunity you are asking " +
+                "about. For registrations, check the event organiser's " +
+                "official registration instructions."
+        },
+
+        "Report a Problem": {
+            title: "Report a problem",
+            message:
+                "Explain what happened and identify the relevant page or " +
+                "listing. Do not include passwords, card details or " +
+                "unnecessary personal information."
+        }
+    };
+
+
+    /* -----------------------------------------
+       CATEGORY-SPECIFIC GUIDANCE
+       ----------------------------------------- */
+
+    function updateCategoryGuidance(category) {
+        const guidance = categoryGuidance[category];
+
+        if (!guidance) {
+            guidanceTitle.textContent = "Before you start";
+            guidanceText.textContent =
+                "Select a category to see guidance relevant to your enquiry.";
+            return;
+        }
+
+        guidanceTitle.textContent = guidance.title;
+        guidanceText.textContent = guidance.message;
+    }
+
+
+    function selectCategory(category) {
+        if (!categoryGuidance[category]) {
+            return;
+        }
+
+        categorySelect.value = category;
+        updateCategoryGuidance(category);
+
+        categoryCards.forEach(function (card) {
+            const isSelected =
+                card.dataset.enquiryCategory === category;
+
+            card.classList.toggle("is-selected", isSelected);
+            card.setAttribute("aria-pressed", String(isSelected));
+        });
+    }
+
+
+    categoryCards.forEach(function (card) {
+        card.addEventListener("click", function () {
+            selectCategory(card.dataset.enquiryCategory);
+
+            document.getElementById("contact-form-section")
+                .scrollIntoView({
+                    behavior: "smooth",
+                    block: "start"
+                });
+        });
+    });
+
+
+    categorySelect.addEventListener("change", function () {
+        selectCategory(categorySelect.value);
+    });
+
+
+    /* -----------------------------------------
+       PREFERRED CONTACT METHOD
+       ----------------------------------------- */
+
+    function updateContactMethod() {
+        const method = contactMethodSelect.value;
+
+        const emailIsRequired = method === "Email";
+        const phoneIsRequired = method === "Phone";
+
+        emailGroup.hidden = !emailIsRequired;
+        phoneGroup.hidden = !phoneIsRequired;
+
+        emailInput.required = emailIsRequired;
+        phoneInput.required = phoneIsRequired;
+
+        // Clear irrelevant fields when the contact method changes.
+        if (!emailIsRequired) {
+            emailInput.value = "";
+            clearFieldError(emailInput);
+        }
+
+        if (!phoneIsRequired) {
+            phoneInput.value = "";
+            clearFieldError(phoneInput);
+        }
+    }
+
+
+    contactMethodSelect.addEventListener("change", updateContactMethod);
+
+
+    /* -----------------------------------------
+       MESSAGE CHARACTER COUNT
+       ----------------------------------------- */
+
+    function updateCharacterCount() {
+        characterCount.textContent =
+            messageInput.value.length + " / 3000";
+    }
+
+
+    messageInput.addEventListener("input", updateCharacterCount);
+
+
+    /* -----------------------------------------
+       VALIDATION HELPERS
+       ----------------------------------------- */
+
+    function setFieldError(field, message) {
+        const errorElement = document.getElementById(
+            field.id + "-error"
+        );
+
+        field.classList.add("support-input-invalid");
+        field.setAttribute("aria-invalid", "true");
+
+        if (errorElement) {
+            errorElement.textContent = message;
+        }
+    }
+
+
+    function clearFieldError(field) {
+        const errorElement = document.getElementById(
+            field.id + "-error"
+        );
+
+        field.classList.remove("support-input-invalid");
+        field.removeAttribute("aria-invalid");
+
+        if (errorElement) {
+            errorElement.textContent = "";
+        }
+    }
+
+
+    function clearAllErrors() {
+        contactForm.querySelectorAll(
+            "input, select, textarea"
+        ).forEach(function (field) {
+            clearFieldError(field);
+        });
+
+        document.getElementById("support-consent-error").textContent = "";
+    }
+
+
+    function validateRequiredText(field, label, minimumLength) {
+        const value = field.value.trim();
+
+        if (!value) {
+            setFieldError(field, label + " is required.");
+            return false;
+        }
+
+        if (minimumLength && value.length < minimumLength) {
+            setFieldError(
+                field,
+                label + " must contain at least " +
+                minimumLength + " characters."
+            );
+            return false;
+        }
+
+        clearFieldError(field);
+        return true;
+    }
+
+
+    function validateEmail() {
+        if (contactMethodSelect.value !== "Email") {
+            clearFieldError(emailInput);
+            return true;
+        }
+
+        const email = emailInput.value.trim();
+
+        // Practical format check for front-end validation.
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!email) {
+            setFieldError(emailInput, "Email address is required.");
+            return false;
+        }
+
+        if (!emailPattern.test(email)) {
+            setFieldError(
+                emailInput,
+                "Enter a valid email address."
+            );
+            return false;
+        }
+
+        clearFieldError(emailInput);
+        return true;
+    }
+
+
+    function validatePhone() {
+        if (contactMethodSelect.value !== "Phone") {
+            clearFieldError(phoneInput);
+            return true;
+        }
+
+        const phone = phoneInput.value.trim();
+
+        // Allow digits, spaces, +, brackets, hyphens and periods.
+        const phonePattern = /^\+?[0-9().\s-]{7,24}$/;
+
+        if (!phone) {
+            setFieldError(phoneInput, "Phone number is required.");
+            return false;
+        }
+
+        if (!phonePattern.test(phone)) {
+            setFieldError(
+                phoneInput,
+                "Enter a valid phone number using at least 7 digits."
+            );
+            return false;
+        }
+
+        const digitCount = phone.replace(/\D/g, "").length;
+
+        if (digitCount < 7) {
+            setFieldError(
+                phoneInput,
+                "Phone number must contain at least 7 digits."
+            );
+            return false;
+        }
+
+        clearFieldError(phoneInput);
+        return true;
+    }
+
+
+    function validateSelect(field, label) {
+        if (!field.value) {
+            setFieldError(field, "Please select " + label + ".");
+            return false;
+        }
+
+        clearFieldError(field);
+        return true;
+    }
+
+
+    function validatePrivacyAcknowledgement() {
+        const checkbox = document.getElementById(
+            "support-privacy-acknowledgement"
+        );
+
+        const errorElement = document.getElementById(
+            "support-consent-error"
+        );
+
+        if (!checkbox.checked) {
+            errorElement.textContent =
+                "Please acknowledge the prototype privacy information.";
+            return false;
+        }
+
+        errorElement.textContent = "";
+        return true;
+    }
+
+
+    /* -----------------------------------------
+       FORM SUBMISSION
+       ----------------------------------------- */
+
+    contactForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        clearAllErrors();
+
+        const checks = [
+            validateRequiredText(
+                document.getElementById("support-name"),
+                "Your name",
+                2
+            ),
+
+            validateSelect(
+                contactMethodSelect,
+                "a preferred contact method"
+            ),
+
+            validateEmail(),
+            validatePhone(),
+
+            validateSelect(
+                categorySelect,
+                "an enquiry category"
+            ),
+
+            validateRequiredText(
+                document.getElementById("support-subject"),
+                "Subject",
+                3
+            ),
+
+            validateRequiredText(
+                messageInput,
+                "Message",
+                10
+            ),
+
+            validatePrivacyAcknowledgement()
+        ];
+
+        const isValid = checks.every(Boolean);
+
+        if (!isValid) {
+            const firstInvalidField = contactForm.querySelector(
+                ".support-input-invalid"
+            );
+
+            if (firstInvalidField) {
+                firstInvalidField.focus();
+
+                firstInvalidField.scrollIntoView({
+                    behavior: "smooth",
+                    block: "center"
+                });
+            } else {
+                const consentError = document.getElementById(
+                    "support-consent-error"
+                );
+
+                if (consentError.textContent) {
+                    document.getElementById(
+                        "support-privacy-acknowledgement"
+                    ).focus();
+                }
+            }
+
+            return;
+        }
+
+        const selectedCategory = categorySelect.value;
+
+        /*
+         * DEMO ONLY:
+         * No network request is made.
+         * Do not display a real message-sent confirmation.
+         * A production form needs a secure backend or connected form service.
+         */
+
+        successMessage.textContent =
+            "Your " + selectedCategory.toLowerCase() +
+            " enquiry passed the local demonstration checks. " +
+            "No message was sent or stored.";
+
+        contactForm.hidden = true;
+        successPanel.hidden = false;
+
+        successPanel.focus();
+
+        successPanel.scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+        });
+    });
+
+
+    /* -----------------------------------------
+       START ANOTHER ENQUIRY
+       ----------------------------------------- */
+
+    newEnquiryButton.addEventListener("click", function () {
+        contactForm.reset();
+
+        clearAllErrors();
+
+        contactForm.hidden = false;
+        successPanel.hidden = true;
+
+        updateContactMethod();
+        updateCharacterCount();
+        updateCategoryGuidance("");
+
+        categoryCards.forEach(function (card) {
+            card.classList.remove("is-selected");
+            card.setAttribute("aria-pressed", "false");
+        });
+
+        contactForm.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+
+        document.getElementById("support-name").focus();
+    });
+
+
+    /* -----------------------------------------
+       CLEAR ERRORS WHILE EDITING
+       ----------------------------------------- */
+
+    contactForm.querySelectorAll(
+        "input, select, textarea"
+    ).forEach(function (field) {
+        field.addEventListener("input", function () {
+            clearFieldError(field);
+        });
+
+        field.addEventListener("change", function () {
+            clearFieldError(field);
+        });
+    });
+
+
+    /* -----------------------------------------
+       INITIAL STATE
+       ----------------------------------------- */
+
+    updateContactMethod();
+    updateCharacterCount();
+    updateCategoryGuidance("");
+
+});
