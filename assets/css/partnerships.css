@@ -1,0 +1,1693 @@
+
+.partnerships-page {
+    --partnership-green: #247653;
+    --partnership-dark: #173f32;
+    --partnership-light: #e8f4ec;
+    --partnership-mint: #e8f4ec;
+    --partnership-sage: #d5e9d9;
+    --partnership-text: #24352d;
+    --partnership-muted: #6d7b73;
+    --partnership-border: #e1e9e2;
+    --partnership-white: #ffffff;
+    --partnership-background: #f7faf7;
+
+    color: var(--partnership-text);
+    overflow: hidden;
+}
+
+.partnerships-page *,
+.partnerships-page *::before,
+.partnerships-page *::after {
+    box-sizing: border-box;
+}
+
+.partnership-container {
+    width: min(1520px, calc(100% - 40px));
+    margin: 0 auto;
+}
+
+.partnership-centered {
+    max-width: 760px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.partnership-section-label {
+    display: inline-block;
+    margin-bottom: 13px;
+    color: var(--partnership-green);
+    font-size: 0.76rem;
+    font-weight: 800;
+    letter-spacing: 1.7px;
+    text-transform: uppercase;
+}
+
+.partnerships-page h1,
+.partnerships-page h2,
+.partnerships-page h3,
+.partnerships-page h4,
+.partnerships-page p {
+    margin-top: 0;
+}
+
+.partnerships-page h1,
+.partnerships-page h2,
+.partnerships-page h3,
+.partnerships-page h4 {
+    color: var(--partnership-dark);
+    line-height: 1.3;
+}
+
+.partnerships-page h2 {
+    margin-bottom: 18px;
+    font-size: clamp(1.8rem, 3vw, 2.65rem);
+    letter-spacing: -1px;
+}
+
+.partnerships-page p {
+    color: var(--partnership-muted);
+    line-height: 1.8;
+}
+
+.partnerships-page h2 span,
+.partnership-hero-content h1 span,
+.partnership-benefits-heading h2 span,
+.partnership-benefits-content h2 span,
+.partnership-enquiry-info h2 span {
+    color: var(--partnership-green);
+}
+
+
+/* BUTTONS */
+
+.partnership-btn {
+    min-height: 49px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 13px 21px;
+    border: 1px solid transparent;
+    border-radius: 9px;
+    font: inherit;
+    font-size: 0.91rem;
+    font-weight: 700;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease,
+        color 0.2s ease,
+        box-shadow 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.partnership-btn:hover {
+    transform: translateY(-2px);
+}
+
+.partnership-btn-primary {
+    background: var(--partnership-green);
+    color: #ffffff;
+    box-shadow: 0 7px 18px rgba(36, 118, 83, 0.16);
+}
+
+.partnership-btn-primary:hover {
+    background: var(--partnership-dark);
+    color: #ffffff;
+}
+
+.partnership-btn-outline {
+    border-color: #cbdacf;
+    background: rgba(255, 255, 255, 0.65);
+    color: var(--partnership-dark);
+}
+
+.partnership-btn-outline:hover {
+    background: #ffffff;
+    border-color: var(--partnership-green);
+}
+
+.partnership-btn-light {
+    background: #ffffff;
+    color: var(--partnership-dark);
+}
+
+.partnership-btn-light:hover {
+    background: var(--partnership-light);
+    color: var(--partnership-dark);
+}
+
+.partnership-btn-outline-light {
+    border-color: rgba(255, 255, 255, 0.55);
+    background: transparent;
+    color: #ffffff;
+}
+
+.partnership-btn-outline-light:hover {
+    background: rgba(255, 255, 255, 0.12);
+    color: #ffffff;
+}
+
+
+/* HERO SECTION */
+
+.partnership-hero {
+    position: relative;
+    padding: 82px 0 90px;
+    background:
+        radial-gradient(
+            circle at 80% 20%,
+            rgba(255, 255, 255, 0.8),
+            transparent 28%
+        ),
+        linear-gradient(
+            125deg,
+            #edf6ed 0%,
+            #dcefe0 55%,
+            #c9e4d0 100%
+        );
+}
+
+.partnership-hero-grid {
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    align-items: center;
+    gap: 55px;
+}
+
+.partnership-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    margin-bottom: 20px;
+    color: var(--partnership-green);
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+}
+
+.partnership-hero-content h1 {
+    max-width: 650px;
+    margin-bottom: 22px;
+    font-size: clamp(2.6rem, 5vw, 4.2rem);
+    line-height: 1.1;
+    letter-spacing: -2px;
+}
+
+.partnership-hero-content > p {
+    max-width: 570px;
+    margin-bottom: 27px;
+    color: #52695c;
+    font-size: 1.04rem;
+}
+
+.partnership-hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.partnership-hero-note {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin-top: 27px;
+    color: #486754;
+    font-size: 0.85rem;
+}
+
+.partnership-hero-note i {
+    color: var(--partnership-green);
+}
+
+
+/* HERO VISUAL */
+
+.partnership-hero-visual {
+    position: relative;
+    min-height: 370px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.partnership-visual-circle {
+    position: absolute;
+    width: min(350px, 85%);
+    aspect-ratio: 1;
+    border: 1px solid rgba(36, 118, 83, 0.17);
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.28);
+    box-shadow:
+        0 0 0 28px rgba(255, 255, 255, 0.15),
+        0 0 0 58px rgba(255, 255, 255, 0.1);
+}
+
+.partnership-visual-card {
+    position: absolute;
+    z-index: 1;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.93);
+    box-shadow: 0 20px 50px rgba(34, 82, 54, 0.13);
+}
+
+.partnership-visual-card-main {
+    width: 260px;
+    padding: 28px;
+    text-align: center;
+}
+
+.partnership-visual-icon {
+    width: 76px;
+    height: 76px;
+    display: grid;
+    place-items: center;
+    margin: 0 auto 19px;
+    border-radius: 22px;
+    background: var(--partnership-mint);
+    color: var(--partnership-green);
+    font-size: 2rem;
+}
+
+.partnership-visual-card h3 {
+    margin-bottom: 9px;
+    font-size: 1.28rem;
+}
+
+.partnership-visual-card p {
+    margin-bottom: 0;
+    font-size: 0.88rem;
+}
+
+.partnership-visual-card-small,
+.partnership-visual-card-bottom {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding: 14px 17px;
+    color: var(--partnership-dark);
+    font-size: 0.82rem;
+    font-weight: 700;
+}
+
+.partnership-visual-card-small i,
+.partnership-visual-card-bottom i {
+    color: var(--partnership-green);
+    font-size: 1.25rem;
+}
+
+.partnership-visual-card-small {
+    top: 55px;
+    right: 0;
+}
+
+.partnership-visual-card-bottom {
+    bottom: 43px;
+    left: 0;
+}
+
+.partnership-floating-icon {
+    position: absolute;
+    z-index: 2;
+    width: 49px;
+    height: 49px;
+    display: grid;
+    place-items: center;
+    border-radius: 15px;
+    background: var(--partnership-green);
+    color: #ffffff;
+    box-shadow: 0 10px 24px rgba(36, 118, 83, 0.2);
+    font-size: 1.25rem;
+}
+
+.partnership-floating-icon-one {
+    top: 40px;
+    left: 42px;
+    transform: rotate(-9deg);
+}
+
+.partnership-floating-icon-two {
+    right: 28px;
+    bottom: 35px;
+    transform: rotate(9deg);
+}
+
+
+/* INTRODUCTION */
+
+.partnership-intro {
+    padding: 78px 0 65px;
+}
+
+.partnership-intro p {
+    max-width: 710px;
+    margin: 0 auto;
+}
+
+
+/* PARTNERSHIP TYPES */
+
+.partnership-types {
+    padding: 70px 0 95px;
+    background: var(--partnership-background);
+}
+
+.partnership-section-heading {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 35px;
+    margin-bottom: 38px;
+}
+
+.partnership-section-heading h2 {
+    margin-bottom: 0;
+}
+
+.partnership-section-heading > p {
+    max-width: 440px;
+    margin-bottom: 4px;
+}
+
+.partnership-type-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 23px;
+}
+
+.partnership-type-card {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    padding: 30px 27px;
+    border: 1px solid var(--partnership-border);
+    border-radius: 17px;
+    background: #ffffff;
+    box-shadow: 0 8px 28px rgba(35, 70, 48, 0.035);
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.partnership-type-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 18px 38px rgba(35, 70, 48, 0.09);
+}
+
+.partnership-card-icon {
+    width: 59px;
+    height: 59px;
+    display: grid;
+    place-items: center;
+    margin-bottom: 22px;
+    border-radius: 16px;
+    font-size: 1.55rem;
+}
+
+.repair-icon {
+    background: #e3f2e7;
+    color: #247653;
+}
+
+.delivery-icon {
+    background: #e4edf9;
+    color: #416ba7;
+}
+
+.sponsor-icon {
+    background: #f8ecdc;
+    color: #a16b24;
+}
+
+.partnership-card-number {
+    margin-bottom: 12px;
+    color: #849187;
+    font-size: 0.69rem;
+    font-weight: 800;
+    letter-spacing: 1.2px;
+}
+
+.partnership-type-card h3 {
+    margin-bottom: 13px;
+    font-size: 1.36rem;
+}
+
+.partnership-type-card > p {
+    margin-bottom: 22px;
+    font-size: 0.91rem;
+}
+
+.partnership-feature-list {
+    display: grid;
+    gap: 14px;
+    margin: 0 0 28px;
+    padding: 0;
+    list-style: none;
+}
+
+.partnership-feature-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    color: #52645a;
+    font-size: 0.84rem;
+    line-height: 1.6;
+}
+
+.partnership-feature-list i {
+    margin-top: 4px;
+    color: var(--partnership-green);
+    font-size: 0.8rem;
+}
+
+.partnership-text-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    width: fit-content;
+    margin-top: auto;
+    color: var(--partnership-green);
+    font-size: 0.88rem;
+    font-weight: 800;
+    text-decoration: none;
+}
+
+.partnership-text-link i {
+    transition: transform 0.2s ease;
+}
+
+.partnership-text-link:hover i {
+    transform: translateX(4px);
+}
+
+
+/* PARTNERSHIP PROCESS */
+
+.partnership-process {
+    padding: 90px 0;
+}
+
+.partnership-process-heading {
+    margin-bottom: 48px;
+}
+
+.partnership-process-heading p {
+    max-width: 640px;
+    margin: 0 auto;
+}
+
+.partnership-flow {
+    display: grid;
+    grid-template-columns:
+        minmax(0, 1fr) 28px
+        minmax(0, 1fr) 28px
+        minmax(0, 1fr) 28px
+        minmax(0, 1fr);
+    align-items: start;
+    gap: 12px;
+}
+
+.partnership-flow-step {
+    position: relative;
+    text-align: center;
+}
+
+.partnership-flow-number {
+    position: absolute;
+    top: -8px;
+    left: calc(50% + 26px);
+    z-index: 2;
+    width: 30px;
+    height: 30px;
+    display: grid;
+    place-items: center;
+    border: 3px solid #ffffff;
+    border-radius: 50%;
+    background: var(--partnership-green);
+    color: #ffffff;
+    font-size: 0.65rem;
+    font-weight: 800;
+}
+
+.partnership-flow-icon {
+    width: 78px;
+    height: 78px;
+    display: grid;
+    place-items: center;
+    margin: 0 auto 20px;
+    border: 1px solid #dcebe0;
+    border-radius: 22px;
+    background: #eff7f0;
+    color: var(--partnership-green);
+    font-size: 1.7rem;
+}
+
+.partnership-flow-step h3 {
+    margin-bottom: 11px;
+    font-size: 1.02rem;
+}
+
+.partnership-flow-step p {
+    margin-bottom: 0;
+    font-size: 0.82rem;
+    line-height: 1.75;
+}
+
+.partnership-flow-connector {
+    display: flex;
+    justify-content: center;
+    padding-top: 30px;
+    color: #a6b8aa;
+}
+
+.partnership-notice {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    margin-top: 44px;
+    padding: 23px 25px;
+    border: 1px solid #dce9de;
+    border-radius: 12px;
+    background: #f4f9f4;
+}
+
+.partnership-notice > i {
+    margin-top: 3px;
+    color: var(--partnership-green);
+    font-size: 1.25rem;
+}
+
+.partnership-notice strong {
+    display: block;
+    margin-bottom: 6px;
+    color: var(--partnership-dark);
+}
+
+.partnership-notice p {
+    margin-bottom: 0;
+    font-size: 0.87rem;
+}
+
+
+/* =========================================
+   8. PARTNERSHIP BENEFITS
+   TWO-COLUMN LAYOUT
+========================================= */
+
+.partnership-benefits {
+    padding: 85px 0;
+    background: var(--partnership-background);
+}
+
+/* Main layout */
+
+.partnership-benefits-layout {
+    display: grid;
+    grid-template-columns: 1.35fr 0.85fr;
+    align-items: stretch;
+    gap: 45px;
+}
+
+/* Left column */
+
+.partnership-benefits-left {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.partnership-benefits-heading {
+    max-width: 650px;
+    margin-bottom: 30px;
+}
+
+.partnership-benefits-heading h2 {
+    margin: 12px 0;
+    color: var(--partnership-dark);
+    font-size: clamp(1.8rem, 3vw, 2.4rem);
+    line-height: 1.3;
+}
+
+.partnership-benefits-heading h2 span {
+    color: var(--partnership-green);
+}
+
+.partnership-benefits-heading p {
+    max-width: 580px;
+    margin: 0;
+    color: var(--partnership-muted);
+    font-size: 0.9rem;
+    line-height: 1.8;
+}
+
+/* Benefit cards */
+
+.partnership-benefits-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    margin: 0 0 25px;
+}
+
+.partnership-benefit-item {
+    min-width: 0;
+    padding: 23px;
+    border: 1px solid var(--partnership-border);
+    border-radius: 12px;
+    background: #ffffff;
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.partnership-benefit-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px rgba(0, 61, 41, 0.07);
+}
+
+.partnership-benefit-icon {
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 17px;
+    border-radius: 10px;
+    background: var(--partnership-light);
+    color: var(--partnership-green);
+    font-size: 18px;
+}
+
+.partnership-benefit-item h3 {
+    margin: 0 0 9px;
+    color: var(--partnership-dark);
+    font-size: 0.98rem;
+}
+
+.partnership-benefit-item p {
+    margin: 0;
+    color: var(--partnership-muted);
+    font-size: 0.82rem;
+    line-height: 1.7;
+}
+
+/* Benefits button */
+
+.partnership-benefits-left > .partnership-btn {
+    align-self: flex-start;
+    margin-top: auto;
+}
+
+
+/* IMPORTANT INFORMATION CARD */
+
+.partnership-important-info {
+    min-width: 0;
+    padding: 30px;
+    border: 1px solid var(--partnership-border);
+    border-radius: 14px;
+    background: #ffffff;
+    box-shadow: 0 10px 30px rgba(0, 61, 41, 0.05);
+}
+
+/* Information heading */
+
+.partnership-info-heading {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 15px;
+}
+
+.partnership-info-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    border-radius: 11px;
+    background: var(--partnership-light);
+    color: var(--partnership-green);
+    font-size: 20px;
+}
+
+.partnership-info-label {
+    display: block;
+    margin-bottom: 5px;
+    color: var(--partnership-green);
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 1.3px;
+}
+
+.partnership-info-heading h3 {
+    margin: 0;
+    color: var(--partnership-dark);
+    font-size: 1.3rem;
+}
+
+.partnership-info-intro {
+    margin: 0 0 25px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--partnership-border);
+    color: var(--partnership-muted);
+    font-size: 0.84rem;
+    line-height: 1.8;
+}
+
+/* Information items */
+
+.partnership-info-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 21px;
+}
+
+.partnership-info-check {
+    width: 23px;
+    height: 23px;
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2px;
+    border-radius: 50%;
+    background: var(--partnership-light);
+    color: var(--partnership-green);
+    font-size: 10px;
+}
+
+.partnership-info-item h4 {
+    margin: 0 0 6px;
+    color: var(--partnership-dark);
+    font-size: 0.87rem;
+}
+
+.partnership-info-item p {
+    margin: 0;
+    color: var(--partnership-muted);
+    font-size: 0.78rem;
+    line-height: 1.7;
+}
+
+/* Information note */
+
+.partnership-info-note {
+    display: flex;
+    align-items: flex-start;
+    gap: 11px;
+    margin-top: 25px;
+    padding: 16px;
+    border-left: 3px solid var(--partnership-green);
+    border-radius: 5px;
+    background: var(--partnership-light);
+}
+
+.partnership-info-note > i {
+    margin-top: 3px;
+    color: var(--partnership-green);
+    font-size: 15px;
+}
+
+.partnership-info-note p {
+    margin: 0;
+    color: var(--partnership-muted);
+    font-size: 0.76rem;
+    line-height: 1.7;
+}
+
+.partnership-info-note strong {
+    color: var(--partnership-dark);
+}
+
+
+/* PARTNERSHIP TIMELINE */
+
+.partnership-next-steps {
+    margin-top: 28px;
+    padding: 25px;
+    border: 1px solid var(--partnership-border);
+    border-radius: 12px;
+    background: #ffffff;
+}
+
+/* Timeline heading */
+
+.partnership-next-heading {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    margin-bottom: 25px;
+}
+
+.partnership-next-icon {
+    width: 43px;
+    height: 43px;
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    background: var(--partnership-light);
+    color: var(--partnership-green);
+    font-size: 18px;
+}
+
+.partnership-next-label {
+    display: block;
+    margin-bottom: 5px;
+    color: var(--partnership-green);
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 1.2px;
+}
+
+.partnership-next-heading h3 {
+    margin: 0;
+    color: var(--partnership-dark);
+    font-size: 1.15rem;
+}
+
+/* Timeline structure */
+
+.partnership-timeline {
+    display: flex;
+    flex-direction: column;
+}
+
+.partnership-timeline-item {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding-bottom: 22px;
+}
+
+.partnership-timeline-item:last-child {
+    padding-bottom: 0;
+}
+
+/* Vertical connecting line */
+
+.partnership-timeline-item:not(:last-child)::after {
+    position: absolute;
+    top: 37px;
+    left: 17px;
+    width: 2px;
+    height: calc(100% - 37px);
+    background: var(--partnership-border);
+    content: "";
+}
+
+/* Timeline number */
+
+.partnership-timeline-number {
+    position: relative;
+    z-index: 1;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--partnership-border);
+    border-radius: 50%;
+    background: var(--partnership-light);
+    color: var(--partnership-green);
+    font-size: 10px;
+    font-weight: 800;
+}
+
+/* Timeline text */
+
+.partnership-timeline-item h4 {
+    margin: 3px 0 6px;
+    color: var(--partnership-dark);
+    font-size: 0.85rem;
+}
+
+.partnership-timeline-item p {
+    margin: 0;
+    color: var(--partnership-muted);
+    font-size: 0.77rem;
+    line-height: 1.7;
+}
+
+
+/* COMMUNITY CAMPAIGN BANNER */
+
+.partnership-campaign {
+    padding: 48px 0;
+    background: linear-gradient(120deg, #e7f3e8, #f3f8ed);
+}
+
+.partnership-campaign-inner {
+    display: grid;
+    grid-template-columns: 70px minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 25px;
+}
+
+.partnership-campaign-icon {
+    width: 68px;
+    height: 68px;
+    display: grid;
+    place-items: center;
+    border-radius: 20px;
+    background: #ffffff;
+    color: var(--partnership-green);
+    font-size: 1.7rem;
+    box-shadow: 0 8px 25px rgba(35, 70, 48, 0.06);
+}
+
+.partnership-campaign-content h2 {
+    margin-bottom: 10px;
+    font-size: clamp(1.45rem, 2.5vw, 2rem);
+}
+
+.partnership-campaign-content p {
+    max-width: 670px;
+    margin-bottom: 0;
+    font-size: 0.9rem;
+}
+
+
+/* PARTNERSHIP ENQUIRY SECTION */
+
+.partnership-enquiry {
+    padding: 95px 0;
+}
+
+.partnership-enquiry-grid {
+    display: grid;
+    grid-template-columns: 0.85fr 1.15fr;
+    align-items: start;
+    gap: 75px;
+}
+
+/* Left information column */
+
+.partnership-enquiry-info {
+    position: sticky;
+    top: 30px;
+}
+
+.partnership-enquiry-info > p {
+    margin-bottom: 30px;
+}
+
+.partnership-contact-point {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    margin-bottom: 23px;
+}
+
+.partnership-contact-point > i {
+    width: 43px;
+    height: 43px;
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    border-radius: 13px;
+    background: var(--partnership-light);
+    color: var(--partnership-green);
+}
+
+.partnership-contact-point h3 {
+    margin-bottom: 5px;
+    font-size: 0.98rem;
+}
+
+.partnership-contact-point p {
+    margin-bottom: 0;
+    font-size: 0.84rem;
+}
+
+/* Form disclaimer */
+
+.partnership-form-disclaimer {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-top: 31px;
+    padding: 15px;
+    border-radius: 10px;
+    background: #f4f7f4;
+    color: #647268;
+    font-size: 0.8rem;
+    line-height: 1.6;
+}
+
+.partnership-form-disclaimer i {
+    margin-top: 3px;
+    color: var(--partnership-green);
+}
+
+
+/* ENQUIRY FORM */
+
+.partnership-form-card {
+    min-width: 0;
+    padding: 34px;
+    border: 1px solid var(--partnership-border);
+    border-radius: 18px;
+    background: #ffffff;
+    box-shadow: 0 15px 50px rgba(35, 70, 48, 0.07);
+}
+
+.partnership-form-heading {
+    margin-bottom: 28px;
+}
+
+.partnership-form-heading h3 {
+    margin-bottom: 7px;
+    font-size: 1.5rem;
+}
+
+.partnership-form-heading p {
+    margin-bottom: 0;
+    font-size: 0.85rem;
+}
+
+/* Form rows */
+
+.partnership-form-row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 17px;
+}
+
+.partnership-form-group {
+    min-width: 0;
+    margin-bottom: 20px;
+}
+
+.partnership-form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #33483a;
+    font-size: 0.84rem;
+    font-weight: 700;
+}
+
+/* Form controls */
+
+.partnership-form-group input,
+.partnership-form-group select,
+.partnership-form-group textarea {
+    width: 100%;
+    min-height: 48px;
+    padding: 12px 13px;
+    border: 1px solid #dce5dd;
+    border-radius: 8px;
+    outline: none;
+    background: #fbfdfb;
+    color: var(--partnership-text);
+    font: inherit;
+    font-size: 0.86rem;
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+}
+
+.partnership-form-group textarea {
+    min-height: 110px;
+    resize: vertical;
+}
+
+.partnership-form-group input:focus,
+.partnership-form-group select:focus,
+.partnership-form-group textarea:focus {
+    border-color: var(--partnership-green);
+    box-shadow: 0 0 0 3px rgba(36, 118, 83, 0.1);
+}
+
+.partnership-form-group input::placeholder,
+.partnership-form-group textarea::placeholder {
+    color: #a1aca3;
+}
+
+/* Validation errors */
+
+.partnership-field-error {
+    display: block;
+    min-height: 0;
+    margin-top: 5px;
+    color: #b42318;
+    font-size: 0.75rem;
+}
+
+.partnership-form-group.is-invalid input,
+.partnership-form-group.is-invalid select,
+.partnership-form-group.is-invalid textarea {
+    border-color: #c43d35;
+    background: #fffafa;
+}
+
+/* Consent checkbox */
+
+.partnership-checkbox-label {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin: 3px 0 7px;
+    color: #5d6d62;
+    font-size: 0.79rem;
+    line-height: 1.7;
+    cursor: pointer;
+}
+
+.partnership-checkbox-label input {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    margin-top: 3px;
+    accent-color: var(--partnership-green);
+}
+
+.partnership-consent-error {
+    margin-bottom: 12px;
+    color: #b42318;
+    font-size: 0.75rem;
+}
+
+/* Submit button */
+
+.partnership-submit-btn {
+    width: 100%;
+    margin-top: 15px;
+}
+
+.partnership-form-privacy {
+    margin: 13px 0 0;
+    text-align: center;
+    font-size: 0.74rem;
+    line-height: 1.6;
+}
+
+/* Success message */
+
+.partnership-form-success {
+    display: flex;
+    align-items: flex-start;
+    gap: 13px;
+    margin-top: 22px;
+    padding: 17px;
+    border: 1px solid #b8dfc0;
+    border-radius: 10px;
+    background: #effaf0;
+    color: #236c3f;
+}
+
+.partnership-form-success[hidden] {
+    display: none;
+}
+
+.partnership-form-success > i {
+    margin-top: 3px;
+    font-size: 1.3rem;
+}
+
+.partnership-form-success strong {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.partnership-form-success p {
+    margin-bottom: 0;
+    color: #467454;
+    font-size: 0.83rem;
+}
+
+
+/* FINAL CALL TO ACTION */
+
+.partnership-final-cta {
+    padding: 55px 0;
+    background: transparent;
+}
+
+.partnership-final-cta-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+    padding: 35px 40px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 14px;
+    background: var(--partnership-dark);
+    box-shadow: 0 12px 30px rgba(0, 61, 41, 0.09);
+}
+
+.partnership-final-content {
+    max-width: 600px;
+}
+
+.partnership-cta-label {
+    display: inline-block;
+    margin-bottom: 12px;
+    color: #a8c9b3;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1.6px;
+}
+
+.partnership-final-cta h2 {
+    margin: 0 0 10px;
+    color: #ffffff;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    line-height: 1.3;
+}
+
+.partnership-final-cta p {
+    margin: 0;
+    color: #c7d9cd;
+    font-size: 0.88rem;
+    line-height: 1.8;
+}
+
+.partnership-final-actions {
+    display: flex;
+    flex-shrink: 0;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+
+/* RESPONSIVE — LARGE TABLETS */
+
+@media (max-width: 1000px) {
+
+    /* Hero */
+
+    .partnership-hero-grid {
+        gap: 25px;
+    }
+
+    .partnership-hero-content h1 {
+        font-size: clamp(2.4rem, 5vw, 3.4rem);
+    }
+
+    .partnership-hero-visual {
+        transform: scale(0.92);
+    }
+
+    /* Partnership cards */
+
+    .partnership-type-grid {
+        gap: 15px;
+    }
+
+    .partnership-type-card {
+        padding: 25px 21px;
+    }
+
+    /* Process */
+
+    .partnership-flow {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 36px 25px;
+    }
+
+    .partnership-flow-connector {
+        display: none;
+    }
+
+    /* Benefits */
+
+    .partnership-benefits-layout {
+        grid-template-columns: 1fr 0.9fr;
+        gap: 25px;
+    }
+
+    .partnership-benefit-item {
+        padding: 19px;
+    }
+
+    .partnership-important-info {
+        padding: 24px;
+    }
+
+    /* Enquiry */
+
+    .partnership-enquiry-grid {
+        gap: 40px;
+    }
+
+    /* Campaign */
+
+    .partnership-campaign-inner {
+        grid-template-columns: 60px minmax(0, 1fr);
+    }
+
+    .partnership-campaign-inner > a {
+        grid-column: 2;
+        justify-self: start;
+    }
+
+    /* Final CTA */
+
+    .partnership-final-cta-inner {
+        align-items: flex-start;
+        flex-direction: column;
+        padding: 30px;
+    }
+
+    .partnership-final-actions {
+        width: 100%;
+    }
+}
+
+
+/* RESPONSIVE — TABLETS & SMALL LAPTOPS */
+
+@media (max-width: 760px) {
+
+    .partnership-container {
+        width: min(100% - 36px, 560px);
+    }
+
+    /* Hero */
+
+    .partnership-hero {
+        padding: 60px 0 65px;
+    }
+
+    .partnership-hero-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .partnership-hero-content h1 {
+        font-size: clamp(2.5rem, 10vw, 3.5rem);
+        letter-spacing: -1.5px;
+    }
+
+    .partnership-hero-visual {
+        min-height: 340px;
+        transform: none;
+    }
+
+    .partnership-visual-card-main {
+        width: 235px;
+        padding: 23px;
+    }
+
+    .partnership-visual-card-small {
+        top: 28px;
+        right: 0;
+    }
+
+    .partnership-visual-card-bottom {
+        bottom: 20px;
+        left: 0;
+    }
+
+    .partnership-floating-icon-one {
+        top: 20px;
+        left: 5px;
+    }
+
+    .partnership-floating-icon-two {
+        right: 4px;
+        bottom: 15px;
+    }
+
+    /* Introduction */
+
+    .partnership-intro {
+        padding: 60px 0;
+    }
+
+    /* Section spacing */
+
+    .partnership-types,
+    .partnership-process,
+    .partnership-benefits,
+    .partnership-enquiry {
+        padding: 65px 0;
+    }
+
+    /* Section heading */
+
+    .partnership-section-heading {
+        display: block;
+    }
+
+    .partnership-section-heading > p {
+        margin-top: 18px;
+    }
+
+    /* Partnership cards */
+
+    .partnership-type-grid {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+
+    .partnership-type-card {
+        padding: 28px;
+    }
+
+    /* Process */
+
+    .partnership-process-heading {
+        margin-bottom: 35px;
+    }
+
+    .partnership-flow {
+        grid-template-columns: 1fr;
+        gap: 33px;
+    }
+
+    .partnership-flow-step {
+        max-width: 340px;
+        margin: 0 auto;
+    }
+
+    .partnership-flow-step p {
+        max-width: 310px;
+        margin: 0 auto;
+    }
+
+    .partnership-notice {
+        padding: 19px;
+    }
+
+    /* Benefits */
+
+    .partnership-benefits-layout {
+        grid-template-columns: 1fr;
+        gap: 35px;
+    }
+
+    .partnership-benefits-heading {
+        margin-bottom: 25px;
+    }
+
+    /* Enquiry */
+
+    .partnership-enquiry-grid {
+        grid-template-columns: 1fr;
+        gap: 38px;
+    }
+
+    .partnership-enquiry-info {
+        position: static;
+    }
+
+    /* Campaign */
+
+    .partnership-campaign {
+        padding: 40px 0;
+    }
+
+    .partnership-campaign-inner {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+
+    .partnership-campaign-inner > a {
+        grid-column: auto;
+    }
+
+    /* Form */
+
+    .partnership-form-card {
+        padding: 26px 21px;
+    }
+
+    /* Final CTA */
+
+    .partnership-final-cta-inner {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .partnership-final-actions {
+        width: 100%;
+    }
+}
+
+
+/* RESPONSIVE — MOBILE DEVICES */
+
+@media (max-width: 480px) {
+
+    .partnership-container {
+        width: calc(100% - 30px);
+    }
+
+    /* Buttons */
+
+    .partnership-hero-actions,
+    .partnership-final-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .partnership-btn {
+        width: 100%;
+    }
+
+    /* Hero */
+
+    .partnership-hero-note {
+        align-items: flex-start;
+        line-height: 1.6;
+    }
+
+    .partnership-hero-visual {
+        min-height: 300px;
+    }
+
+    .partnership-visual-card-main {
+        width: 205px;
+        padding: 20px 15px;
+    }
+
+    .partnership-visual-icon {
+        width: 60px;
+        height: 60px;
+        margin-bottom: 14px;
+        font-size: 1.6rem;
+    }
+
+    .partnership-visual-card-small,
+    .partnership-visual-card-bottom {
+        gap: 7px;
+        padding: 11px;
+        font-size: 0.7rem;
+    }
+
+    .partnership-floating-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 12px;
+        font-size: 1rem;
+    }
+
+    /* Benefits */
+
+    .partnership-benefits-list {
+        grid-template-columns: 1fr;
+        gap: 13px;
+    }
+
+    .partnership-benefit-item {
+        padding: 20px;
+    }
+
+    .partnership-benefit-icon {
+        width: 42px;
+        height: 42px;
+    }
+
+    .partnership-benefits-left > .partnership-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .partnership-important-info {
+        padding: 22px 18px;
+    }
+
+    /* Timeline */
+
+    .partnership-next-steps {
+        padding: 20px 17px;
+    }
+
+    .partnership-next-heading {
+        margin-bottom: 22px;
+    }
+
+    .partnership-timeline-item {
+        gap: 11px;
+    }
+
+    /* Form */
+
+    .partnership-form-row {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+    .partnership-form-card {
+        padding: 23px 16px;
+    }
+
+    /* Final CTA */
+
+    .partnership-final-cta {
+        padding: 35px 0;
+    }
+
+    .partnership-final-cta-inner {
+        padding: 25px 20px;
+    }
+
+    .partnership-final-actions {
+        flex-direction: column;
+    }
+
+    .partnership-final-actions .partnership-btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+
+/* ACCESSIBILITY */
+
+.partnerships-page a:focus-visible,
+.partnerships-page button:focus-visible,
+.partnerships-page input:focus-visible,
+.partnerships-page select:focus-visible,
+.partnerships-page textarea:focus-visible {
+    outline: 3px solid #6fae88;
+    outline-offset: 3px;
+}
+
+/* Reduce animation for users who prefer less motion */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .partnerships-page *,
+    .partnerships-page *::before,
+    .partnerships-page *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+    }
+
+}

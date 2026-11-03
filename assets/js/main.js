@@ -2866,164 +2866,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 
-
-/* RE:POWER COLLECTION & DELIVERY JavaScript Functionality */
-
-document.addEventListener("DOMContentLoaded", function () {
-    const form = document.getElementById("collectionForm");
-    const message = document.getElementById("formMessage");
-    const preferenceError =
-        document.getElementById("preferenceError");
-    const dateInput = document.getElementById("date");
-
-    // SET MINIMUM COLLECTION DATE TO TODAY
-    const today = new Date();
-    const localDate = new Date(
-        today.getTime() - today.getTimezoneOffset() * 60000
-    ).toISOString().split("T")[0];
-    dateInput.min = localDate;
-
-
-    const preferenceCards =
-        document.querySelectorAll(".preference-card");
-    const preferenceInputs =
-        document.querySelectorAll('input[name="preference"]');
-    preferenceInputs.forEach(function (radio) {
-        radio.addEventListener("change", function () {
-            preferenceCards.forEach(function (card) {
-                card.classList.remove("selected");
-            });
-            radio.closest(".preference-card")
-                .classList.add("selected");
-            preferenceError.style.display = "none";
-        });
-    });
-
-
-    // FORM SUBMISSION
-    form.addEventListener("submit", function (event) {
-        event.preventDefault();
-        let isValid = true;
-        // CHECK REQUIRED INPUTS
-        const requiredFields =
-            form.querySelectorAll("[required]");
-        requiredFields.forEach(function (field) {
-            const group = field.closest(".form-group");
-            if (!field.value.trim()) {
-                isValid = false;
-                if (group) {
-                    group.classList.add("invalid");
-                }
-            } else {
-                if (group) {
-                    group.classList.remove("invalid");
-                }
-            }
-        });
-        // CHECK COLLECTION PREFERENCE
-        const selectedPreference =
-            form.querySelector(
-                'input[name="preference"]:checked'
-            );
-        if (!selectedPreference) {
-            isValid = false;
-            preferenceError.style.display = "block";
-        }
-        // CHECK FORM VALIDATION
-        if (!isValid) {
-            showMessage(
-                "Please complete all required fields before submitting.",
-                "warning"
-            );
-            const firstInvalid =
-                form.querySelector(
-                    ".form-group.invalid input, " +
-                    ".form-group.invalid select, " +
-                    ".form-group.invalid textarea"
-                );
-            if (firstInvalid) {
-                firstInvalid.focus();
-            }
-            return;
-        }
-
-
-        // COLLECT FORM DATA
-        const enquiry = {
-            customerName:
-                document.getElementById("customerName").value,
-            phone:
-                document.getElementById("phone").value,
-            township:
-                document.getElementById("township").value,
-            category:
-                document.getElementById("category").value,
-            device:
-                document.getElementById("device").value,
-            repairShop:
-                document.getElementById("repairShop").value,
-            preference:
-                selectedPreference.value,
-            date:
-                document.getElementById("date").value,
-            time:
-                document.getElementById("time").value,
-            address:
-                document.getElementById("address").value,
-            submittedAt:
-                new Date().toISOString()
-        };
-
-        // SAVE DEMO ENQUIRY IN LOCAL STORAGE
-
-        try {
-            let enquiries = JSON.parse(
-                localStorage.getItem("repowerEnquiries") || "[]"
-            );
-            enquiries.push(enquiry);
-            localStorage.setItem(
-                "repowerEnquiries",
-                JSON.stringify(enquiries)
-            );
-            showMessage(
-                "Your enquiry has been saved successfully on this device. " +
-                "This is a demonstration submission; RE:Power has not " +
-                "received it yet.",
-                "success"
-            );
-        }
-        catch (error) {
-            showMessage(
-                "Unable to save the enquiry. Please try again.",
-                "error"
-            );
-        }
-    });
-
-    // RESET FORM
-    form.addEventListener("reset", function () {
-        setTimeout(function () {
-            const groups =
-                form.querySelectorAll(".form-group");
-            groups.forEach(function (group) {
-                group.classList.remove("invalid");
-            });
-            preferenceCards.forEach(function (card) {
-                card.classList.remove("selected");
-            });
-            preferenceError.style.display = "none";
-            message.className = "form-message";
-            message.textContent = "";
-        }, 0);
-    });
-
-    // DISPLAY FORM MESSAGES
-    function showMessage(text, type) {
-        message.textContent = text;
-        message.className = "form-message " + type;
-    }
-});
-
 /* community.html */
 /* =========================================
    PAGE 6: COMMUNITY & DONATIONS
@@ -4072,5 +3914,254 @@ document.addEventListener("DOMContentLoaded", function () {
     updateContactMethod();
     updateCharacterCount();
     updateCategoryGuidance("");
+
+});
+/* collection-delivery.html */
+/* =========================================
+   RE:POWER COLLECTION & DELIVERY
+   JavaScript Functionality
+========================================= */
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const form = document.getElementById("collectionForm");
+
+    const message = document.getElementById("formMessage");
+
+    const preferenceError =
+        document.getElementById("preferenceError");
+
+    const dateInput = document.getElementById("date");
+
+
+    // SET MINIMUM COLLECTION DATE TO TODAY
+
+    const today = new Date();
+
+    const localDate = new Date(
+        today.getTime() - today.getTimezoneOffset() * 60000
+    ).toISOString().split("T")[0];
+
+    dateInput.min = localDate;
+
+
+    // COLLECTION PREFERENCE SELECTION
+
+    const preferenceCards =
+        document.querySelectorAll(".preference-card");
+
+    const preferenceInputs =
+        document.querySelectorAll('input[name="preference"]');
+
+
+    preferenceInputs.forEach(function (radio) {
+
+        radio.addEventListener("change", function () {
+
+            preferenceCards.forEach(function (card) {
+                card.classList.remove("selected");
+            });
+
+            radio.closest(".preference-card")
+                .classList.add("selected");
+
+            preferenceError.style.display = "none";
+
+        });
+
+    });
+
+
+    // FORM SUBMISSION
+
+    form.addEventListener("submit", function (event) {
+
+        event.preventDefault();
+
+        let isValid = true;
+
+
+        // CHECK REQUIRED INPUTS
+
+        const requiredFields =
+            form.querySelectorAll("[required]");
+
+
+        requiredFields.forEach(function (field) {
+
+            const group = field.closest(".form-group");
+
+            if (!field.value.trim()) {
+
+                isValid = false;
+
+                if (group) {
+                    group.classList.add("invalid");
+                }
+
+            } else {
+
+                if (group) {
+                    group.classList.remove("invalid");
+                }
+
+            }
+
+        });
+
+
+        // CHECK COLLECTION PREFERENCE
+
+        const selectedPreference =
+            form.querySelector(
+                'input[name="preference"]:checked'
+            );
+
+        if (!selectedPreference) {
+
+            isValid = false;
+
+            preferenceError.style.display = "block";
+
+        }
+
+
+        // CHECK FORM VALIDATION
+
+        if (!isValid) {
+
+            showMessage(
+                "Please complete all required fields before submitting.",
+                "warning"
+            );
+
+            const firstInvalid =
+                form.querySelector(
+                    ".form-group.invalid input, " +
+                    ".form-group.invalid select, " +
+                    ".form-group.invalid textarea"
+                );
+
+            if (firstInvalid) {
+                firstInvalid.focus();
+            }
+
+            return;
+
+        }
+
+
+        // COLLECT FORM DATA
+
+        const enquiry = {
+
+            customerName:
+                document.getElementById("customerName").value,
+
+            phone:
+                document.getElementById("phone").value,
+
+            township:
+                document.getElementById("township").value,
+
+            category:
+                document.getElementById("category").value,
+
+            device:
+                document.getElementById("device").value,
+
+            repairShop:
+                document.getElementById("repairShop").value,
+
+            preference:
+                selectedPreference.value,
+
+            date:
+                document.getElementById("date").value,
+
+            time:
+                document.getElementById("time").value,
+
+            address:
+                document.getElementById("address").value,
+
+            submittedAt:
+                new Date().toISOString()
+
+        };
+
+
+        // SAVE DEMO ENQUIRY IN LOCAL STORAGE
+
+        try {
+
+            let enquiries = JSON.parse(
+                localStorage.getItem("repowerEnquiries") || "[]"
+            );
+
+            enquiries.push(enquiry);
+        localStorage.setItem(
+                "repowerEnquiries",
+                JSON.stringify(enquiries)
+            );
+
+
+            showMessage(
+                "Your enquiry has been saved successfully on this device. " +
+                "This is a demonstration submission; RE:Power has not " +
+                "received it yet.",
+                "success"
+            );
+
+        }
+
+        catch (error) {
+
+            showMessage(
+                "Unable to save the enquiry. Please try again.",
+                "error"
+            );
+
+        }
+
+    });
+
+
+    // RESET FORM
+
+    form.addEventListener("reset", function () {
+
+        setTimeout(function () {
+
+            const groups =
+                form.querySelectorAll(".form-group");
+
+            groups.forEach(function (group) {
+                group.classList.remove("invalid");
+            });
+
+            preferenceCards.forEach(function (card) {
+                card.classList.remove("selected");
+            });
+
+            preferenceError.style.display = "none";
+
+            message.className = "form-message";
+            message.textContent = "";
+
+        }, 0);
+
+    });
+
+
+    // DISPLAY FORM MESSAGES
+
+    function showMessage(text, type) {
+
+        message.textContent = text;
+
+        message.className = "form-message " + type;
+
+    }
 
 });
