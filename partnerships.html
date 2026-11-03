@@ -67,14 +67,58 @@
 
             <div class="header-actions">
 
-                <a
-                    href="repair-shops.html"
-                    class="header-search"
-                    aria-label="Find repair shops">
+                <div class="header-search-wrapper">
 
-                    <i class="fas fa-search" aria-hidden="true"></i>
+                    <button
+                        type="button"
+                        class="header-search"
+                        id="headerSearchToggle"
+                        aria-label="Open search"
+                        aria-expanded="false">
 
-                </a>
+                        <i class="fas fa-search"></i>
+
+                    </button>
+
+                    <div class="header-search-panel" id="headerSearchPanel">
+
+                        <div class="header-search-input-wrapper">
+
+                            <i class="fas fa-search"></i>
+
+                            <input
+                                type="search"
+                                id="headerSearchInput"
+                                placeholder="Search pages, services..."
+                                autocomplete="off"
+                                aria-label="Search website">
+
+                            <button
+                                type="button"
+                                id="headerSearchClose"
+                                aria-label="Close search">
+
+                                <i class="fas fa-times"></i>
+
+                            </button>
+
+                        </div>
+
+                        <div
+                            class="header-search-suggestions"
+                            id="headerSearchSuggestions">
+
+                            <p class="search-suggestion-heading">
+                                QUICK LINKS
+                            </p>
+
+                            <div id="headerSearchResults"></div>
+
+                        </div>
+
+                    </div>
+
+                </div>
 
                 <a href="contact.html" class="btn btn-support">
                     <span>Get Support</span>
@@ -1597,7 +1641,7 @@
 
                     <span aria-hidden="true">|</span>
 
-                    <a href="sitemap.html">
+                    <a href="assets/images/sitemap.jpg">
                         Sitemap
                     </a>
 
