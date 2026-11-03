@@ -10,15 +10,14 @@
 
     <meta name="theme-color" content="#159A9C">
 
-    <title>Community & Donations | re:power</title>
+    <title>Contact & Support | re:power</title>
 
     <link
         rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
     <link rel="stylesheet" href="assets/css/style.css">
-
-    <link rel="stylesheet" href="assets/css/community.css">
+    <link rel="stylesheet" href="assets/css/contact.css">
 
 </head>
 
@@ -60,9 +59,9 @@
                 <a href="collection-delivery.html" class="nav-link">Collection & Delivery</a>
                 <a href="weather-device-care.html" class="nav-link">Weather & Device Care</a>
                 <a href="partnerships.html" class="nav-link">Business Partnerships</a>
-                <a href="community.html" class="nav-link active">Community & Donations</a>
+                <a href="community.html" class="nav-link">Community & Donations</a>
                 <a href="about.html" class="nav-link">About & Trust</a>
-                <a href="contact.html" class="nav-link">Contact & Support</a>
+                <a href="contact.html" class="nav-link active">Contact & Support</a>
             </nav>
 
             <div class="header-actions">
@@ -129,640 +128,894 @@
 
         </div>
     </header>
-<main class="community-page">
+<main class="contact-support-page">
 
     <!-- HERO -->
-    <section class="community-hero">
-        <div class="community-hero-content">
-            <span class="section-eyebrow">COMMUNITY • REUSE • IMPACT</span>
-            <h1>Small actions. Longer life for electronics.</h1>
+    <section class="support-hero">
+        <div class="support-hero-content">
+            <span class="support-eyebrow">CONTACT & SUPPORT</span>
+
+            <h1>How can we help you?</h1>
+
             <p>
-                Help build a community where electronics are repaired,
-                useful devices are reused, and fewer resources go to waste.
-                Discover volunteer opportunities, support responsible
-                donations, or share an idea with re:power.
+                Have a question about a repair listing, collection and delivery,
+                a business partnership or a community activity? Choose the
+                relevant category and send us an enquiry.
             </p>
 
-            <div class="community-hero-actions">
-                <a href="#volunteer-board" class="btn btn-primary">
-                    Explore Activities
+            <div class="support-hero-actions">
+                <a href="#contact-form-section" class="support-btn support-btn-primary">
+                    Contact Our Team
+                    <i class="fa-solid fa-arrow-right"></i>
                 </a>
-                <a href="#community-ideas" class="btn btn-outline">
-                    Submit an Idea
+
+                <a href="#support-faq" class="support-btn support-btn-outline">
+                    Browse FAQs
                 </a>
+            </div>
+
+            <div class="support-hero-note">
+                <i class="fa-solid fa-circle-info"></i>
+                <span>
+                    This is a website prototype. The demo contact form does not
+                    send messages to a real support team.
+                </span>
             </div>
         </div>
 
-        <div class="community-hero-visual" aria-hidden="true">
-            <div class="community-illustration">
-                <i class="fa-solid fa-hand-holding-heart"></i>
-                <span class="community-illustration-leaf">
-                    <i class="fa-solid fa-leaf"></i>
-                </span>
-                <span class="community-illustration-device">
-                    <i class="fa-solid fa-mobile-screen-button"></i>
-                </span>
+        <div class="support-hero-visual" aria-hidden="true">
+            <div class="support-hero-circle support-circle-one"></div>
+            <div class="support-hero-circle support-circle-two"></div>
+
+            <div class="support-hero-main-icon">
+                <i class="fa-solid fa-headset"></i>
             </div>
-            <p>Repair more. Reuse responsibly. Waste less.</p>
+
+            <span class="support-floating-icon support-float-message">
+                <i class="fa-solid fa-message"></i>
+            </span>
+
+            <span class="support-floating-icon support-float-question">
+                <i class="fa-solid fa-circle-question"></i>
+            </span>
+
+            <span class="support-floating-icon support-float-check">
+                <i class="fa-solid fa-check"></i>
+            </span>
         </div>
     </section>
 
 
-    <!-- COMMUNITY VALUES -->
-    <section class="community-values section-padding">
-        <div class="section-heading">
-            <span class="section-eyebrow">WHY GET INVOLVED?</span>
-            <h2>Make a difference together</h2>
+    <!-- ENQUIRY CATEGORY CARDS -->
+    <section class="support-categories section-padding">
+        <div class="support-section-heading">
+            <span class="support-eyebrow">WE'RE HERE TO HELP</span>
+            <h2>What do you need help with?</h2>
             <p>
-                Small community actions can help people make better use
-                of their electronics and understand responsible disposal.
+                Select the topic that best matches your question.
+                We will show relevant guidance before you complete the form.
             </p>
         </div>
 
-        <div class="community-value-grid">
-            <article class="community-value-card">
-                <div class="community-icon">
+        <div class="support-category-grid">
+
+            <button type="button"
+                    class="support-category-card"
+                    data-enquiry-category="General"
+                    aria-pressed="false">
+                <span class="support-category-icon">
+                    <i class="fa-solid fa-comments"></i>
+                </span>
+                <span class="support-category-title">General Enquiry</span>
+                <span class="support-category-description">
+                    Questions about re:power and how the website works.
+                </span>
+                <span class="support-category-action">
+                    Select topic <i class="fa-solid fa-arrow-right"></i>
+                </span>
+            </button>
+
+            <button type="button"
+                    class="support-category-card"
+                    data-enquiry-category="Repair Listing"
+                    aria-pressed="false">
+                <span class="support-category-icon">
+                    <i class="fa-solid fa-screwdriver-wrench"></i>
+                </span>
+                <span class="support-category-title">Repair Listing</span>
+                <span class="support-category-description">
+                    Report incorrect shop details or ask about repair listings.
+                </span>
+                <span class="support-category-action">
+                    Select topic <i class="fa-solid fa-arrow-right"></i>
+                </span>
+            </button>
+
+            <button type="button"
+                    class="support-category-card"
+                    data-enquiry-category="Collection & Delivery"
+                    aria-pressed="false">
+                <span class="support-category-icon">
+                    <i class="fa-solid fa-truck-fast"></i>
+                </span>
+                <span class="support-category-title">Collection & Delivery</span>
+                <span class="support-category-description">
+                    Ask about service areas, collection arrangements and fees.
+                </span>
+                <span class="support-category-action">
+                    Select topic <i class="fa-solid fa-arrow-right"></i>
+                </span>
+            </button>
+
+            <button type="button"
+                    class="support-category-card"
+                    data-enquiry-category="Business/Sponsor"
+                    aria-pressed="false">
+                <span class="support-category-icon">
+                    <i class="fa-solid fa-handshake"></i>
+                </span>
+                <span class="support-category-title">Business / Sponsor</span>
+                <span class="support-category-description">
+                    Discuss repair partnerships, delivery services or sponsorship.
+                </span>
+                <span class="support-category-action">
+                    Select topic <i class="fa-solid fa-arrow-right"></i>
+                </span>
+            </button>
+
+            <button type="button"
+                    class="support-category-card"
+                    data-enquiry-category="Community/Event"
+                    aria-pressed="false">
+                <span class="support-category-icon">
                     <i class="fa-solid fa-people-group"></i>
-                </div>
-                <h3>Volunteer Locally</h3>
-                <p>
-                    Help organise awareness activities, collection events,
-                    repair workshops and community education.
-                </p>
-            </article>
-
-            <article class="community-value-card">
-                <div class="community-icon">
-                    <i class="fa-solid fa-recycle"></i>
-                </div>
-                <h3>Support Reuse</h3>
-                <p>
-                    Help suitable devices find a second life through
-                    responsible donation and reuse programmes.
-                </p>
-            </article>
-
-            <article class="community-value-card">
-                <div class="community-icon">
-                    <i class="fa-solid fa-lightbulb"></i>
-                </div>
-                <h3>Share Ideas</h3>
-                <p>
-                    Suggest practical projects that encourage repair,
-                    device care, reuse and environmental awareness.
-                </p>
-            </article>
-        </div>
-    </section>
-
-
-    <!-- VOLUNTEER BOARD -->
-    <section class="volunteer-board section-padding" id="volunteer-board">
-        <div class="section-heading section-heading-row">
-            <div>
-                <span class="section-eyebrow">GET INVOLVED</span>
-                <h2>Community activities</h2>
-                <p>
-                    Explore events and activities that support repair,
-                    reuse and responsible electronics management.
-                </p>
-            </div>
-
-            <a href="#community-ideas" class="text-link">
-                Suggest an Activity <i class="fa-solid fa-arrow-right"></i>
-            </a>
-        </div>
-
-        <div class="community-filter-bar" role="group"
-             aria-label="Filter community events">
-            <button class="community-filter active"
-                    type="button" data-event-filter="upcoming"
-                    aria-pressed="true">
-                Upcoming
+                </span>
+                <span class="support-category-title">Community / Event</span>
+                <span class="support-category-description">
+                    Questions about volunteering, events and donation opportunities.
+                </span>
+                <span class="support-category-action">
+                    Select topic <i class="fa-solid fa-arrow-right"></i>
+                </span>
             </button>
 
-            <button class="community-filter"
-                    type="button" data-event-filter="completed"
+            <button type="button"
+                    class="support-category-card"
+                    data-enquiry-category="Report a Problem"
                     aria-pressed="false">
-                Completed
+                <span class="support-category-icon">
+                    <i class="fa-solid fa-flag"></i>
+                </span>
+                <span class="support-category-title">Report a Problem</span>
+                <span class="support-category-description">
+                    Tell us about an incorrect listing or a website issue.
+                </span>
+                <span class="support-category-action">
+                    Select topic <i class="fa-solid fa-arrow-right"></i>
+                </span>
             </button>
 
-            <button class="community-filter"
-                    type="button" data-event-filter="closed"
-                    aria-pressed="false">
-                Registration Closed
-            </button>
-        </div>
-
-        <div class="community-event-grid" id="community-event-grid">
-            <!-- Event cards are rendered from the JavaScript data array. -->
-        </div>
-
-        <div class="community-empty-state" id="community-empty-state" hidden>
-            <i class="fa-regular fa-calendar"></i>
-            <h3>No events in this category yet</h3>
-            <p>Please check another category or return later for updates.</p>
-        </div>
-
-        <p class="prototype-note">
-            <i class="fa-solid fa-circle-info"></i>
-            Prototype notice: sample activities are provided for layout
-            demonstration. Confirm event details with the organiser before
-            travelling or registering.
-        </p>
-    </section>
-
-
-    <!-- EVENT DETAILS -->
-    <section class="community-event-details section-padding"
-             id="event-details" hidden>
-        <div class="event-details-content" id="event-details-content">
-            <!-- Selected event details are inserted here. -->
         </div>
     </section>
 
 
-    <!-- DONATION OPPORTUNITIES -->
-    <section class="donation-section section-padding" id="donation-opportunities">
-        <div class="section-heading">
-            <span class="section-eyebrow">GIVE DEVICES A SECOND LIFE</span>
-            <h2>Donation opportunities</h2>
-            <p>
-                A usable device may still help someone else. Contact a
-                receiving organisation to confirm its current needs,
-                acceptance criteria and donation process before handing
-                over any equipment.
-            </p>
-        </div>
+    <!-- CONTACT FORM -->
+    <section class="support-form-section section-padding"
+             id="contact-form-section">
 
-        <div class="donation-notice">
-            <div class="donation-notice-icon">
-                <i class="fa-solid fa-circle-exclamation"></i>
-            </div>
-            <div>
-                <h3>Check before donating</h3>
-                <p>
-                    Acceptance rules vary by organisation. Confirm the
-                    accepted device types, condition requirements, collection
-                    arrangements and any fees before making a donation.
-                </p>
-            </div>
-        </div>
+        <div class="support-form-layout">
 
-        <div class="donation-card-grid">
+            <div class="support-form-intro">
+                <span class="support-eyebrow">SEND AN ENQUIRY</span>
 
-            <article class="donation-card">
-                <div class="donation-card-icon">
-                    <i class="fa-solid fa-laptop"></i>
-                </div>
-
-                <span class="donation-tag">Device Reuse</span>
-                <h3>Phones, tablets and computers</h3>
+                <h2>Let's get your question to the right place.</h2>
 
                 <p>
-                    Ask receiving organisations whether they accept working
-                    devices, repairable equipment or devices suitable for
-                    parts recovery.
+                    Complete the form with enough information for someone
+                    to understand your enquiry. Avoid including passwords,
+                    payment card numbers, identity documents or other
+                    sensitive information.
                 </p>
 
-                <h4>Before handing over a device</h4>
-                <ul>
-                    <li>Confirm the organisation accepts that device type.</li>
-                    <li>Back up your personal files.</li>
-                    <li>Sign out of accounts and remove personal data safely.</li>
-                    <li>Confirm the handover and receipt process.</li>
-                </ul>
-
-                <a href="#donation-contact"
-                   class="btn btn-outline donation-contact-link">
-                    Donation Information
-                </a>
-            </article>
-
-            <article class="donation-card">
-                <div class="donation-card-icon">
-                    <i class="fa-solid fa-plug-circle-check"></i>
-                </div>
-
-                <span class="donation-tag">Electrical Equipment</span>
-                <h3>Household electronics</h3>
-
-                <p>
-                    Some collection programmes may accept selected household
-                    electronics. Check their rules for working, damaged or
-                    obsolete equipment.
-                </p>
-
-                <h4>Check these requirements</h4>
-                <ul>
-                    <li>Accepted appliance types and sizes.</li>
-                    <li>Whether damaged equipment is permitted.</li>
-                    <li>Safe transport and collection arrangements.</li>
-                    <li>Whether batteries or accessories must be separated.</li>
-                </ul>
-
-                <a href="#donation-contact"
-                   class="btn btn-outline donation-contact-link">
-                    Donation Information
-                </a>
-            </article>
-
-            <article class="donation-card">
-                <div class="donation-card-icon">
-                    <i class="fa-solid fa-box-open"></i>
-                </div>
-
-                <span class="donation-tag">Responsible Disposal</span>
-                <h3>Unusable or damaged devices</h3>
-
-                <p>
-                    Equipment that cannot be reused may need specialist
-                    electronic-waste handling. Do not assume it can be
-                    included in a general donation.
-                </p>
-
-                <h4>Before arranging disposal</h4>
-                <ul>
-                    <li>Ask about accepted electronic-waste categories.</li>
-                    <li>Do not place loose batteries in general rubbish.</li>
-                    <li>Do not dismantle hazardous components yourself.</li>
-                    <li>Request disposal or collection guidance.</li>
-                </ul>
-
-                <a href="#donation-contact"
-                   class="btn btn-outline donation-contact-link">
-                    Donation Information
-                </a>
-            </article>
-
-        </div>
-
-        <div class="donation-contact-panel" id="donation-contact">
-            <div>
-                <span class="section-eyebrow">DONATION ENQUIRIES</span>
-                <h3>Need help finding a suitable option?</h3>
-                <p>
-                    Contact the re:power community team for guidance.
-                    We will only identify a receiving organisation as a
-                    partner after its details and participation have been
-                    checked.
-                </p>
-            </div>
-
-            <a href="contact.html" class="btn btn-primary">
-                Contact Community Support
-            </a>
-        </div>
-
-        <!--
-          Add a real organisation card here only after verifying its
-          current programme, accepted items, contact information and URL.
-        -->
-    </section>
-
-
-    <!-- COMMUNITY IDEAS -->
-    <section class="community-ideas section-padding" id="community-ideas">
-        <div class="community-ideas-layout">
-            <div class="community-ideas-intro">
-                <span class="section-eyebrow">YOUR IDEA MATTERS</span>
-                <h2>What should our community do next?</h2>
-
-                <p>
-                    Have an idea for a repair workshop, device-care session,
-                    donation drive, school activity or reuse campaign?
-                    Share it with us.
-                </p>
-
-                <div class="idea-example-list">
+                <div class="support-form-benefit">
+                    <span class="support-benefit-icon">
+                        <i class="fa-solid fa-list-check"></i>
+                    </span>
                     <div>
-                        <i class="fa-solid fa-check"></i>
-                        <span>Community repair-awareness workshops</span>
-                    </div>
-
-                    <div>
-                        <i class="fa-solid fa-check"></i>
-                        <span>Device-care education for students</span>
-                    </div>
-
-                    <div>
-                        <i class="fa-solid fa-check"></i>
-                        <span>Responsible reuse and collection drives</span>
-                    </div>
-
-                    <div>
-                        <i class="fa-solid fa-check"></i>
-                        <span>Collaboration with local organisations</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="community-idea-form-card">
-                <h3>Submit a community idea</h3>
-                <p class="form-intro">
-                    Tell us what you have in mind. Contact details are optional.
-                </p>
-
-                <form id="community-idea-form">
-                    <div class="form-group">
-                        <label for="idea-title">Idea title *</label>
-                        <input
-                            type="text"
-                            id="idea-title"
-                            name="ideaTitle"
-                            maxlength="100"
-                            placeholder="e.g. School device-care workshop"
-                            required
-                        >
-                    </div>
-
-                    <div class="form-group">
-                        <label for="idea-category">Idea category *</label>
-                        <select id="idea-category" name="ideaCategory" required>
-                            <option value="">Select a category</option>
-                            <option value="repair-workshop">Repair workshop</option>
-                            <option value="device-care">Device-care education</option>
-                            <option value="donation-drive">Donation drive</option>
-                            <option value="reuse-campaign">Reuse campaign</option>
-                            <option value="volunteering">Volunteering</option>
-                            <option value="other">Other</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="idea-description">Describe your idea *</label>
-                        <textarea
-                            id="idea-description"
-                            name="ideaDescription"
-                            rows="5"
-                            maxlength="1500"
-                            placeholder="What would you like to organise, and who could benefit?"
-                            required
-                        ></textarea>
-                        <small>Maximum 1,500 characters.</small>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="idea-contact">
-                            Contact information (optional)
-                        </label>
-                        <input
-                            type="text"
-                            id="idea-contact"
-                            name="ideaContact"
-                            maxlength="150"
-                            placeholder="Email address or phone number"
-                        >
-                    </div>
-
-                    <div class="form-consent-note">
-                        <i class="fa-solid fa-shield-halved"></i>
+                        <h3>Choose the right category</h3>
                         <p>
-                            This prototype displays a demonstration confirmation.
-                            It does not send, store or publish your submission.
-                            Do not enter sensitive personal information.
+                            Your selection changes the guidance shown beside
+                            the form.
                         </p>
                     </div>
+                </div>
 
-                    <button type="submit" class="btn btn-primary btn-full">
+                <div class="support-form-benefit">
+                    <span class="support-benefit-icon">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </span>
+                    <div>
+                        <h3>Share only what is necessary</h3>
+                        <p>
+                            Provide a suitable contact method and a clear
+                            description of your question.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="support-form-benefit">
+                    <span class="support-benefit-icon">
+                        <i class="fa-solid fa-circle-info"></i>
+                    </span>
+                    <div>
+                        <h3>Prototype demonstration</h3>
+                        <p>
+                            The form validates information locally. It does
+                            not transmit your enquiry to a real recipient.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="support-privacy-link">
+                    <i class="fa-solid fa-lock"></i>
+                    Read our
+                    <a href="about.html#privacy-policy">privacy information</a>.
+                </div>
+            </div>
+
+
+            <div class="support-form-card">
+
+                <div class="support-form-card-heading">
+                    <h3>Contact form</h3>
+                    <p>Fields marked with * are required.</p>
+                </div>
+
+                <form id="repower-contact-form" novalidate>
+
+                    <!-- NAME -->
+                    <div class="support-form-group">
+                        <label for="support-name">
+                            Your name <span aria-hidden="true">*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            id="support-name"
+                            name="name"
+                            placeholder="Enter your name"
+                            autocomplete="name"
+                            maxlength="100"
+                            required>
+
+                        <small class="support-field-error"
+                               id="support-name-error"></small>
+                    </div>
+
+
+                    <!-- CONTACT METHOD -->
+                    <div class="support-form-group">
+                        <label for="support-contact-method">
+                            Preferred contact method
+                            <span aria-hidden="true">*</span>
+                        </label>
+
+                        <select
+                            id="support-contact-method"
+                            name="contactMethod"
+                            required>
+                            <option value="">Choose a contact method</option>
+                            <option value="Email">Email</option>
+                            <option value="Phone">Phone</option>
+                        </select>
+
+                        <small class="support-field-error"
+                               id="support-contact-method-error"></small>
+                    </div>
+
+
+                    <!-- EMAIL -->
+                    <div class="support-form-group"
+                         id="support-email-group">
+
+                        <label for="support-email">
+                            Email address <span aria-hidden="true">*</span>
+                        </label>
+
+                        <input
+                            type="email"
+                            id="support-email"
+                            name="email"
+                            placeholder="you@example.com"
+                            autocomplete="email"
+                            maxlength="254">
+
+                        <small class="support-field-hint">
+                            Used for contact only in a connected, live service.
+                        </small>
+
+                        <small class="support-field-error"
+                               id="support-email-error"></small>
+                    </div>
+
+
+                    <!-- PHONE -->
+                    <div class="support-form-group"
+                         id="support-phone-group"
+                         hidden>
+
+                        <label for="support-phone">
+                            Phone number <span aria-hidden="true">*</span>
+                        </label>
+
+                        <input
+                            type="tel"
+                            id="support-phone"
+                            name="phone"
+                            placeholder="Enter your phone number"
+                            autocomplete="tel"
+                            maxlength="25">
+
+                        <small class="support-field-hint">
+                            Include your country code if appropriate.
+                        </small>
+
+                        <small class="support-field-error"
+                               id="support-phone-error"></small>
+                    </div>
+
+
+                    <!-- CATEGORY -->
+                    <div class="support-form-group">
+                        <label for="support-category">
+                            Enquiry category <span aria-hidden="true">*</span>
+                        </label>
+
+                        <select
+                            id="support-category"
+                            name="category"
+                            required>
+                            <option value="">Select an enquiry category</option>
+                            <option value="General">General</option>
+                            <option value="Repair Listing">Repair Listing</option>
+                            <option value="Collection & Delivery">
+                                Collection & Delivery
+                            </option>
+                            <option value="Business/Sponsor">Business/Sponsor</option>
+                            <option value="Community/Event">Community/Event</option>
+                            <option value="Report a Problem">Report a Problem</option>
+                        </select>
+
+                        <small class="support-field-error"
+                               id="support-category-error"></small>
+                    </div>
+
+
+                    <!-- CATEGORY GUIDANCE -->
+                    <div class="support-category-guidance"
+                         id="support-category-guidance"
+                         aria-live="polite">
+
+                        <i class="fa-solid fa-lightbulb"></i>
+
+                        <div>
+                            <strong id="support-guidance-title">
+                                Before you start
+                            </strong>
+
+                            <p id="support-guidance-text">
+                                Select a category to see guidance relevant
+                                to your enquiry.
+                            </p>
+                        </div>
+                    </div>
+
+
+                    <!-- SUBJECT -->
+                    <div class="support-form-group">
+                        <label for="support-subject">
+                            Subject <span aria-hidden="true">*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            id="support-subject"
+                            name="subject"
+                            placeholder="Briefly describe your question"
+                            maxlength="150"
+                            required>
+
+                        <small class="support-field-error"
+                               id="support-subject-error"></small>
+                    </div>
+
+
+                    <!-- MESSAGE -->
+                    <div class="support-form-group">
+                        <label for="support-message">
+                            Message <span aria-hidden="true">*</span>
+                        </label>
+
+                        <textarea
+                            id="support-message"
+                            name="message"
+                            rows="6"
+                            placeholder="Tell us how we can help..."
+                            minlength="10"
+                            maxlength="3000"
+                            required></textarea>
+
+                        <div class="support-message-meta">
+                            <small>Minimum 10 characters.</small>
+                            <small id="support-character-count">0 / 3000</small>
+                        </div>
+
+                        <small class="support-field-error"
+                               id="support-message-error"></small>
+                    </div>
+
+
+                    <!-- PRIVACY ACKNOWLEDGEMENT -->
+                    <div class="support-consent-group">
+                        <input
+                            type="checkbox"
+                            id="support-privacy-acknowledgement"
+                            name="privacyAcknowledgement"
+                            required>
+
+                        <label for="support-privacy-acknowledgement">
+                            I have read the
+                            <a href="about.html#privacy-policy"
+                               target="_blank"
+                               rel="noopener noreferrer">
+                                privacy information
+                            </a>
+                            and understand that this prototype does not
+                            send my enquiry.
+                        </label>
+                    </div>
+
+                    <small class="support-field-error"
+                           id="support-consent-error"></small>
+
+
+                    <!-- FORM BUTTON -->
+                    <button type="submit"
+                            class="support-btn support-btn-primary support-submit-btn">
+
+                        <span>Send Enquiry</span>
                         <i class="fa-solid fa-paper-plane"></i>
-                        Submit an Idea
                     </button>
 
-                    <div class="form-feedback" id="community-idea-feedback"
-                         role="status" aria-live="polite" hidden></div>
+                    <p class="support-demo-disclaimer">
+                        <i class="fa-solid fa-circle-info"></i>
+                        Demo only. No message is sent or stored by this form.
+                    </p>
+
                 </form>
+
+
+                <!-- SUCCESS MESSAGE -->
+                <div class="support-form-success"
+                     id="support-form-success"
+                     role="status"
+                     aria-live="polite"
+                     tabindex="-1"
+                     hidden>
+
+                    <div class="support-success-icon">
+                        <i class="fa-solid fa-check"></i>
+                    </div>
+
+                    <h3>Demo enquiry completed</h3>
+
+                    <p id="support-success-message">
+                        Your form passed the demonstration checks.
+                    </p>
+
+                    <p>
+                        <strong>Please note:</strong> This is a prototype
+                        confirmation, not proof that a message was sent
+                        or received.
+                    </p>
+
+                    <button type="button"
+                            id="support-new-enquiry"
+                            class="support-btn support-btn-primary">
+                        Start Another Enquiry
+                    </button>
+                </div>
+
             </div>
         </div>
     </section>
 
 
-    <!-- COMMUNITY IMPACT -->
-    <section class="community-impact section-padding" id="community-impact">
-        <div class="section-heading">
-            <span class="section-eyebrow">OUR SHARED IMPACT</span>
-            <h2>Progress worth sharing</h2>
+    <!-- ALTERNATIVE CONTACT INFORMATION -->
+    <section class="support-contact-options section-padding">
+
+        <div class="support-section-heading">
+            <span class="support-eyebrow">OTHER WAYS TO CONNECT</span>
+            <h2>Choose the right next step</h2>
             <p>
-                We want to highlight community activities transparently.
-                Published impact figures should be supported by event records,
-                verified counts or reports.
+                These links direct you to relevant areas of the re:power
+                prototype. Replace the contact placeholders below with
+                real, approved contact details before publishing.
             </p>
         </div>
 
-        <div class="impact-highlight-banner">
-            <div class="impact-highlight-icon">
-                <i class="fa-solid fa-seedling"></i>
-            </div>
+        <div class="support-contact-grid">
 
-            <div>
-                <h3>Every responsible action counts</h3>
-                <p>
-                    From sharing repair knowledge to supporting device reuse,
-                    community participation can help extend the useful life
-                    of electronics.
-                </p>
-            </div>
-        </div>
-
-        <div class="community-impact-grid">
-            <article class="impact-card">
-                <div class="impact-card-icon">
-                    <i class="fa-solid fa-calendar-check"></i>
+            <article class="support-contact-card">
+                <div class="support-contact-icon">
+                    <i class="fa-solid fa-store"></i>
                 </div>
-                <strong class="impact-value">[Prototype figure]</strong>
-                <h3>Activities completed</h3>
+
+                <h3>Repair Services</h3>
+
                 <p>
-                    Replace with the verified number of completed activities.
+                    Explore repair listings and contact a provider to
+                    confirm service availability and prices.
                 </p>
+
+                <a href="repair-shops.html" class="support-text-link">
+                    Repair Finder
+                    <i class="fa-solid fa-arrow-right"></i>
+                </a>
             </article>
 
-            <article class="impact-card">
-                <div class="impact-card-icon">
+
+            <article class="support-contact-card">
+                <div class="support-contact-icon">
                     <i class="fa-solid fa-handshake-angle"></i>
                 </div>
-                <strong class="impact-value">[Prototype figure]</strong>
-                <h3>Volunteer participation</h3>
+
+                <h3>Business Partnerships</h3>
+
                 <p>
-                    Replace with a documented participant or volunteer count.
+                    Explore partnership opportunities for repair shops,
+                    delivery providers and sponsors.
                 </p>
+
+                <a href="partnerships.html" class="support-text-link">
+                    Business Enquiry
+                    <i class="fa-solid fa-arrow-right"></i>
+                </a>
             </article>
 
-            <article class="impact-card">
-                <div class="impact-card-icon">
-                    <i class="fa-solid fa-laptop-file"></i>
+
+            <article class="support-contact-card">
+                <div class="support-contact-icon">
+                    <i class="fa-solid fa-people-group"></i>
                 </div>
-                <strong class="impact-value">[Prototype figure]</strong>
-                <h3>Devices reused or collected</h3>
+
+                <h3>Community Activities</h3>
+
                 <p>
-                    Replace with verified device counts and explain what was
-                    collected, reused or responsibly recycled.
+                    Explore volunteering opportunities, community events
+                    and device donation information.
                 </p>
+
+                <a href="community.html" class="support-text-link">
+                    Community Activities
+                    <i class="fa-solid fa-arrow-right"></i>
+                </a>
             </article>
-        </div>
 
-        <p class="impact-disclaimer">
-            <i class="fa-solid fa-circle-info"></i>
-            These are prototype placeholders, not actual re:power results.
-            Replace them with documented figures before publication.
-        </p>
 
-        <div class="completed-activities">
-            <h3>Community activity highlights</h3>
-
-            <article class="completed-activity-card">
-                <div class="completed-activity-icon">
+            <article class="support-contact-card">
+                <div class="support-contact-icon">
                     <i class="fa-solid fa-book-open"></i>
                 </div>
 
-                <div>
-                    <span class="activity-status">Sample highlight</span>
-                    <h4>Device-care awareness session</h4>
-                    <p>
-                        Add a short summary of a completed event, including
-                        its date, organiser, activities and supporting evidence.
-                    </p>
-                </div>
+                <h3>About & Privacy</h3>
+
+                <p>
+                    Learn about re:power, shop listing checks, pricing
+                    transparency and privacy information.
+                </p>
+
+                <a href="about.html#privacy-policy"
+                   class="support-text-link">
+                    About & Privacy
+                    <i class="fa-solid fa-arrow-right"></i>
+                </a>
             </article>
 
-            <article class="completed-activity-card">
-                <div class="completed-activity-icon">
-                    <i class="fa-solid fa-recycle"></i>
-                </div>
-
-                <div>
-                    <span class="activity-status">Sample highlight</span>
-                    <h4>Responsible reuse campaign</h4>
-                    <p>
-                        Describe the campaign outcome using confirmed details
-                        and records from the participating organisation.
-                    </p>
-                </div>
-            </article>
         </div>
+
+
+        <!-- PLACEHOLDER CONTACT DETAILS -->
+        <div class="support-placeholder-contact">
+            <div class="support-placeholder-heading">
+                <i class="fa-solid fa-address-card"></i>
+
+                <div>
+                    <h3>Contact details</h3>
+                    <p>
+                        Prototype placeholders — replace these with
+                        real, approved details.
+                    </p>
+                </div>
+            </div>
+
+            <div class="support-placeholder-grid">
+
+                <div>
+                    <i class="fa-solid fa-envelope"></i>
+
+                    <div>
+                        <strong>Email</strong>
+                        <span>[Add official support email]</span>
+                    </div>
+                </div>
+
+                <div>
+                    <i class="fa-solid fa-phone"></i>
+
+                    <div>
+                        <strong>Phone</strong>
+                        <span>[Add official support phone number]</span>
+                    </div>
+                </div>
+
+                <div>
+                    <i class="fa-solid fa-clock"></i>
+
+                    <div>
+                        <strong>Support hours</strong>
+                        <span>[Add confirmed support hours]</span>
+                    </div>
+                </div>
+
+                <div>
+                    <i class="fa-solid fa-share-nodes"></i>
+
+                    <div>
+                        <strong>Social media</strong>
+                        <span>[Add official social media links]</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
     </section>
 
 
-    <!-- CSR AND SPONSORED CAMPAIGNS -->
-    <section class="community-sponsorship section-padding"
-             id="sponsored-campaigns">
-        <div class="sponsorship-layout">
-            <div class="sponsorship-visual" aria-hidden="true">
-                <i class="fa-solid fa-hands-holding-circle"></i>
-                <span><i class="fa-solid fa-leaf"></i></span>
-            </div>
+    <!-- FAQ -->
+    <section class="support-faq-section section-padding"
+             id="support-faq">
 
-            <div class="sponsorship-content">
-                <span class="section-eyebrow">CSR & COMMUNITY PARTNERSHIPS</span>
-                <h2>Support a campaign that matters</h2>
+        <div class="support-section-heading">
+            <span class="support-eyebrow">HELP CENTRE</span>
+            <h2>Frequently asked questions</h2>
+            <p>
+                Find answers to common questions about repair services,
+                delivery, community activities and your information.
+            </p>
+        </div>
 
-                <p>
-                    Businesses and organisations can support repair awareness,
-                    responsible reuse, device-care education or community
-                    collection campaigns through agreed sponsorship
-                    arrangements.
-                </p>
+        <div class="support-faq-list">
 
-                <div class="sponsorship-benefits">
-                    <div>
-                        <i class="fa-solid fa-check-circle"></i>
-                        <span>Support practical community activities</span>
-                    </div>
+            <details class="support-faq-item">
+                <summary>
+                    Are repair estimates guaranteed?
+                    <i class="fa-solid fa-plus"></i>
+                </summary>
 
-                    <div>
-                        <i class="fa-solid fa-check-circle"></i>
-                        <span>Help promote responsible device use and reuse</span>
-                    </div>
-
-                    <div>
-                        <i class="fa-solid fa-check-circle"></i>
-                        <span>Agree on campaign goals and reporting in advance</span>
-                    </div>
-                </div>
-
-                <div class="sponsorship-disclosure">
-                    <strong>Transparency matters</strong>
+                <div class="support-faq-answer">
                     <p>
-                        Sponsorship is separate from repair referrals and
-                        donation handling. Sponsor contributions, campaign
-                        responsibilities, logo use and reporting arrangements
-                        must be agreed before a campaign begins.
+                        No. Prices displayed on re:power may be indicative
+                        and can change after the provider inspects the device.
+                        Confirm the final quote, parts, labour, additional
+                        fees and any warranty terms directly with the shop
+                        before authorising the repair.
+                    </p>
+
+                    <a href="about.html#pricing-transparency"
+                       class="support-text-link">
+                        Read the pricing policy
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
+            </details>
+
+
+            <details class="support-faq-item">
+                <summary>
+                    Does re:power charge referral commission?
+                    <i class="fa-solid fa-plus"></i>
+                </summary>
+
+                <div class="support-faq-answer">
+                    <p>
+                        re:power may receive an agreed commission from
+                        participating repair shops for qualifying completed
+                        referrals. Rates, eligibility and payment timing
+                        depend on the relevant business agreement.
+                        Customers should confirm repair prices directly
+                        with the provider.
+                    </p>
+
+                    <a href="about.html#referral-transparency"
+                       class="support-text-link">
+                        Read about referral transparency
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
+            </details>
+
+
+            <details class="support-faq-item">
+                <summary>
+                    Is collection and delivery available everywhere?
+                    <i class="fa-solid fa-plus"></i>
+                </summary>
+
+                <div class="support-faq-answer">
+                    <p>
+                        Availability depends on the provider, location,
+                        device and service arrangement. Contact the relevant
+                        provider to confirm the service area, collection
+                        time, return arrangements and any additional fees.
+                    </p>
+
+                    <a href="collection-delivery.html"
+                       class="support-text-link">
+                        Explore Collection & Delivery
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
+            </details>
+
+
+            <details class="support-faq-item">
+                <summary>
+                    How do I register for a community event?
+                    <i class="fa-solid fa-plus"></i>
+                </summary>
+
+                <div class="support-faq-answer">
+                    <p>
+                        Visit the Community & Donations page and choose an
+                        event. If registration is open, follow the event's
+                        registration link. Where a Google Form is used,
+                        the organiser managing that form receives the
+                        submitted registration information.
+                    </p>
+
+                    <a href="community.html"
+                       class="support-text-link">
+                        View Community Activities
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
+            </details>
+
+
+            <details class="support-faq-item">
+                <summary>
+                    Where can I find device donation information?
+                    <i class="fa-solid fa-plus"></i>
+                </summary>
+
+                <div class="support-faq-answer">
+                    <p>
+                        Visit the Community & Donations page to explore
+                        available donation opportunities. Check the
+                        receiving organisation's requirements and confirm
+                        accepted device types, condition requirements and
+                        handover arrangements before donating.
+                    </p>
+
+                    <a href="community.html"
+                       class="support-text-link">
+                        Donation Information
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
+            </details>
+
+
+            <details class="support-faq-item">
+                <summary>
+                    What happens to information entered into this form?
+                    <i class="fa-solid fa-plus"></i>
+                </summary>
+
+                <div class="support-faq-answer">
+                    <p>
+                        In this front-end prototype, the form performs
+                        validation in your browser and shows a demonstration
+                        confirmation. It does not send or store your enquiry.
+                        A live implementation would need a properly configured
+                        backend or form service and an accurate privacy notice.
+                    </p>
+
+                    <a href="about.html#privacy-policy"
+                       class="support-text-link">
+                        Read the privacy information
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
+            </details>
+
+
+            <details class="support-faq-item">
+                <summary>
+                    How can I report incorrect information or a website issue?
+                    <i class="fa-solid fa-plus"></i>
+                </summary>
+
+                <div class="support-faq-answer">
+                    <p>
+                        Select "Report a Problem" in the contact form.
+                        Include the relevant page or listing and describe
+                        what appears to be incorrect. Do not include
+                        passwords, payment card details or other sensitive
+                        information.
                     </p>
                 </div>
+            </details>
 
-                <a href="partnerships.html" class="btn btn-primary">
-                    Become a Sponsor
-                    <i class="fa-solid fa-arrow-right"></i>
-                </a>
-            </div>
         </div>
     </section>
 
 
     <!-- FINAL CTA -->
-    <section class="community-final-cta section-padding">
-        <div class="community-final-cta-content">
-            <span class="section-eyebrow">LET'S WORK TOGETHER</span>
-            <h2>A better electronics future starts locally.</h2>
+    <section class="support-final-cta section-padding">
+        <div class="support-final-content">
+            <span class="support-eyebrow">LET'S CONNECT</span>
+
+            <h2>Need help finding your next step?</h2>
+
             <p>
-                Whether you want to volunteer, share an idea, donate a usable
-                device or support a campaign, your next step can start here.
+                Whether you need a repair, want to work with re:power
+                or wish to support a community activity, start with
+                the section that fits your needs.
             </p>
 
-            <div class="community-hero-actions">
-                <a href="#volunteer-board" class="btn btn-primary">
-                    Find an Activity
+            <div class="support-final-actions">
+                <a href="repair-shops.html"
+                   class="support-btn support-btn-primary">
+                    Repair Finder
+                    <i class="fa-solid fa-arrow-right"></i>
                 </a>
 
-                <a href="contact.html" class="btn btn-outline">
-                    Contact Community Support
+                <a href="partnerships.html"
+                   class="support-btn support-btn-outline">
+                    Business Enquiry
+                </a>
+
+                <a href="community.html"
+                   class="support-btn support-btn-outline">
+                    Community Activities
                 </a>
             </div>
         </div>
     </section>
     <section class="repair-cta">
+                    <div class="container repair-cta-content">
+                        <div class="repair-cta-image">
+                            <img src="assets/images/community-volunteer.jpg"
+                                alt="Volunteers working together to repair electronic devices">
+                        </div>
 
-            <div class="container repair-cta-content">
+                        <div class="repair-cta-text">
+                            <span class="eyebrow">Be Part of the Change</span>
+                            <h2>Repair More. Waste Less.</h2>
+                            <p>Build a Greener Myanmar Together.</p>
+                        </div>
 
-                <div class="repair-cta-image">
-
-                    <img
-                        src="assets/images/community-volunteer.jpg"
-                        alt="Volunteers working together to repair electronic devices"
-                        loading="lazy">
-
-                </div>
-
-
-                <div class="repair-cta-text">
-
-                    <span class="eyebrow">
-                        Be Part of the Change
-                    </span>
-
-                    <h2>Repair More. Waste Less.</h2>
-
-                    <p>
-                        Build a Greener Myanmar Together.
-                    </p>
-
-                </div>
-
-
-                <div class="repair-cta-action">
-
-                    <a href="community.html" class="btn btn-orange">
-
-                        Get Involved
-
-                        <i class="fas fa-arrow-right" aria-hidden="true"></i>
-
-                    </a>
-
-                </div>
-
-            </div>
-
-        </section>
+                        <div class="repair-cta-action">
+                            <a href="community.html" class="btn btn-orange">
+                                Get Involved
+                                <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </section>
 
 </main>
 <footer class="footer">
