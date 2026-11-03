@@ -2295,3 +2295,65 @@
     }
 
 }
+
+.shop-input-wrapper select {
+    width: 100%;
+    padding: 14px 40px 14px 42px;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: var(--charcoal);
+    font-family: inherit;
+    font-size: 14px;
+    cursor: pointer;
+    appearance: none;
+}
+
+.shop-input-wrapper select:invalid {
+    color: #9aa69d;
+}
+
+.shop-input-wrapper select option {
+    color: var(--charcoal);
+    background: #ffffff;
+}
+.shop-user-location {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 18px;
+}
+
+.shop-location-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    padding: 12px 18px;
+    border: none;
+    border-radius: 8px;
+    background: var(--forest);
+    color: #ffffff;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.shop-location-button:hover {
+    background: var(--leaf);
+}
+
+.shop-location-button:disabled {
+    opacity: 0.65;
+    cursor: wait;
+}
+
+#shopLocationStatus {
+    margin: 0;
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.5;
+}
