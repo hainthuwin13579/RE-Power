@@ -642,36 +642,61 @@ p {
     color: var(--orange);
 }
 
-/* FOOTER RESPONSIVE DESIGN */
 
-/* FOOTER: 1150PX */
+.footer-main {
+    display: grid;
+    grid-template-columns: 1.25fr 1.3fr 1.2fr 1fr 1.4fr;
+    gap: 35px;
+    padding-bottom: 55px;
+    min-width: 0;
+}
 
-/* =========================================
-   FOOTER RESPONSIVE DESIGN
-========================================= */
+.footer-main > * {
+    min-width: 0;
+}
 
-/* TABLET — 1150PX */
+.footer-brand,
+.footer-campaign {
+    min-width: 0;
+}
+
+.footer-campaign img {
+    display: block;
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+.footer-bottom-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.footer-legal {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 14px;
+}
 
 @media (max-width: 1150px) {
-
     .footer-main {
         grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 35px 25px;
     }
 
     .footer-brand {
         grid-column: 1 / -1;
     }
-
 }
 
-
-/* TABLET — 900PX */
-
 @media (max-width: 900px) {
-
     .footer-main {
         grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 35px 25px;
+        gap: 30px 22px;
     }
 
     .footer-brand,
@@ -686,62 +711,44 @@ p {
     }
 
     .footer-legal {
-        flex-wrap: wrap;
+        justify-content: flex-start;
         gap: 10px;
     }
-
 }
 
-
-/* SMALL TABLET — 768PX */
-
 @media (max-width: 768px) {
-
     .footer {
         padding-top: 45px;
     }
 
+    .footer-main {
+        padding-top: 35px;
+        padding-bottom: 40px;
+    }
+
     .footer-campaign {
         display: grid;
-        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        grid-template-columns: repeat(2, minmax(0, 1fr));
         align-items: center;
         gap: 20px;
     }
 
     .footer-campaign img {
-        width: 100%;
         height: 150px;
-        object-fit: cover;
     }
-
 }
 
-
-/* MOBILE — 650PX */
-
 @media (max-width: 650px) {
-
     .footer-main {
         grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 30px 18px;
-        padding-top: 35px;
-        padding-bottom: 40px;
-    }
-
-    .footer-brand,
-    .footer-campaign {
-        grid-column: 1 / -1;
     }
 
     .footer-campaign {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        align-items: center;
         gap: 15px;
     }
 
     .footer-campaign img {
-        width: 100%;
         height: 130px;
     }
 
@@ -770,17 +777,12 @@ p {
     .footer-legal span {
         font-size: 11px;
     }
-
 }
 
-
-/* SMALL MOBILE — 480PX */
-
 @media (max-width: 480px) {
-
     .footer-main {
         grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 28px 14px;
+        gap: 25px 14px;
     }
 
     .footer-campaign {
@@ -789,7 +791,6 @@ p {
     }
 
     .footer-campaign img {
-        width: 100%;
         height: 170px;
     }
 
@@ -814,14 +815,9 @@ p {
     .footer-legal {
         gap: 7px;
     }
-
 }
 
-
-/* EXTRA SMALL MOBILE — 360PX */
-
 @media (max-width: 360px) {
-
     .footer-main {
         grid-template-columns: 1fr;
         gap: 25px;
@@ -847,6 +843,6 @@ p {
     .footer-legal {
         flex-direction: column;
         align-items: flex-start;
+        gap: 8px;
     }
-
 }
