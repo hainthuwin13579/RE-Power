@@ -453,7 +453,7 @@ document.addEventListener("DOMContentLoaded", () => {
         },
 
         {
-            title: "intro",
+            title: "Intro",
             href: "intro.html",
             icon: "fa-solid fa-circle-info",
             keywords: [
@@ -728,71 +728,73 @@ document.addEventListener("DOMContentLoaded", function () {
 
     "use strict";
 
-    /* 1. PAGE CHECK */
+    /* =========================================
+       1. PAGE CHECK
+    ========================================= */
 
     const shopPage = document.querySelector(".shop-page");
 
-    if (!shopPage) {
-        return;
-    }
+    if (!shopPage) return;
 
 
-    /* 2. DEVICE OPTIONS */
+    /* =========================================
+       2. DEVICE OPTIONS
+    ========================================= */
 
     const deviceOptions = {
 
-        household: [
-            "Refrigerator",
-            "Washing Machine",
-            "Television",
-            "Air Conditioner",
-            "Microwave",
-            "Rice Cooker",
-            "Electric Fan",
-            "Water Pump"
+        all: [
+            "Smartphone",
+            "Laptop"
         ],
 
-        personal: [
-            "Smartphone",
-            "Laptop",
-            "Desktop Computer",
-            "Tablet",
-            "Monitor",
-            "Printer",
-            "Power Bank",
-            "Computer Accessories"
+        phone: [
+            "Smartphone"
+        ],
+
+        laptop: [
+            "Laptop"
         ]
 
     };
 
 
-    /* 3. SAMPLE REPAIR SHOP DATA */
+    /* =========================================
+       3. SAMPLE REPAIR SHOP DATA
+
+       3 Phone Repair Shops
+       3 Laptop Repair Shops
+
+       Four Yangon Townships:
+       Tamwe, Sanchaung, Bahan, Kamayut
+
+       All details are prototype information.
+    ========================================= */
 
     const repairShops = [
 
+        /* PHONE REPAIR 1 */
+
         {
             id: 1,
-            name: "Green Tech Repair Centre",
-            category: "personal",
+            name: "Mobile Care Workshop",
+            category: "phone",
             township: "Sanchaung",
             city: "Yangon",
-            address: "Sanchaung Township, Yangon",
+            address: "Sanchaung Township, Yangon, Myanmar",
+
             latitude: 16.8053,
             longitude: 96.1320,
 
             description:
-                "A sample repair listing offering general electronic device inspection and repair services.",
+                "A sample smartphone repair service offering general mobile device inspection and troubleshooting.",
 
-            devices: [
-                "Smartphone",
-                "Laptop",
-                "Tablet",
-                "Desktop Computer"
-            ],
+            devices: ["Smartphone"],
 
             problems: [
                 "power",
                 "screen",
+                "water",
                 "performance"
             ],
 
@@ -800,149 +802,187 @@ document.addEventListener("DOMContentLoaded", function () {
             delivery: true,
             phone: "+95 9 123 456 701",
 
-            icon: "fa-laptop",
-            badge: "Personal Technology",
+            icon: "fa-mobile-screen-button",
+            badge: "Phone Repair",
 
             services:
-                "Screen inspection, charging diagnosis, software troubleshooting and general device servicing.",
+                "Screen inspection, charging diagnosis, battery assessment and general smartphone servicing.",
 
             hours: "9:00 AM – 6:00 PM"
         },
 
+
+        /* PHONE REPAIR 2 */
+
         {
             id: 2,
-            name: "Smart Home Appliance Service",
-            category: "household",
-            township: "Kamayut",
+            name: "Smart Phone Repair Centre",
+            category: "phone",
+            township: "Tamwe",
             city: "Yangon",
-            address: "Kamayut Township, Yangon",
-            latitude: 16.8250,
-            longitude: 96.1350,
+            address: "Tamwe Township, Yangon, Myanmar",
+
+            latitude: 16.8065,
+            longitude: 96.1780,
 
             description:
-                "A sample household appliance repair listing for common home electronics.",
+                "A sample mobile repair listing for common smartphone hardware and software problems.",
 
-            devices: [
-                "Refrigerator",
-                "Washing Machine",
-                "Television",
-                "Microwave"
-            ],
+            devices: ["Smartphone"],
 
             problems: [
                 "power",
-                "mechanical",
-                "performance"
-            ],
-
-            price: 35000,
-            delivery: true,
-            phone: "+95 9 123 456 702",
-
-            icon: "fa-tv",
-            badge: "Household Electronics",
-
-            services:
-                "Appliance inspection, electrical troubleshooting and general maintenance.",
-
-            hours: "8:30 AM – 5:30 PM"
-        },
-
-        {
-            id: 3,
-            name: "Mobile Care Workshop",
-            category: "personal",
-            township: "Hlaing",
-            city: "Yangon",
-            address: "Hlaing Township, Yangon",
-            latitude: 16.8500,
-            longitude: 96.1300,
-
-            description:
-                "A sample mobile device repair listing for common smartphone problems.",
-
-            devices: [
-                "Smartphone",
-                "Tablet"
-            ],
-
-            problems: [
                 "screen",
-                "power",
-                "water"
-            ],
-
-            price: 18000,
-            delivery: false,
-            phone: "+95 9 123 456 703",
-
-            icon: "fa-mobile-screen-button",
-            badge: "Personal Technology",
-
-            services:
-                "Mobile device inspection, display diagnosis and charging problem assessment.",
-
-            hours: "10:00 AM – 7:00 PM"
-        },
-
-        {
-            id: 4,
-            name: "Home Electronics Workshop",
-            category: "household",
-            township: "Bahan",
-            city: "Yangon",
-            address: "Bahan Township, Yangon",
-            latitude: 16.8100,
-            longitude: 96.1600,
-
-            description:
-                "A sample repair listing for household electrical and electronic equipment.",
-
-            devices: [
-                "Electric Fan",
-                "Rice Cooker",
-                "Water Pump",
-                "Air Conditioner"
-            ],
-
-            problems: [
-                "power",
-                "mechanical",
                 "performance"
             ],
 
             price: 30000,
             delivery: false,
-            phone: "+95 9 123 456 704",
+            phone: "+95 9 123 456 702",
 
-            icon: "fa-house",
-            badge: "Household Electronics",
+            icon: "fa-mobile-screen",
+            badge: "Phone Repair",
 
             services:
-                "Electrical inspection, mechanical troubleshooting and maintenance.",
+                "Display inspection, charging port diagnosis, software troubleshooting and mobile device maintenance.",
 
-            hours: "9:00 AM – 5:00 PM"
+            hours: "10:00 AM – 7:00 PM"
         },
+
+
+        /* PHONE REPAIR 3 */
+
+        {
+            id: 3,
+            name: "Digital Mobile Solutions",
+            category: "phone",
+            township: "Bahan",
+            city: "Yangon",
+            address: "Bahan Township, Yangon, Myanmar",
+
+            latitude: 16.8100,
+            longitude: 96.1600,
+
+            description:
+                "A sample smartphone service listing providing general mobile device diagnostics and repair support.",
+
+            devices: ["Smartphone"],
+
+            problems: [
+                "power",
+                "screen",
+                "water",
+                "other"
+            ],
+
+            price: 35000,
+            delivery: true,
+            phone: "+95 9 123 456 703",
+
+            icon: "fa-mobile-screen-button",
+            badge: "Phone Repair",
+
+            services:
+                "Mobile screen diagnosis, battery inspection, water damage assessment and general troubleshooting.",
+
+            hours: "9:00 AM – 5:30 PM"
+        },
+
+
+        /* LAPTOP REPAIR 1 */
+
+        {
+            id: 4,
+            name: "Laptop Care Service",
+            category: "laptop",
+            township: "Kamayut",
+            city: "Yangon",
+            address: "Kamayut Township, Yangon, Myanmar",
+
+            latitude: 16.8250,
+            longitude: 96.1350,
+
+            description:
+                "A sample laptop repair listing for computer hardware inspection and software troubleshooting.",
+
+            devices: ["Laptop"],
+
+            problems: [
+                "power",
+                "performance",
+                "screen",
+                "other"
+            ],
+
+            price: 45000,
+            delivery: true,
+            phone: "+95 9 123 456 704",
+
+            icon: "fa-laptop",
+            badge: "Laptop Repair",
+
+            services:
+                "Laptop diagnostics, keyboard inspection, operating system troubleshooting and hardware maintenance.",
+
+            hours: "9:00 AM – 6:00 PM"
+        },
+
+
+        /* LAPTOP REPAIR 2 */
 
         {
             id: 5,
-            name: "Digital Device Solutions",
-            category: "personal",
-            township: "Mayangone",
+            name: "Computer Tech Workshop",
+            category: "laptop",
+            township: "Sanchaung",
             city: "Yangon",
-            address: "Mayangone Township, Yangon",
-            latitude: 16.8650,
-            longitude: 96.1550,
+            address: "Sanchaung Township, Yangon, Myanmar",
+
+            latitude: 16.8105,
+            longitude: 96.1370,
 
             description:
-                "A sample technology repair listing for computers and related equipment.",
+                "A sample computer repair service for common laptop hardware and performance issues.",
 
-            devices: [
-                "Laptop",
-                "Desktop Computer",
-                "Monitor",
-                "Printer"
+            devices: ["Laptop"],
+
+            problems: [
+                "power",
+                "performance",
+                "screen"
             ],
+
+            price: 55000,
+            delivery: false,
+            phone: "+95 9 123 456 705",
+
+            icon: "fa-laptop",
+            badge: "Laptop Repair",
+
+            services:
+                "Laptop hardware inspection, cooling system maintenance, display diagnosis and software support.",
+
+            hours: "9:30 AM – 6:00 PM"
+        },
+
+
+        /* LAPTOP REPAIR 3 */
+
+        {
+            id: 6,
+            name: "Advanced Laptop Solutions",
+            category: "laptop",
+            township: "Tamwe",
+            city: "Yangon",
+            address: "Tamwe Township, Yangon, Myanmar",
+
+            latitude: 16.8000,
+            longitude: 96.1800,
+
+            description:
+                "A sample laptop service listing offering computer diagnostics and general repair assistance.",
+
+            devices: ["Laptop"],
 
             problems: [
                 "power",
@@ -950,62 +990,25 @@ document.addEventListener("DOMContentLoaded", function () {
                 "other"
             ],
 
-            price: 40000,
-            delivery: true,
-            phone: "+95 9 123 456 705",
-
-            icon: "fa-computer",
-            badge: "Personal Technology",
-
-            services:
-                "Computer diagnostics, software troubleshooting and hardware inspection.",
-
-            hours: "9:30 AM – 6:00 PM"
-        },
-
-        {
-            id: 6,
-            name: "Appliance Care Service",
-            category: "household",
-            township: "Thingangyun",
-            city: "Yangon",
-            address: "Thingangyun Township, Yangon",
-            latitude: 16.8300,
-            longitude: 96.2000,
-
-            description:
-                "A sample home appliance service listing with general maintenance options.",
-
-            devices: [
-                "Refrigerator",
-                "Washing Machine",
-                "Air Conditioner",
-                "Electric Fan"
-            ],
-
-            problems: [
-                "power",
-                "mechanical",
-                "other"
-            ],
-
-            price: 45000,
+            price: 65000,
             delivery: true,
             phone: "+95 9 123 456 706",
 
-            icon: "fa-screwdriver-wrench",
-            badge: "Household Electronics",
+            icon: "fa-computer",
+            badge: "Laptop Repair",
 
             services:
-                "General appliance inspection, maintenance and fault diagnosis.",
+                "Laptop diagnostics, hardware troubleshooting, software maintenance and general computer servicing.",
 
-            hours: "8:00 AM – 5:00 PM"
+            hours: "8:30 AM – 5:30 PM"
         }
 
     ];
 
 
-    /* 4. HTML ELEMENTS */
+    /* =========================================
+       4. HTML ELEMENTS
+    ========================================= */
 
     const categoryButtons = shopPage.querySelectorAll(
         ".shop-category-option"
@@ -1067,10 +1070,6 @@ document.addEventListener("DOMContentLoaded", function () {
         "#shopMapToggle"
     );
 
-    const mapPanel = shopPage.querySelector(
-        "#shopMapPanel"
-    );
-
     const resultsLayout = shopPage.querySelector(
         ".shop-results-layout"
     );
@@ -1083,10 +1082,18 @@ document.addEventListener("DOMContentLoaded", function () {
         "currentYear"
     );
 
+    const locationButton = shopPage.querySelector(
+        "#shopUseMyLocation"
+    );
 
-    /* 5. APPLICATION VARIABLES */
+    const locationStatus = shopPage.querySelector(
+        "#shopLocationStatus"
+    );
 
-    let selectedCategory = "household";
+
+    /* =========================================
+       5. APPLICATION VARIABLES
+    ========================================= */
 
     let activeShopFilter = "all";
 
@@ -1100,10 +1107,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
     let detailMarker = null;
 
+    let userLocationMarker = null;
+
+    let userLocationCircle = null;
+
     const currencyFormatter = new Intl.NumberFormat("en-US");
 
 
-    /* 6. HELPER FUNCTIONS */
+    /* =========================================
+       6. HELPER FUNCTIONS
+    ========================================= */
 
     function formatPrice(price) {
 
@@ -1172,17 +1185,18 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
-    /* 7. DEVICE DROPDOWN */
+    /* =========================================
+       7. DEVICE DROPDOWN
+    ========================================= */
 
     function updateDeviceOptions() {
 
-        if (!deviceSelect) {
-            return;
-        }
+        if (!deviceSelect) return;
 
         const previousValue = deviceSelect.value;
 
-        const devices = deviceOptions[selectedCategory];
+        const devices = deviceOptions[activeShopFilter] ||
+            deviceOptions.all;
 
         deviceSelect.innerHTML =
             '<option value="">All supported devices</option>';
@@ -1208,14 +1222,30 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
-    /* 8. CATEGORY SELECTION */
+    /* =========================================
+       8. UPDATE FILTER BUTTONS
+    ========================================= */
 
-    function updateCategoryButtons() {
+    function updateFilterButtons() {
+
+        shopFilterButtons.forEach(function (button) {
+
+            const isActive =
+                button.dataset.shopFilter === activeShopFilter;
+
+            button.classList.toggle("active", isActive);
+
+            button.setAttribute(
+                "aria-pressed",
+                String(isActive)
+            );
+
+        });
 
         categoryButtons.forEach(function (button) {
 
             const isActive =
-                button.dataset.category === selectedCategory;
+                button.dataset.category === activeShopFilter;
 
             button.classList.toggle("active", isActive);
 
@@ -1229,19 +1259,23 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
+    /* =========================================
+       9. CATEGORY BUTTON EVENTS
+    ========================================= */
+
     categoryButtons.forEach(function (button) {
 
         button.addEventListener("click", function () {
 
             const category = button.dataset.category;
 
-            if (!deviceOptions[category]) {
+            if (!["phone", "laptop"].includes(category)) {
                 return;
             }
 
-            selectedCategory = category;
+            activeShopFilter = category;
 
-            updateCategoryButtons();
+            updateFilterButtons();
 
             updateDeviceOptions();
 
@@ -1252,36 +1286,9 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 
-    /* 9. SHOP TYPE FILTER */
-
-    function getVisibleShops() {
-
-        if (activeShopFilter === "phone") {
-
-            return filteredShops.filter(function (shop) {
-
-                return shop.devices.includes("Smartphone");
-
-            });
-
-        }
-
-
-        if (activeShopFilter === "laptop") {
-
-            return filteredShops.filter(function (shop) {
-
-                return shop.devices.includes("Laptop");
-
-            });
-
-        }
-
-
-        return filteredShops;
-
-    }
-
+    /* =========================================
+       10. SHOP TYPE FILTER
+    ========================================= */
 
     shopFilterButtons.forEach(function (button) {
 
@@ -1295,33 +1302,51 @@ document.addEventListener("DOMContentLoaded", function () {
 
             activeShopFilter = filter;
 
+            updateFilterButtons();
 
-            shopFilterButtons.forEach(function (filterButton) {
+            updateDeviceOptions();
 
-                const isActive =
-                    filterButton.dataset.shopFilter === activeShopFilter;
-
-                filterButton.classList.toggle(
-                    "active",
-                    isActive
-                );
-
-                filterButton.setAttribute(
-                    "aria-pressed",
-                    String(isActive)
-                );
-
-            });
-
-
-            renderShops();
+            applyFilters();
 
         });
 
     });
 
 
-    /* 10. FILTER REPAIR SHOPS */
+    /* =========================================
+       11. GET VISIBLE SHOPS
+    ========================================= */
+
+    function getVisibleShops() {
+
+        if (activeShopFilter === "phone") {
+
+            return filteredShops.filter(function (shop) {
+
+                return shop.category === "phone";
+
+            });
+
+        }
+
+        if (activeShopFilter === "laptop") {
+
+            return filteredShops.filter(function (shop) {
+
+                return shop.category === "laptop";
+
+            });
+
+        }
+
+        return filteredShops;
+
+    }
+
+
+    /* =========================================
+       12. APPLY SEARCH FILTERS
+    ========================================= */
 
     function applyFilters() {
 
@@ -1351,37 +1376,35 @@ document.addEventListener("DOMContentLoaded", function () {
         filteredShops = repairShops.filter(function (shop) {
 
 
-            /* CATEGORY MATCH */
+            /* SHOP TYPE */
 
             const categoryMatch =
-                activeShopFilter !== "all" ||
-                shop.category === selectedCategory;
+                activeShopFilter === "all" ||
+                shop.category === activeShopFilter;
 
 
-            /* LOCATION MATCH */
+            /* TOWNSHIP */
 
             const locationMatch =
                 !location ||
-                shop.township.toLowerCase().includes(location) ||
-                shop.city.toLowerCase().includes(location) ||
-                shop.address.toLowerCase().includes(location);
+                shop.township.toLowerCase() === location;
 
 
-            /* DEVICE MATCH */
+            /* DEVICE */
 
             const deviceMatch =
                 !device ||
                 shop.devices.includes(device);
 
 
-            /* PROBLEM MATCH */
+            /* PROBLEM */
 
             const problemMatch =
                 !problem ||
                 shop.problems.includes(problem);
 
 
-            /* BUDGET MATCH */
+            /* BUDGET */
 
             const budgetMatch =
                 budget === "" ||
@@ -1392,7 +1415,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 );
 
 
-            /* DELIVERY MATCH */
+            /* DELIVERY */
 
             const deliveryMatch =
                 !deliveryOnly ||
@@ -1416,7 +1439,9 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
-    /* 11. SORT REPAIR SHOPS */
+    /* =========================================
+       13. SORT SHOPS
+    ========================================= */
 
     function sortShops() {
 
@@ -1451,28 +1476,25 @@ document.addEventListener("DOMContentLoaded", function () {
 
         }
 
-
         renderShops();
 
     }
 
 
-    /* 12. RENDER REPAIR SHOP CARDS */
+    /* =========================================
+       14. RENDER SHOP CARDS
+    ========================================= */
 
     function renderShops() {
 
-        if (!resultsContainer) {
-            return;
-        }
-
+        if (!resultsContainer) return;
 
         resultsContainer.innerHTML = "";
-
 
         const visibleShops = getVisibleShops();
 
 
-        /* UPDATE RESULTS COUNT */
+        /* RESULTS COUNT */
 
         if (resultsSummary) {
 
@@ -1492,7 +1514,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
 
-        /* RENDER SHOP CARDS */
+        /* SHOP CARDS */
 
         visibleShops.forEach(function (shop) {
 
@@ -1500,9 +1522,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             card.className = "shop-card";
 
-
             const deviceTags = shop.devices
-                .slice(0, 3)
                 .map(function (device) {
 
                     return `
@@ -1540,10 +1560,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                     <div class="shop-card-location">
 
-                        <i
-                            class="fas fa-location-dot"
-                            aria-hidden="true">
-                        </i>
+                        <i class="fas fa-location-dot"></i>
 
                         <span>
                             ${escapeHTML(shop.township)},
@@ -1584,7 +1601,6 @@ document.addEventListener("DOMContentLoaded", function () {
                             data-shop-id="${shop.id}">
 
                             <i class="fas fa-circle-info"></i>
-
                             Details
 
                         </button>
@@ -1596,7 +1612,6 @@ document.addEventListener("DOMContentLoaded", function () {
                             data-shop-id="${shop.id}">
 
                             <i class="fas fa-phone"></i>
-
                             Contact
 
                         </button>
@@ -1608,7 +1623,6 @@ document.addEventListener("DOMContentLoaded", function () {
                             data-shop-id="${shop.id}">
 
                             <i class="fas fa-diamond-turn-right"></i>
-
                             Directions
 
                         </button>
@@ -1619,29 +1633,25 @@ document.addEventListener("DOMContentLoaded", function () {
 
             `;
 
-
             resultsContainer.appendChild(card);
 
         });
 
-
-        /* UPDATE MAP */
 
         updateMapMarkers(visibleShops);
 
     }
 
 
-    /* 13. SHOP DETAILS */
+    /* =========================================
+       15. SHOW SHOP DETAILS
+    ========================================= */
 
     function showShopDetails(shopId) {
 
         const shop = getShopById(shopId);
 
-        if (!shop || !detailContent) {
-            return;
-        }
-
+        if (!shop || !detailContent) return;
 
         closeDetailMap();
 
@@ -1653,7 +1663,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 return `
                     <span>
-                        <i class="fas fa-check" aria-hidden="true"></i>
+                        <i class="fas fa-check"></i>
                         ${escapeHTML(device)}
                     </span>
                 `;
@@ -1692,10 +1702,9 @@ document.addEventListener("DOMContentLoaded", function () {
                                     ${escapeHTML(shop.name)}
                                 </h2>
 
-
                                 <span class="shop-partner-badge">
 
-                                    <i class="fas fa-circle-check"></i>
+                                    <i class="fas fa-circle-info"></i>
 
                                     Sample Listing
 
@@ -1755,7 +1764,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
                         </h3>
 
-
                         <div
                             id="shopDetailMap"
                             aria-label="Map showing the sample repair shop location">
@@ -1776,11 +1784,8 @@ document.addEventListener("DOMContentLoaded", function () {
                     <div class="shop-info-group">
 
                         <h3>
-
                             <i class="fas fa-screwdriver-wrench"></i>
-
                             Available Services
-
                         </h3>
 
                         <p>
@@ -1793,11 +1798,8 @@ document.addEventListener("DOMContentLoaded", function () {
                     <div class="shop-info-group">
 
                         <h3>
-
                             <i class="fas fa-location-dot"></i>
-
                             Address
-
                         </h3>
 
                         <p>
@@ -1810,13 +1812,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     <div class="shop-info-group">
 
                         <h3>
-
                             <i class="fas fa-clock"></i>
-
                             Opening Hours
-
                         </h3>
-
 
                         <div class="shop-opening-hours">
 
@@ -1838,11 +1836,8 @@ document.addEventListener("DOMContentLoaded", function () {
                     <div class="shop-info-group">
 
                         <h3>
-
                             <i class="fas fa-money-bill-wave"></i>
-
                             Price Notes
-
                         </h3>
 
                         <p>
@@ -1861,19 +1856,13 @@ document.addEventListener("DOMContentLoaded", function () {
                     <div class="shop-info-group">
 
                         <h3>
-
                             <i class="fas fa-address-book"></i>
-
                             Contact Details
-
                         </h3>
 
                         <p>
-
                             <i class="fas fa-phone"></i>
-
                             ${escapeHTML(shop.phone)}
-
                         </p>
 
                     </div>
@@ -1882,11 +1871,8 @@ document.addEventListener("DOMContentLoaded", function () {
                     <div class="shop-info-group">
 
                         <h3>
-
                             <i class="fas fa-truck"></i>
-
                             Collection and Delivery
-
                         </h3>
 
                         <p>
@@ -1905,7 +1891,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         <i class="fas fa-circle-info"></i>
 
                         Prototype sample information.
-                        Shop details, contact numbers and prices
+                        Shop details, contact numbers, locations and prices
                         have not been independently verified.
 
                     </div>
@@ -1917,7 +1903,6 @@ document.addEventListener("DOMContentLoaded", function () {
                         id="closeShopDetails">
 
                         <i class="fas fa-times"></i>
-
                         Close Details
 
                     </button>
@@ -1932,8 +1917,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
         initialiseDetailMap(shop);
 
-
-        /* SCROLL TO DETAILS */
 
         const detailsSection = shopPage.querySelector(
             "#shopDetails"
@@ -1954,7 +1937,9 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
-    /* 14. SHOP DETAIL MAP */
+    /* =========================================
+       16. DETAIL MAP
+    ========================================= */
 
     function initialiseDetailMap(shop) {
 
@@ -1962,10 +1947,7 @@ document.addEventListener("DOMContentLoaded", function () {
             "#shopDetailMap"
         );
 
-        if (!detailMapElement) {
-            return;
-        }
-
+        if (!detailMapElement) return;
 
         if (typeof L === "undefined") {
 
@@ -1990,22 +1972,17 @@ document.addEventListener("DOMContentLoaded", function () {
         L.tileLayer(
             "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
             {
-
                 attribution:
                     '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
 
                 maxZoom: 19
-
             }
         ).addTo(detailMap);
 
 
         detailMarker = L.marker([
-
             shop.latitude,
-
             shop.longitude
-
         ]).addTo(detailMap);
 
 
@@ -2017,9 +1994,7 @@ document.addEventListener("DOMContentLoaded", function () {
         setTimeout(function () {
 
             if (detailMap) {
-
                 detailMap.invalidateSize();
-
             }
 
         }, 300);
@@ -2027,12 +2002,13 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
-    /* 15. SHOP CARD BUTTON EVENTS */
+    /* =========================================
+       17. SHOP CARD BUTTON EVENTS
+    ========================================= */
 
     if (resultsContainer) {
 
         resultsContainer.addEventListener("click", function (event) {
-
 
             const detailsButton = event.target.closest(
                 ".shop-details-button"
@@ -2047,7 +2023,7 @@ document.addEventListener("DOMContentLoaded", function () {
             );
 
 
-            /* VIEW DETAILS */
+            /* DETAILS */
 
             if (detailsButton) {
 
@@ -2060,7 +2036,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
 
-            /* CONTACT SHOP */
+            /* CONTACT */
 
             if (contactButton) {
 
@@ -2068,19 +2044,17 @@ document.addEventListener("DOMContentLoaded", function () {
                     contactButton.dataset.shopId
                 );
 
-                if (!shop) {
-                    return;
-                }
+                if (!shop) return;
 
                 window.location.href =
-                    "tel:" + shop.phone.replace(/[^+\d]/g, "");
+                    "tel:" + shop.phone.replace(/[^\d+]/g, "");
 
                 return;
 
             }
 
 
-            /* GET DIRECTIONS */
+            /* DIRECTIONS */
 
             if (directionsButton) {
 
@@ -2088,25 +2062,17 @@ document.addEventListener("DOMContentLoaded", function () {
                     directionsButton.dataset.shopId
                 );
 
-                if (!shop) {
-                    return;
-                }
+                if (!shop) return;
 
                 const destination =
                     shop.latitude + "," + shop.longitude;
 
                 window.open(
-
                     "https://www.google.com/maps/dir/?api=1&destination=" +
                     encodeURIComponent(destination),
-
                     "_blank",
-
                     "noopener,noreferrer"
-
                 );
-
-                return;
 
             }
 
@@ -2115,7 +2081,9 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
-    /* 16. CLOSE SHOP DETAILS */
+    /* =========================================
+       18. CLOSE SHOP DETAILS
+    ========================================= */
 
     if (detailContent) {
 
@@ -2132,42 +2100,14 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
-    /* 17. RESET FILTERS */
+    /* =========================================
+       19. RESET FILTERS
+    ========================================= */
 
     function resetFilters() {
 
-
-        /* RESET SHOP TYPE */
-
         activeShopFilter = "all";
 
-
-        shopFilterButtons.forEach(function (button) {
-
-            const isActive =
-                button.dataset.shopFilter === "all";
-
-            button.classList.toggle(
-                "active",
-                isActive
-            );
-
-            button.setAttribute(
-                "aria-pressed",
-                String(isActive)
-            );
-
-        });
-
-
-        /* RESET CATEGORY */
-
-        selectedCategory = "household";
-
-        updateCategoryButtons();
-
-
-        /* RESET INPUTS */
 
         if (locationInput) {
             locationInput.value = "";
@@ -2189,18 +2129,11 @@ document.addEventListener("DOMContentLoaded", function () {
             sortSelect.value = "recommended";
         }
 
-
-        /* RESET DEVICE DROPDOWN */
+        updateFilterButtons();
 
         updateDeviceOptions();
 
-
-        /* CLOSE DETAILS */
-
         closeShopDetails();
-
-
-        /* APPLY DEFAULT FILTERS */
 
         applyFilters();
 
@@ -2227,7 +2160,9 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
-    /* 18. SEARCH FORM */
+    /* =========================================
+       20. SEARCH FORM
+    ========================================= */
 
     if (searchForm) {
 
@@ -2236,7 +2171,6 @@ document.addEventListener("DOMContentLoaded", function () {
             event.preventDefault();
 
             applyFilters();
-
 
             const resultsSection = shopPage.querySelector(
                 ".shop-results-section"
@@ -2259,7 +2193,9 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
-    /* 19. SORT CONTROL */
+    /* =========================================
+       21. SORT CONTROL
+    ========================================= */
 
     if (sortSelect) {
 
@@ -2272,7 +2208,9 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
-    /* 20. MAIN MAP INITIALISATION */
+    /* =========================================
+       22. INITIALISE MAIN MAP
+    ========================================= */
 
     function initialiseMap() {
 
@@ -2280,10 +2218,7 @@ document.addEventListener("DOMContentLoaded", function () {
             "#shopMap"
         );
 
-        if (!mapElement) {
-            return;
-        }
-
+        if (!mapElement) return;
 
         if (typeof L === "undefined") {
 
@@ -2300,7 +2235,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
         shopMap = L.map(mapElement).setView(
-            [16.8409, 96.1735],
+            [16.8150, 96.1550],
             12
         );
 
@@ -2318,15 +2253,13 @@ document.addEventListener("DOMContentLoaded", function () {
         ).addTo(shopMap);
 
 
-        updateMapMarkers();
+        updateMapMarkers(getVisibleShops());
 
 
         setTimeout(function () {
 
             if (shopMap) {
-
                 shopMap.invalidateSize();
-
             }
 
         }, 300);
@@ -2334,18 +2267,18 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
-    /* 21. UPDATE MAP MARKERS */
+    /* =========================================
+       23. UPDATE MAP MARKERS
+    ========================================= */
 
     function updateMapMarkers(
         shopsToShow = getVisibleShops()
     ) {
 
-        if (!shopMap || typeof L === "undefined") {
-            return;
-        }
+        if (!shopMap || typeof L === "undefined") return;
 
 
-        /* REMOVE OLD MARKERS */
+        /* REMOVE OLD SHOP MARKERS */
 
         mapMarkers.forEach(function (marker) {
 
@@ -2356,7 +2289,7 @@ document.addEventListener("DOMContentLoaded", function () {
         mapMarkers = [];
 
 
-        /* ADD NEW MARKERS */
+        /* ADD SHOP MARKERS */
 
         shopsToShow.forEach(function (shop) {
 
@@ -2377,8 +2310,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 <br>
 
-                ${escapeHTML(shop.township)},
-                ${escapeHTML(shop.city)}
+                ${escapeHTML(shop.township)}, Yangon
 
                 <br>
 
@@ -2412,7 +2344,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
 
-        /* ADJUST MAP VIEW */
+        /* FIT MAP TO VISIBLE SHOPS */
 
         if (mapMarkers.length > 0) {
 
@@ -2425,7 +2357,7 @@ document.addEventListener("DOMContentLoaded", function () {
         } else {
 
             shopMap.setView(
-                [16.8409, 96.1735],
+                [16.8150, 96.1550],
                 12
             );
 
@@ -2434,7 +2366,9 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
-    /* 22. MAP POPUP BUTTON */
+    /* =========================================
+       24. MAP POPUP BUTTON
+    ========================================= */
 
     document.addEventListener("click", function (event) {
 
@@ -2442,9 +2376,7 @@ document.addEventListener("DOMContentLoaded", function () {
             ".shop-popup-details"
         );
 
-        if (!popupButton) {
-            return;
-        }
+        if (!popupButton) return;
 
         showShopDetails(
             popupButton.dataset.shopId
@@ -2453,7 +2385,9 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 
-    /* 23. MAP TOGGLE */
+    /* =========================================
+       25. MAP TOGGLE
+    ========================================= */
 
     if (mapToggle && resultsLayout) {
 
@@ -2482,7 +2416,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
                     shopMap.invalidateSize();
 
-
                     if (mapMarkers.length > 0) {
 
                         const group = L.featureGroup(mapMarkers);
@@ -2502,7 +2435,204 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
-    /* 24. CURRENT YEAR */
+    /* =========================================
+       26. USER CURRENT LOCATION
+    ========================================= */
+
+    if (locationButton && locationStatus) {
+
+        locationButton.addEventListener("click", function () {
+
+            if (!navigator.geolocation) {
+
+                locationStatus.textContent =
+                    "Your browser does not support location access.";
+
+                return;
+
+            }
+
+
+            if (!shopMap) {
+
+                locationStatus.textContent =
+                    "The map is not ready. Please try again.";
+
+                return;
+
+            }
+
+
+            locationButton.disabled = true;
+
+            locationStatus.textContent =
+                "Requesting your location permission...";
+
+
+            navigator.geolocation.getCurrentPosition(
+
+                function (position) {
+
+                    const latitude = position.coords.latitude;
+
+                    const longitude = position.coords.longitude;
+
+                    const accuracy = position.coords.accuracy;
+
+
+                    /* REMOVE PREVIOUS USER LOCATION */
+
+                    if (userLocationMarker) {
+
+                        shopMap.removeLayer(userLocationMarker);
+
+                    }
+
+                    if (userLocationCircle) {
+
+                        shopMap.removeLayer(userLocationCircle);
+
+                    }
+
+
+                    /* USER LOCATION MARKER */
+
+                    userLocationMarker = L.circleMarker(
+
+                        [latitude, longitude],
+
+                        {
+
+                            radius: 9,
+
+                            color: "#ffffff",
+
+                            weight: 3,
+
+                            fillColor: "#247653",
+
+                            fillOpacity: 1
+
+                        }
+
+                    ).addTo(shopMap);
+
+
+                    userLocationMarker.bindPopup(
+                        "<strong>Your Current Location</strong>"
+                    );
+
+
+                    /* LOCATION ACCURACY AREA */
+
+                    userLocationCircle = L.circle(
+
+                        [latitude, longitude],
+
+                        {
+
+                            radius: accuracy,
+
+                            color: "#247653",
+
+                            fillColor: "#247653",
+
+                            fillOpacity: 0.10,
+
+                            weight: 1
+
+                        }
+
+                    ).addTo(shopMap);
+
+
+                    /* MOVE MAP */
+
+                    shopMap.setView(
+
+                        [latitude, longitude],
+
+                        15,
+
+                        { animate: true }
+
+                    );
+
+
+                    userLocationMarker.openPopup();
+
+
+                    locationStatus.textContent =
+                        "Your location has been found. The map is centred on your current location.";
+
+
+                    locationButton.disabled = false;
+
+                },
+
+
+                function (error) {
+
+                    let message = "";
+
+                    switch (error.code) {
+
+                        case error.PERMISSION_DENIED:
+
+                            message =
+                                "Location permission was denied. Please allow location access in your browser settings.";
+
+                            break;
+
+                        case error.POSITION_UNAVAILABLE:
+
+                            message =
+                                "Your current location is unavailable. Please try again.";
+
+                            break;
+
+                        case error.TIMEOUT:
+
+                            message =
+                                "Location request timed out. Please try again.";
+
+                            break;
+
+                        default:
+
+                            message =
+                                "Unable to access your location.";
+
+                    }
+
+
+                    locationStatus.textContent = message;
+
+                    locationButton.disabled = false;
+
+                },
+
+
+                {
+
+                    enableHighAccuracy: true,
+
+                    timeout: 15000,
+
+                    maximumAge: 60000
+
+                }
+
+            );
+
+        });
+
+    }
+
+
+    /* =========================================
+       27. CURRENT YEAR
+    ========================================= */
 
     if (currentYear) {
 
@@ -2512,9 +2642,11 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
-    /*  INITIALISE APPLICATION */
+    /* =========================================
+       28. INITIALISE APPLICATION
+    ========================================= */
 
-    updateCategoryButtons();
+    updateFilterButtons();
 
     updateDeviceOptions();
 
@@ -2524,6 +2656,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 });
+
 /* weather-device-care.html */
 (() => {
 
