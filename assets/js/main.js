@@ -261,6 +261,466 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 });
+/* =========================================
+   HEADER SEARCH — ALL WEBSITE PAGES
+   re:power Website
+========================================= */
+
+(() => {
+
+    "use strict";
+
+    /* =====================================
+       1. GET HTML ELEMENTS
+    ===================================== */
+
+    const toggle = document.getElementById("headerSearchToggle");
+    const panel = document.getElementById("headerSearchPanel");
+    const input = document.getElementById("headerSearchInput");
+    const close = document.getElementById("headerSearchClose");
+    const results = document.getElementById("headerSearchResults");
+
+    if (!toggle || !panel || !input || !close || !results) {
+        return;
+    }
+
+
+    /* =====================================
+       2. ALL WEBSITE PAGES
+    ===================================== */
+
+    const pages = [
+
+        {
+            title: "Home",
+            href: "index.html",
+            icon: "fa-house",
+            keywords: [
+                "home",
+                "homepage",
+                "welcome",
+                "re power",
+                "electronics",
+                "repair",
+                "reuse",
+                "sustainability",
+                "calculator",
+                "cost calculator"
+            ]
+        },
+
+        {
+            title: "Find a Repair Shop",
+            href: "repair-shops.html",
+            icon: "fa-screwdriver-wrench",
+            keywords: [
+                "repair shop",
+                "repair centre",
+                "phone repair",
+                "mobile repair",
+                "laptop repair",
+                "computer repair",
+                "technician",
+                "repair service",
+                "shop location",
+                "nearby repair",
+                "repair cost",
+                "find technician"
+            ]
+        },
+
+        {
+            title: "Collection & Delivery",
+            href: "collection-delivery.html",
+            icon: "fa-truck",
+            keywords: [
+                "collection",
+                "delivery",
+                "pickup",
+                "pick up",
+                "drop off",
+                "device collection",
+                "device delivery",
+                "schedule collection",
+                "booking",
+                "transport",
+                "collect device"
+            ]
+        },
+
+        {
+            title: "Weather & Device Care",
+            href: "weather-device-care.html",
+            icon: "fa-cloud-sun",
+            keywords: [
+                "weather",
+                "device care",
+                "phone care",
+                "laptop care",
+                "rain",
+                "humidity",
+                "heat",
+                "temperature",
+                "device maintenance",
+                "maintenance guide",
+                "repair tips",
+                "protection",
+                "cleaning",
+                "device safety"
+            ]
+        },
+
+        {
+            title: "Business Partnerships",
+            href: "partnerships.html",
+            icon: "fa-handshake",
+            keywords: [
+                "partnership",
+                "business",
+                "sponsor",
+                "sponsorship",
+                "corporate",
+                "organisation",
+                "company",
+                "collaboration",
+                "business enquiry",
+                "partner with us",
+                "support business",
+                "campaign"
+            ]
+        },
+
+        {
+            title: "Community & Donations",
+            href: "community.html",
+            icon: "fa-people-group",
+            keywords: [
+                "community",
+                "donation",
+                "donate",
+                "volunteer",
+                "volunteering",
+                "community ideas",
+                "volunteer board",
+                "electronic donation",
+                "old devices",
+                "recycling",
+                "reuse",
+                "environment",
+                "get involved"
+            ]
+        },
+
+        {
+            title: "About & Trust",
+            href: "about.html",
+            icon: "fa-circle-info",
+            keywords: [
+                "about",
+                "about us",
+                "our story",
+                "mission",
+                "vision",
+                "trust",
+                "privacy",
+                "privacy policy",
+                "terms",
+                "terms and conditions",
+                "information",
+                "who we are"
+            ]
+        },
+
+        {
+            title: "Contact & Support",
+            href: "contact.html",
+            icon: "fa-headset",
+            keywords: [
+                "contact",
+                "support",
+                "help",
+                "customer service",
+                "get support",
+                "contact us",
+                "faq",
+                "faqs",
+                "frequently asked questions",
+                "enquiry",
+                "message",
+                "email",
+                "phone number"
+            ]
+        },
+
+        {
+            title: "intro",
+            href: "intro.html",
+            icon: "fa-solid fa-circle-info",
+            keywords: [
+                "start",
+                "intro",
+                "annimation",
+                "restart",
+                "rerun"
+            ]
+        }
+
+    ];
+
+
+    /* =====================================
+       3. NORMALISE SEARCH TEXT
+    ===================================== */
+
+    function normaliseText(value) {
+
+        return value
+            .toLowerCase()
+            .trim()
+            .replace(/[&]/g, "and")
+            .replace(/[^\w\s]/g, " ")
+            .replace(/\s+/g, " ");
+
+    }
+
+
+    /* =====================================
+       4. SEARCH PAGE INFORMATION
+    ===================================== */
+
+    function showSuggestions(query = "") {
+
+        results.innerHTML = "";
+
+        const searchTerm = normaliseText(query);
+
+        let matches = [];
+
+        if (!searchTerm) {
+
+            matches = pages.slice(0, 5);
+
+        } else {
+
+            matches = pages
+                .map(page => {
+
+                    const title = normaliseText(page.title);
+
+                    const keywords = page.keywords.map(
+                        keyword => normaliseText(keyword)
+                    );
+
+                    let score = 0;
+
+                    if (title === searchTerm) {
+                        score += 100;
+                    }
+
+                    if (title.startsWith(searchTerm)) {
+                        score += 50;
+                    }
+
+                    if (title.includes(searchTerm)) {
+                        score += 30;
+                    }
+
+                    keywords.forEach(keyword => {
+
+                        if (keyword === searchTerm) {
+                            score += 40;
+                        } else if (keyword.startsWith(searchTerm)) {
+                            score += 20;
+                        } else if (keyword.includes(searchTerm)) {
+                            score += 10;
+                        } else if (
+                            searchTerm.split(" ").some(word =>
+                                keyword.includes(word)
+                            )
+                        ) {
+                            score += 5;
+                        }
+
+                    });
+
+                    return {
+                        ...page,
+                        score
+                    };
+
+                })
+                .filter(page => page.score > 0)
+                .sort((a, b) => b.score - a.score);
+
+        }
+
+
+        /* NO RESULTS */
+
+        if (matches.length === 0) {
+
+            results.innerHTML = `
+                <div class="header-search-empty">
+                    <i class="fas fa-search" aria-hidden="true"></i>
+                    <p>No matching pages found.</p>
+                    <span>Try searching for repair, donation, delivery or support.</span>
+                </div>
+            `;
+
+            return;
+
+        }
+
+
+        /* DISPLAY MATCHING PAGES */
+
+        matches.slice(0, 7).forEach(page => {
+
+            const link = document.createElement("a");
+
+            link.className = "header-search-result";
+
+            link.href = page.href;
+
+            link.innerHTML = `
+                <i class="fas ${page.icon}" aria-hidden="true"></i>
+
+                <span></span>
+
+                <i class="fas fa-arrow-right" aria-hidden="true"></i>
+            `;
+
+            link.querySelector("span").textContent = page.title;
+
+            results.appendChild(link);
+
+        });
+
+    }
+
+
+    /* =====================================
+       5. OPEN SEARCH
+    ===================================== */
+
+    function openSearch() {
+
+        panel.classList.add("active");
+
+        toggle.setAttribute("aria-expanded", "true");
+
+        showSuggestions(input.value);
+
+        input.focus();
+
+    }
+
+
+    /* =====================================
+       6. CLOSE SEARCH
+    ===================================== */
+
+    function closeSearch() {
+
+        panel.classList.remove("active");
+
+        toggle.setAttribute("aria-expanded", "false");
+
+        input.value = "";
+
+        showSuggestions();
+
+    }
+
+
+    /* =====================================
+       7. SEARCH BUTTON
+    ===================================== */
+
+    toggle.addEventListener("click", () => {
+
+        if (panel.classList.contains("active")) {
+
+            closeSearch();
+
+        } else {
+
+            openSearch();
+
+        }
+
+    });
+
+
+    /* =====================================
+       8. CLOSE BUTTON
+    ===================================== */
+
+    close.addEventListener("click", closeSearch);
+
+
+    /* =====================================
+       9. LIVE SEARCH
+    ===================================== */
+
+    input.addEventListener("input", () => {
+
+        showSuggestions(input.value);
+
+    });
+
+
+    /* =====================================
+       10. KEYBOARD CONTROLS
+    ===================================== */
+
+    input.addEventListener("keydown", event => {
+
+        if (event.key === "Enter") {
+
+            const firstResult = results.querySelector(
+                ".header-search-result"
+            );
+
+            if (firstResult) {
+
+                window.location.href = firstResult.href;
+
+            }
+
+        }
+
+        if (event.key === "Escape") {
+
+            closeSearch();
+
+        }
+
+    });
+
+
+    /* =====================================
+       11. CLOSE WHEN CLICKING OUTSIDE
+    ===================================== */
+
+    document.addEventListener("click", event => {
+
+        if (!event.target.closest(".header-search-wrapper")) {
+
+            closeSearch();
+
+        }
+
+    });
+
+
+    /* =====================================
+       12. INITIAL SUGGESTIONS
+    ===================================== */
+
+    showSuggestions();
+
+})();
 
 /*repair-shop.html*/
 
