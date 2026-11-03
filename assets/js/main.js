@@ -4166,29 +4166,40 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 
-/*Intro Page animation hehehe*/
-(() => {
+/* re:power Intro Page */
+
+document.addEventListener("DOMContentLoaded", function () {
+
     const HOME_PAGE = "index.html";
     const intro = document.getElementById("intro");
 
     const key = "repowerIntroPlayed";
 
-    let played = sessionStorage.getItem(key);
+    // Check whether intro has already played
+    if (sessionStorage.getItem(key) === "true") {
 
-    if (played === "true") {
         window.location.replace(HOME_PAGE);
         return;
+
     }
 
-    sessionStorage.setItem(key, "true");
+    // Play intro animation
+    setTimeout(function () {
 
-    setTimeout(() => {
+        if (!intro) return;
+
         intro.classList.add("leaving");
 
-        setTimeout(() => {
+        // Remember that intro has played
+        sessionStorage.setItem(key, "true");
+
+        // Redirect to homepage
+        setTimeout(function () {
+
             window.location.replace(HOME_PAGE);
+
         }, 850);
 
     }, 7000);
 
-})();
+});
