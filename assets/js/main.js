@@ -2866,89 +2866,160 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 
-// RE:Power - Collection & Delivery page interactions
-document.addEventListener("DOMContentLoaded", () => {
-  const form = document.getElementById("collectionEnquiryForm");
-  const message = document.getElementById("formMessage");
-  const dateInput = document.getElementById("collectionDate");
-  const preferenceHint = document.getElementById("preferenceHint");
 
-  if (!form) return;
+/* RE:POWER COLLECTION & DELIVERY JavaScript Functionality */
 
-  // Do not allow a preferred collection date in the past.
-  if (dateInput) {
+document.addEventListener("DOMContentLoaded", function () {
+    const form = document.getElementById("collectionForm");
+    const message = document.getElementById("formMessage");
+    const preferenceError =
+        document.getElementById("preferenceError");
+    const dateInput = document.getElementById("date");
+
+    // SET MINIMUM COLLECTION DATE TO TODAY
     const today = new Date();
-    const localToday = new Date(
-      today.getTime() - today.getTimezoneOffset() * 60000,
-    )
-      .toISOString()
-      .split("T")[0];
-    dateInput.min = localToday;
-  }
+    const localDate = new Date(
+        today.getTime() - today.getTimezoneOffset() * 60000
+    ).toISOString().split("T")[0];
+    dateInput.min = localDate;
 
-  // Highlight the selected collection preference.
-  form.querySelectorAll('input[name="preference"]').forEach((radio) => {
-    radio.addEventListener("change", () => {
-      preferenceHint.textContent = "Selected: " + radio.value + ".";
-      preferenceHint.classList.remove("text-danger");
+
+    const preferenceCards =
+        document.querySelectorAll(".preference-card");
+    const preferenceInputs =
+        document.querySelectorAll('input[name="preference"]');
+    preferenceInputs.forEach(function (radio) {
+        radio.addEventListener("change", function () {
+            preferenceCards.forEach(function (card) {
+                card.classList.remove("selected");
+            });
+            radio.closest(".preference-card")
+                .classList.add("selected");
+            preferenceError.style.display = "none";
+        });
     });
-  });
 
-  form.addEventListener("submit", (event) => {
-    event.preventDefault();
-    message.className = "alert d-none mt-3";
-    let valid = form.checkValidity();
 
-    const selectedPreference = form.querySelector(
-      'input[name="preference"]:checked',
-    );
-    if (!selectedPreference) {
-      valid = false;
-      preferenceHint.textContent = "Please select a collection preference.";
-      preferenceHint.classList.add("text-danger");
+    // FORM SUBMISSION
+    form.addEventListener("submit", function (event) {
+        event.preventDefault();
+        let isValid = true;
+        // CHECK REQUIRED INPUTS
+        const requiredFields =
+            form.querySelectorAll("[required]");
+        requiredFields.forEach(function (field) {
+            const group = field.closest(".form-group");
+            if (!field.value.trim()) {
+                isValid = false;
+                if (group) {
+                    group.classList.add("invalid");
+                }
+            } else {
+                if (group) {
+                    group.classList.remove("invalid");
+                }
+            }
+        });
+        // CHECK COLLECTION PREFERENCE
+        const selectedPreference =
+            form.querySelector(
+                'input[name="preference"]:checked'
+            );
+        if (!selectedPreference) {
+            isValid = false;
+            preferenceError.style.display = "block";
+        }
+        // CHECK FORM VALIDATION
+        if (!isValid) {
+            showMessage(
+                "Please complete all required fields before submitting.",
+                "warning"
+            );
+            const firstInvalid =
+                form.querySelector(
+                    ".form-group.invalid input, " +
+                    ".form-group.invalid select, " +
+                    ".form-group.invalid textarea"
+                );
+            if (firstInvalid) {
+                firstInvalid.focus();
+            }
+            return;
+        }
+
+
+        // COLLECT FORM DATA
+        const enquiry = {
+            customerName:
+                document.getElementById("customerName").value,
+            phone:
+                document.getElementById("phone").value,
+            township:
+                document.getElementById("township").value,
+            category:
+                document.getElementById("category").value,
+            device:
+                document.getElementById("device").value,
+            repairShop:
+                document.getElementById("repairShop").value,
+            preference:
+                selectedPreference.value,
+            date:
+                document.getElementById("date").value,
+            time:
+                document.getElementById("time").value,
+            address:
+                document.getElementById("address").value,
+            submittedAt:
+                new Date().toISOString()
+        };
+
+        // SAVE DEMO ENQUIRY IN LOCAL STORAGE
+
+        try {
+            let enquiries = JSON.parse(
+                localStorage.getItem("repowerEnquiries") || "[]"
+            );
+            enquiries.push(enquiry);
+            localStorage.setItem(
+                "repowerEnquiries",
+                JSON.stringify(enquiries)
+            );
+            showMessage(
+                "Your enquiry has been saved successfully on this device. " +
+                "This is a demonstration submission; RE:Power has not " +
+                "received it yet.",
+                "success"
+            );
+        }
+        catch (error) {
+            showMessage(
+                "Unable to save the enquiry. Please try again.",
+                "error"
+            );
+        }
+    });
+
+    // RESET FORM
+    form.addEventListener("reset", function () {
+        setTimeout(function () {
+            const groups =
+                form.querySelectorAll(".form-group");
+            groups.forEach(function (group) {
+                group.classList.remove("invalid");
+            });
+            preferenceCards.forEach(function (card) {
+                card.classList.remove("selected");
+            });
+            preferenceError.style.display = "none";
+            message.className = "form-message";
+            message.textContent = "";
+        }, 0);
+    });
+
+    // DISPLAY FORM MESSAGES
+    function showMessage(text, type) {
+        message.textContent = text;
+        message.className = "form-message " + type;
     }
-
-    if (!valid) {
-      form.classList.add("was-validated");
-      const firstInvalid = form.querySelector(":invalid");
-      if (firstInvalid) firstInvalid.focus();
-      message.textContent =
-        "Please complete all required fields before submitting.";
-      message.className = "alert alert-warning mt-3";
-      return;
-    }
-
-    const formData = new FormData(form);
-    const enquiry = Object.fromEntries(formData.entries());
-    enquiry.submittedAt = new Date().toISOString();
-
-    // Demo behaviour: store the enquiry in this browser.
-    // Connect this section to a backend/email service for real submissions.
-    try {
-      const saved = JSON.parse(
-        localStorage.getItem("repowerCollectionEnquiries") || "[]",
-      );
-      saved.push(enquiry);
-      localStorage.setItem("repowerCollectionEnquiries", JSON.stringify(saved));
-      message.textContent =
-        "Enquiry saved successfully on this device. This is a demo submission; the RE:Power team has not received it yet.";
-      message.className = "alert alert-success mt-3";
-      form.classList.remove("was-validated");
-    } catch (error) {
-      message.textContent =
-        "The enquiry could not be saved in this browser. Please try again.";
-      message.className = "alert alert-danger mt-3";
-    }
-  });
-
-  form.addEventListener("reset", () => {
-    window.setTimeout(() => {
-      form.classList.remove("was-validated");
-      message.className = "alert d-none mt-3";
-      message.textContent = "";
-      preferenceHint.textContent = "Select one service preference.";
-      preferenceHint.classList.remove("text-danger");
-    }, 0);
-  });
 });
-
