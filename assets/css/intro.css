@@ -168,8 +168,7 @@
         top: 3px;
         width: 0;
         height: 0;
-        border-top: 5px solid transparent;
-        border-bottom: 5px solid transparent;
+        border-top: 5px solid transparent; border-bottom: 5px solid transparent;
         border-left: 12px solid #849487;
       }
       .orbit {
@@ -349,8 +348,7 @@
           margin-top: -20px;
           margin-bottom: -22px;
         }
-        .brand {
-          width: min(310px, 82vw);
+        .brand {width: min(310px, 82vw);
         }
         .footer {
           font-size: 8px;

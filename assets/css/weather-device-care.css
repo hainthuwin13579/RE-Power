@@ -84,13 +84,19 @@
     transform: translateY(-2px);
 }
 
-.weather-btn-primary {
+
+.weather-care-page a.weather-btn.weather-btn-primary {
     background: var(--weather-green);
-    color: var(--weather-white);
+    color: #ffffff !important;
 }
 
-.weather-btn-primary:hover {
+.weather-care-page a.weather-btn.weather-btn-primary i {
+    color: #ffffff !important;
+}
+
+.weather-care-page a.weather-btn.weather-btn-primary:hover {
     background: var(--weather-green-dark);
+    color: #ffffff !important;
 }
 
 /*  HERO SECTION */

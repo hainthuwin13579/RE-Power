@@ -77,9 +77,6 @@
     color: var(--partnership-green);
 }
 
-
-/* BUTTONS */
-
 .partnership-btn {
     min-height: 49px;
     display: inline-flex;
@@ -95,12 +92,11 @@
     text-align: center;
     text-decoration: none;
     cursor: pointer;
-    transition:
-        transform 0.2s ease,
-        background 0.2s ease,
-        color 0.2s ease,
-        box-shadow 0.2s ease,
-        border-color 0.2s ease;
+    transition: transform 0.2s ease,
+                background 0.2s ease,
+                color 0.2s ease,
+                box-shadow 0.2s ease,
+                border-color 0.2s ease;
 }
 
 .partnership-btn:hover {
@@ -149,9 +145,6 @@
     background: rgba(255, 255, 255, 0.12);
     color: #ffffff;
 }
-
-
-/* HERO SECTION */
 
 .partnership-hero {
     position: relative;
@@ -221,9 +214,6 @@
 .partnership-hero-note i {
     color: var(--partnership-green);
 }
-
-
-/* HERO VISUAL */
 
 .partnership-hero-visual {
     position: relative;
@@ -335,9 +325,6 @@
     transform: rotate(9deg);
 }
 
-
-/* INTRODUCTION */
-
 .partnership-intro {
     padding: 78px 0 65px;
 }
@@ -346,9 +333,6 @@
     max-width: 710px;
     margin: 0 auto;
 }
-
-
-/* PARTNERSHIP TYPES */
 
 .partnership-types {
     padding: 70px 0 95px;
@@ -387,9 +371,8 @@
     border-radius: 17px;
     background: #ffffff;
     box-shadow: 0 8px 28px rgba(35, 70, 48, 0.035);
-    transition:
-        transform 0.25s ease,
-        box-shadow 0.25s ease;
+    transition: transform 0.25s ease,
+                box-shadow 0.25s ease;
 }
 
 .partnership-type-card:hover {
@@ -482,9 +465,6 @@
 .partnership-text-link:hover i {
     transform: translateX(4px);
 }
-
-
-/* PARTNERSHIP PROCESS */
 
 .partnership-process {
     padding: 90px 0;
@@ -591,18 +571,10 @@
     font-size: 0.87rem;
 }
 
-
-/* =========================================
-   8. PARTNERSHIP BENEFITS
-   TWO-COLUMN LAYOUT
-========================================= */
-
 .partnership-benefits {
     padding: 85px 0;
     background: var(--partnership-background);
 }
-
-/* Main layout */
 
 .partnership-benefits-layout {
     display: grid;
@@ -611,12 +583,10 @@
     gap: 45px;
 }
 
-/* Left column */
-
 .partnership-benefits-left {
+    min-width: 0;
     display: flex;
     flex-direction: column;
-    min-width: 0;
 }
 
 .partnership-benefits-heading {
@@ -643,8 +613,6 @@
     line-height: 1.8;
 }
 
-/* Benefit cards */
-
 .partnership-benefits-list {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -658,9 +626,8 @@
     border: 1px solid var(--partnership-border);
     border-radius: 12px;
     background: #ffffff;
-    transition:
-        transform 0.25s ease,
-        box-shadow 0.25s ease;
+    transition: transform 0.25s ease,
+                box-shadow 0.25s ease;
 }
 
 .partnership-benefit-item:hover {
@@ -694,15 +661,10 @@
     line-height: 1.7;
 }
 
-/* Benefits button */
-
 .partnership-benefits-left > .partnership-btn {
     align-self: flex-start;
     margin-top: auto;
 }
-
-
-/* IMPORTANT INFORMATION CARD */
 
 .partnership-important-info {
     min-width: 0;
@@ -712,8 +674,6 @@
     background: #ffffff;
     box-shadow: 0 10px 30px rgba(0, 61, 41, 0.05);
 }
-
-/* Information heading */
 
 .partnership-info-heading {
     display: flex;
@@ -759,8 +719,6 @@
     line-height: 1.8;
 }
 
-/* Information items */
-
 .partnership-info-item {
     display: flex;
     align-items: flex-start;
@@ -795,8 +753,6 @@
     line-height: 1.7;
 }
 
-/* Information note */
-
 .partnership-info-note {
     display: flex;
     align-items: flex-start;
@@ -825,9 +781,6 @@
     color: var(--partnership-dark);
 }
 
-
-/* PARTNERSHIP TIMELINE */
-
 .partnership-next-steps {
     margin-top: 28px;
     padding: 25px;
@@ -835,8 +788,6 @@
     border-radius: 12px;
     background: #ffffff;
 }
-
-/* Timeline heading */
 
 .partnership-next-heading {
     display: flex;
@@ -873,8 +824,6 @@
     font-size: 1.15rem;
 }
 
-/* Timeline structure */
-
 .partnership-timeline {
     display: flex;
     flex-direction: column;
@@ -892,8 +841,6 @@
     padding-bottom: 0;
 }
 
-/* Vertical connecting line */
-
 .partnership-timeline-item:not(:last-child)::after {
     position: absolute;
     top: 37px;
@@ -903,8 +850,6 @@
     background: var(--partnership-border);
     content: "";
 }
-
-/* Timeline number */
 
 .partnership-timeline-number {
     position: relative;
@@ -923,8 +868,6 @@
     font-weight: 800;
 }
 
-/* Timeline text */
-
 .partnership-timeline-item h4 {
     margin: 3px 0 6px;
     color: var(--partnership-dark);
@@ -938,46 +881,64 @@
     line-height: 1.7;
 }
 
-
-/* COMMUNITY CAMPAIGN BANNER */
-
 .partnership-campaign {
-    padding: 48px 0;
-    background: linear-gradient(120deg, #e7f3e8, #f3f8ed);
+    padding: 35px 0;
+    background: transparent;
 }
 
 .partnership-campaign-inner {
     display: grid;
-    grid-template-columns: 70px minmax(0, 1fr) auto;
+    grid-template-columns: 65px minmax(0, 1fr) auto;
     align-items: center;
-    gap: 25px;
+    gap: 22px;
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 30px 35px;
+    border: 1px solid #dceadd;
+    border-radius: 16px;
+    background: linear-gradient(120deg, #e7f3e8, #f3f8ed);
 }
 
 .partnership-campaign-icon {
-    width: 68px;
-    height: 68px;
-    display: grid;
-    place-items: center;
-    border-radius: 20px;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
     background: #ffffff;
     color: var(--partnership-green);
-    font-size: 1.7rem;
+    font-size: 25px;
     box-shadow: 0 8px 25px rgba(35, 70, 48, 0.06);
 }
 
+.partnership-campaign-content {
+    min-width: 0;
+}
+
 .partnership-campaign-content h2 {
-    margin-bottom: 10px;
+    margin: 8px 0 10px;
+    color: #203b32;
     font-size: clamp(1.45rem, 2.5vw, 2rem);
 }
 
 .partnership-campaign-content p {
     max-width: 670px;
-    margin-bottom: 0;
+    margin: 0;
+    color: #718078;
     font-size: 0.9rem;
+    line-height: 1.8;
 }
 
+.partnership-campaign .partnership-btn {
+    white-space: nowrap;
+}
 
-/* PARTNERSHIP ENQUIRY SECTION */
+.repair-cta-text .eyebrow,
+.repair-cta-text h2,
+.repair-cta-text p {
+    color: #ffffff !important;
+}
 
 .partnership-enquiry {
     padding: 95px 0;
@@ -989,8 +950,6 @@
     align-items: start;
     gap: 75px;
 }
-
-/* Left information column */
 
 .partnership-enquiry-info {
     position: sticky;
@@ -1030,8 +989,6 @@
     font-size: 0.84rem;
 }
 
-/* Form disclaimer */
-
 .partnership-form-disclaimer {
     display: flex;
     align-items: flex-start;
@@ -1049,9 +1006,6 @@
     margin-top: 3px;
     color: var(--partnership-green);
 }
-
-
-/* ENQUIRY FORM */
 
 .partnership-form-card {
     min-width: 0;
@@ -1076,8 +1030,6 @@
     font-size: 0.85rem;
 }
 
-/* Form rows */
-
 .partnership-form-row {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1097,8 +1049,6 @@
     font-weight: 700;
 }
 
-/* Form controls */
-
 .partnership-form-group input,
 .partnership-form-group select,
 .partnership-form-group textarea {
@@ -1112,10 +1062,9 @@
     color: var(--partnership-text);
     font: inherit;
     font-size: 0.86rem;
-    transition:
-        border-color 0.2s ease,
-        box-shadow 0.2s ease,
-        background 0.2s ease;
+    transition: border-color 0.2s ease,
+                box-shadow 0.2s ease,
+                background 0.2s ease;
 }
 
 .partnership-form-group textarea {
@@ -1135,8 +1084,6 @@
     color: #a1aca3;
 }
 
-/* Validation errors */
-
 .partnership-field-error {
     display: block;
     min-height: 0;
@@ -1151,8 +1098,6 @@
     border-color: #c43d35;
     background: #fffafa;
 }
-
-/* Consent checkbox */
 
 .partnership-checkbox-label {
     display: flex;
@@ -1179,8 +1124,6 @@
     font-size: 0.75rem;
 }
 
-/* Submit button */
-
 .partnership-submit-btn {
     width: 100%;
     margin-top: 15px;
@@ -1192,8 +1135,6 @@
     font-size: 0.74rem;
     line-height: 1.6;
 }
-
-/* Success message */
 
 .partnership-form-success {
     display: flex;
@@ -1226,9 +1167,6 @@
     color: #467454;
     font-size: 0.83rem;
 }
-
-
-/* FINAL CALL TO ACTION */
 
 .partnership-final-cta {
     padding: 55px 0;
@@ -1281,13 +1219,7 @@
     gap: 10px;
 }
 
-
-/* RESPONSIVE — LARGE TABLETS */
-
 @media (max-width: 1000px) {
-
-    /* Hero */
-
     .partnership-hero-grid {
         gap: 25px;
     }
@@ -1300,8 +1232,6 @@
         transform: scale(0.92);
     }
 
-    /* Partnership cards */
-
     .partnership-type-grid {
         gap: 15px;
     }
@@ -1309,8 +1239,6 @@
     .partnership-type-card {
         padding: 25px 21px;
     }
-
-    /* Process */
 
     .partnership-flow {
         grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1320,8 +1248,6 @@
     .partnership-flow-connector {
         display: none;
     }
-
-    /* Benefits */
 
     .partnership-benefits-layout {
         grid-template-columns: 1fr 0.9fr;
@@ -1336,24 +1262,19 @@
         padding: 24px;
     }
 
-    /* Enquiry */
-
     .partnership-enquiry-grid {
         gap: 40px;
     }
 
-    /* Campaign */
-
     .partnership-campaign-inner {
         grid-template-columns: 60px minmax(0, 1fr);
+        gap: 18px;
     }
 
-    .partnership-campaign-inner > a {
+    .partnership-campaign-inner > .partnership-btn {
         grid-column: 2;
         justify-self: start;
     }
-
-    /* Final CTA */
 
     .partnership-final-cta-inner {
         align-items: flex-start;
@@ -1366,16 +1287,10 @@
     }
 }
 
-
-/* RESPONSIVE — TABLETS & SMALL LAPTOPS */
-
 @media (max-width: 760px) {
-
     .partnership-container {
-        width: min(100% - 36px, 560px);
+        width: min(calc(100% - 36px), 560px);
     }
-
-    /* Hero */
 
     .partnership-hero {
         padding: 60px 0 65px;
@@ -1421,13 +1336,9 @@
         bottom: 15px;
     }
 
-    /* Introduction */
-
     .partnership-intro {
         padding: 60px 0;
     }
-
-    /* Section spacing */
 
     .partnership-types,
     .partnership-process,
@@ -1435,8 +1346,6 @@
     .partnership-enquiry {
         padding: 65px 0;
     }
-
-    /* Section heading */
 
     .partnership-section-heading {
         display: block;
@@ -1446,8 +1355,6 @@
         margin-top: 18px;
     }
 
-    /* Partnership cards */
-
     .partnership-type-grid {
         grid-template-columns: 1fr;
         gap: 18px;
@@ -1456,8 +1363,6 @@
     .partnership-type-card {
         padding: 28px;
     }
-
-    /* Process */
 
     .partnership-process-heading {
         margin-bottom: 35px;
@@ -1482,8 +1387,6 @@
         padding: 19px;
     }
 
-    /* Benefits */
-
     .partnership-benefits-layout {
         grid-template-columns: 1fr;
         gap: 35px;
@@ -1492,8 +1395,6 @@
     .partnership-benefits-heading {
         margin-bottom: 25px;
     }
-
-    /* Enquiry */
 
     .partnership-enquiry-grid {
         grid-template-columns: 1fr;
@@ -1504,8 +1405,6 @@
         position: static;
     }
 
-    /* Campaign */
-
     .partnership-campaign {
         padding: 40px 0;
     }
@@ -1515,17 +1414,14 @@
         gap: 18px;
     }
 
-    .partnership-campaign-inner > a {
+    .partnership-campaign-inner > .partnership-btn {
         grid-column: auto;
+        justify-self: start;
     }
-
-    /* Form */
 
     .partnership-form-card {
         padding: 26px 21px;
     }
-
-    /* Final CTA */
 
     .partnership-final-cta-inner {
         align-items: flex-start;
@@ -1537,16 +1433,10 @@
     }
 }
 
-
-/* RESPONSIVE — MOBILE DEVICES */
-
 @media (max-width: 480px) {
-
     .partnership-container {
         width: calc(100% - 30px);
     }
-
-    /* Buttons */
 
     .partnership-hero-actions,
     .partnership-final-actions {
@@ -1557,8 +1447,6 @@
     .partnership-btn {
         width: 100%;
     }
-
-    /* Hero */
 
     .partnership-hero-note {
         align-items: flex-start;
@@ -1595,8 +1483,6 @@
         font-size: 1rem;
     }
 
-    /* Benefits */
-
     .partnership-benefits-list {
         grid-template-columns: 1fr;
         gap: 13px;
@@ -1620,8 +1506,6 @@
         padding: 22px 18px;
     }
 
-    /* Timeline */
-
     .partnership-next-steps {
         padding: 20px 17px;
     }
@@ -1634,8 +1518,6 @@
         gap: 11px;
     }
 
-    /* Form */
-
     .partnership-form-row {
         grid-template-columns: 1fr;
         gap: 0;
@@ -1644,8 +1526,6 @@
     .partnership-form-card {
         padding: 23px 16px;
     }
-
-    /* Final CTA */
 
     .partnership-final-cta {
         padding: 35px 0;
@@ -1663,10 +1543,21 @@
         width: 100%;
         justify-content: center;
     }
+
+    .partnership-campaign-inner {
+        padding: 25px 22px;
+    }
+
+    .partnership-campaign-icon {
+        width: 52px;
+        height: 52px;
+        font-size: 22px;
+    }
+
+    .partnership-campaign-content h2 {
+        font-size: 19px;
+    }
 }
-
-
-/* ACCESSIBILITY */
 
 .partnerships-page a:focus-visible,
 .partnerships-page button:focus-visible,
@@ -1677,10 +1568,7 @@
     outline-offset: 3px;
 }
 
-/* Reduce animation for users who prefer less motion */
-
 @media (prefers-reduced-motion: reduce) {
-
     .partnerships-page *,
     .partnerships-page *::before,
     .partnerships-page *::after {
@@ -1689,5 +1577,4 @@
         animation-duration: 0.01ms !important;
         animation-iteration-count: 1 !important;
     }
-
 }
