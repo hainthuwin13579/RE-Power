@@ -1,7 +1,4 @@
-/* =========================================
-   RE:POWER COLLECTION & DELIVERY
-   Custom CSS - No Framework
-========================================= */
+
 
 :root {
     --green: #004b35;
@@ -39,11 +36,6 @@ a {
     color: inherit;
 }
 
-.container {
-    width: 90%;
-    max-width: 1160px;
-    margin: auto;
-}
 
 h1, h2, h3 {
     font-family: "Montserrat", sans-serif;
