@@ -16,6 +16,7 @@
 
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/repair-shops.css">
+    <script src="assets/js/testing.js" defer></script>
 
     
 </head>
@@ -52,9 +53,58 @@
 
                 <div class="header-actions">
 
-                    <a href="repair-shops.html" class="header-search" aria-label="Search repair shops">
+                    <div class="header-search-wrapper">
+
+                    <button
+                        type="button"
+                        class="header-search"
+                        id="headerSearchToggle"
+                        aria-label="Open search"
+                        aria-expanded="false">
+
                         <i class="fas fa-search"></i>
-                    </a>
+
+                    </button>
+
+                    <div class="header-search-panel" id="headerSearchPanel">
+
+                        <div class="header-search-input-wrapper">
+
+                            <i class="fas fa-search"></i>
+
+                            <input
+                                type="search"
+                                id="headerSearchInput"
+                                placeholder="Search pages, services..."
+                                autocomplete="off"
+                                aria-label="Search website">
+
+                            <button
+                                type="button"
+                                id="headerSearchClose"
+                                aria-label="Close search">
+
+                                <i class="fas fa-times"></i>
+
+                            </button>
+
+                        </div>
+
+                        <div
+                            class="header-search-suggestions"
+                            id="headerSearchSuggestions">
+
+                            <p class="search-suggestion-heading">
+                                QUICK LINKS
+                            </p>
+
+                            <div id="headerSearchResults"></div>
+
+                        </div>
+
+                    </div>
+
+                </div>
 
                     <a href="contact.html" class="btn btn-support">
                         <span>Get Support</span>
@@ -241,9 +291,14 @@
                                 <div class="shop-input-wrapper">
                                     <i class="fas fa-location-dot"></i>
 
-                                    <input type="text"
-                                        id="shopLocation"
-                                        placeholder="e.g. Sanchaung">
+                                    <select id="shopLocation" name="shopLocation">
+                                        <option value="">Select a city</option>
+                                        <option value="Yangon">Yangon</option>
+                                        <option value="Mandalay">Mandalay</option>
+                                        <option value="Naypyidaw">Naypyidaw</option>
+                                        <option value="Taunggyi">Taunggyi</option>
+                                    </select>
+
                                 </div>
 
                             </div>
@@ -1020,7 +1075,7 @@
                         <span>|</span>
                         <a href="about.html#terms">Terms & Conditions</a>
                         <span>|</span>
-                        <a href="sitemap.html">Sitemap</a>
+                        <a href="assets/images/sitemap.jpg">Sitemap</a>
 
                     </div>
 
