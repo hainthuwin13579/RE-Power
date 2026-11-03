@@ -49,9 +49,58 @@
 
             <div class="header-actions">
 
-                <a class="header-search" aria-label="Search">
-                    <i class="fas fa-search"></i>
-                </a>
+                <div class="header-search-wrapper">
+
+                    <button
+                        type="button"
+                        class="header-search"
+                        id="headerSearchToggle"
+                        aria-label="Open search"
+                        aria-expanded="false">
+
+                        <i class="fas fa-search"></i>
+
+                    </button>
+
+                    <div class="header-search-panel" id="headerSearchPanel">
+
+                        <div class="header-search-input-wrapper">
+
+                            <i class="fas fa-search"></i>
+
+                            <input
+                                type="search"
+                                id="headerSearchInput"
+                                placeholder="Search pages, services..."
+                                autocomplete="off"
+                                aria-label="Search website">
+
+                            <button
+                                type="button"
+                                id="headerSearchClose"
+                                aria-label="Close search">
+
+                                <i class="fas fa-times"></i>
+
+                            </button>
+
+                        </div>
+
+                        <div
+                            class="header-search-suggestions"
+                            id="headerSearchSuggestions">
+
+                            <p class="search-suggestion-heading">
+                                QUICK LINKS
+                            </p>
+
+                            <div id="headerSearchResults"></div>
+
+                        </div>
+
+                    </div>
+
+                </div>
 
                 <a href="contact.html" class="btn btn-support">
                     <span>Get Support</span>
@@ -88,7 +137,7 @@
                         avoidable damage and know when to seek professional help.
                     </p>
 
-                    <a href="#weather-guides" class="weather-btn weather-btn-primary">
+                    <a href="#weather-guides" class="weather-btn weather-btn-primary" >
                         Explore Guides
                         <i class="fas fa-arrow-right"></i>
                     </a>
@@ -1333,7 +1382,7 @@
                     <span>|</span>
                     <a href="about.html#terms">Terms & Conditions</a>
                     <span>|</span>
-                    <a href="sitemap.html">Sitemap</a>
+                    <a href="assets/images/sitemap.jpg">Sitemap</a>
                 </div>
             </div>
         </div>
