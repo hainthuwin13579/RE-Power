@@ -4165,3 +4165,30 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 });
+
+/*Intro Page animation hehehe*/
+(() => {
+    const HOME_PAGE = "index.html";
+    const intro = document.getElementById("intro");
+
+    const key = "repowerIntroPlayed";
+
+    let played = sessionStorage.getItem(key);
+
+    if (played === "true") {
+        window.location.replace(HOME_PAGE);
+        return;
+    }
+
+    sessionStorage.setItem(key, "true");
+
+    setTimeout(() => {
+        intro.classList.add("leaving");
+
+        setTimeout(() => {
+            window.location.replace(HOME_PAGE);
+        }, 850);
+
+    }, 7000);
+
+})();
