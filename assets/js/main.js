@@ -1,4 +1,100 @@
+/* =========================================
+   NAVIGATION DROPDOWN
+========================================= */
 
+document.addEventListener("DOMContentLoaded", function () {
+
+    const dropdowns = document.querySelectorAll(".nav-dropdown");
+
+    dropdowns.forEach(function (dropdown) {
+
+        const toggle = dropdown.querySelector(".nav-dropdown-toggle");
+
+        if (!toggle) return;
+
+        toggle.addEventListener("click", function (event) {
+
+            event.stopPropagation();
+
+            const isOpen = dropdown.classList.contains("open");
+
+            dropdowns.forEach(function (item) {
+
+                item.classList.remove("open");
+
+                const itemToggle = item.querySelector(
+                    ".nav-dropdown-toggle"
+                );
+
+                if (itemToggle) {
+                    itemToggle.setAttribute("aria-expanded", "false");
+                }
+
+            });
+
+            if (!isOpen) {
+
+                dropdown.classList.add("open");
+
+                toggle.setAttribute("aria-expanded", "true");
+
+            }
+
+        });
+
+    });
+
+
+    /* CLOSE WHEN CLICKING OUTSIDE */
+
+    document.addEventListener("click", function (event) {
+
+        if (!event.target.closest(".nav-dropdown")) {
+
+            dropdowns.forEach(function (dropdown) {
+
+                dropdown.classList.remove("open");
+
+                const toggle = dropdown.querySelector(
+                    ".nav-dropdown-toggle"
+                );
+
+                if (toggle) {
+                    toggle.setAttribute("aria-expanded", "false");
+                }
+
+            });
+
+        }
+
+    });
+
+
+    /* CLOSE WITH ESCAPE */
+
+    document.addEventListener("keydown", function (event) {
+
+        if (event.key === "Escape") {
+
+            dropdowns.forEach(function (dropdown) {
+
+                dropdown.classList.remove("open");
+
+                const toggle = dropdown.querySelector(
+                    ".nav-dropdown-toggle"
+                );
+
+                if (toggle) {
+                    toggle.setAttribute("aria-expanded", "false");
+                }
+
+            });
+
+        }
+
+    });
+
+});
 
 document.addEventListener("DOMContentLoaded", () => {
 
