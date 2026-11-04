@@ -959,7 +959,7 @@
 
 .community-cta-text h2 {
     margin: 12px 0;
-    color: var(--white);
+    color: var(--white) !important;
     font-size: 34px;
     line-height: 1.25;
 }
@@ -967,7 +967,7 @@
 .community-cta-text p {
     max-width: 580px;
     margin: 0;
-    color: #D0DDD4;
+    color: #D0DDD4 !important;
     line-height: 1.7;
 }
 
@@ -1319,4 +1319,159 @@
     .sample-label {
         font-size: 0.62rem;
     }
+}
+
+/* =========================================
+   HOME QUICK SEARCH RESULTS
+========================================= */
+
+.home-search-results {
+    margin-top: 35px;
+    padding-top: 28px;
+    border-top: 1px solid var(--border);
+}
+
+.home-search-results[hidden] {
+    display: none;
+}
+
+.home-search-results-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.search-results-label {
+    color: var(--leaf);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+}
+
+.home-search-results-heading h3 {
+    margin: 6px 0 0;
+    color: var(--forest);
+    font-size: 21px;
+}
+
+#homeSearchResultsCount {
+    color: var(--muted);
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.home-search-shop-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 18px;
+    margin-bottom: 12px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    transition: 0.2s ease;
+}
+
+.home-search-shop-card:hover {
+    border-color: var(--leaf);
+    box-shadow: var(--shadow);
+}
+
+.home-search-shop-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    background: var(--sage);
+    color: var(--leaf);
+    border-radius: 10px;
+    font-size: 19px;
+}
+
+.home-search-shop-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.home-search-shop-info h4 {
+    margin: 0 0 6px;
+    color: var(--charcoal);
+    font-size: 15px;
+}
+
+.home-search-shop-info p {
+    margin: 0 0 5px;
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.home-search-shop-info span {
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.home-search-shop-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+    color: var(--leaf);
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.home-search-shop-link:hover {
+    color: var(--forest);
+}
+
+.home-search-empty {
+    padding: 35px 20px;
+    text-align: center;
+    background: var(--sage);
+    border-radius: 12px;
+}
+
+.home-search-empty i {
+    color: var(--leaf);
+    font-size: 28px;
+}
+
+.home-search-empty h3 {
+    margin: 12px 0 7px;
+    color: var(--forest);
+    font-size: 17px;
+}
+
+.home-search-empty p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+@media (max-width: 600px) {
+
+    .home-search-results-heading {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .home-search-shop-card {
+        align-items: flex-start;
+        flex-wrap: wrap;
+    }
+
+    .home-search-shop-info {
+        flex-basis: calc(100% - 65px);
+    }
+
+    .home-search-shop-link {
+        margin-left: 64px;
+    }
+
 }

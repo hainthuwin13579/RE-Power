@@ -597,14 +597,14 @@ p {
 }
 
 .alternative-card h2 {
-    color: white;
+    color: white !important;
     font-size: 25px;
     margin-bottom: 12px;
 }
 
 .alternative-card p {
     max-width: 600px;
-    color: #c6d8ce;
+    color: #c6d8ce !important;
     font-size: 12px;
 }
 

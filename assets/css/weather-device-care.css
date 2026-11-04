@@ -99,6 +99,11 @@
     color: #ffffff !important;
 }
 
+
+.weather-care-page [hidden] {
+    display: none !important;
+}
+
 /*  HERO SECTION */
 
 .weather-hero {

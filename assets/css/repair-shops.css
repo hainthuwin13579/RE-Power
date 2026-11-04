@@ -1719,8 +1719,8 @@
     gap: 35px;
     padding: 45px 50px;
     overflow: hidden;
-    border-radius: var(--radius);
-    background: var(--forest);
+    border-radius: var(--radius) !important;
+    background: var(--forest) !important;
     color: var(--white);
 }
 
@@ -1730,14 +1730,14 @@
 
 .shop-details-cta-text h2 {
     margin: 12px 0;
-    color: var(--white);
+    color: var(--white) !important;
     font-size: clamp(1.8rem, 3vw, 2.5rem);
 }
 
 .shop-details-cta-text p {
     max-width: 570px;
     margin-bottom: 24px;
-    color: rgba(255, 255, 255, 0.78);
+    color: rgba(255, 255, 255, 0.78) !important;
     line-height: 1.8;
 }
 
