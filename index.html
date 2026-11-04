@@ -27,14 +27,61 @@
             </button>
 
             <nav class="navigation" id="navigation">
+
                 <a href="index.html" class="nav-link active">Home</a>
-                <a href="repair-shops.html" class="nav-link">Find a Repair Shop</a>
-                <a href="collection-delivery.html" class="nav-link">Collection & Delivery</a>
-                <a href="weather-device-care.html" class="nav-link">Weather & Device Care</a>
-                <a href="partnerships.html" class="nav-link">Business Partnerships</a>
-                <a href="community.html" class="nav-link">Community & Donations</a>
-                <a href="about.html" class="nav-link">About & Trust</a>
-                <a href="contact.html" class="nav-link">Contact & Support</a>
+
+                <a href="repair-shops.html" class="nav-link">
+                    Find a Repair Shop
+                </a>
+                <a href="weather-device-care.html" class="nav-link">
+                            Weather & Device Care
+                </a>
+                <a href="collection-delivery.html" class="nav-link">
+                    Collection & Delivery
+                </a>
+                <a href="community.html" class="nav-link">
+                            Community & Donations
+                        </a>
+
+
+                <!-- ABOUT DROPDOWN -->
+                <div class="nav-dropdown">
+                    
+
+                    <button
+                        type="button"
+                        class="nav-link nav-dropdown-toggle"
+                        aria-expanded="false"
+                        aria-haspopup="true">
+
+                        About
+                        <i class="fas fa-chevron-down"></i>
+
+                    </button>
+
+                    <div class="nav-dropdown-menu">
+
+                        
+
+                        <a href="about.html">
+                            <i class="fas fa-circle-info"></i>
+                            About & Trust
+                        </a>
+
+                        <a href="partnerships.html">
+                            <i class="fas fa-handshake"></i>
+                            Business Partnerships
+                        </a>
+
+                        <a href="contact.html">
+                            <i class="fas fa-headset"></i>
+                            Contact & Support
+                        </a>
+
+                    </div>
+
+                </div>
+
             </nav>
 
             <div class="header-actions">
@@ -127,82 +174,106 @@
 
         <section class="quick-search-section">
             <div class="container">
-    <div class="quick-search">
+                <div class="quick-search">
 
-        <div class="search-heading">
-            <span class="section-icon">
-                <i class="fas fa-search"></i>
-            </span>
-            <div>
-                <h2>Quick Repair Search</h2>
-                <p>Find trusted repair services for your devices.</p>
-            </div>
-        </div>
+                    <div class="search-heading">
+                        <span class="section-icon">
+                            <i class="fas fa-search"></i>
+                        </span>
 
-        <form id="homeSearchForm">
-
-            <div class="search-layout">
-
-                <div class="search-field category-field">
-                    <label>Device Category</label>
-
-                    <div class="category-options">
-                        <label class="category-option">
-                            <input type="radio" name="category" value="household" required>
-                            <span>
-                                <i class="fas fa-tv"></i>
-                                Household Electronics
-                            </span>
-                        </label>
-
-                        <label class="category-option">
-                            <input type="radio" name="category" value="personal">
-                            <span>
-                                <i class="fas fa-laptop"></i>
-                                Personal Technology
-                            </span>
-                        </label>
-                    </div>
-                </div>
-
-                <div class="location-device-row">
-
-                    <div class="search-field">
-                        <label for="location">Township or Location</label>
-                        <div class="input-wrapper">
-                            <i class="fas fa-map-marker-alt"></i>
-                            <input type="text" id="location" name="location"
-                                placeholder="e.g. Yangon" required>
+                        <div>
+                            <h2>Quick Repair Search</h2>
+                            <p>Find trusted repair services for your devices.</p>
                         </div>
                     </div>
 
-                    <div class="search-field">
-                        <label for="device">Your Device</label>
-                        <div class="input-wrapper">
-                            <i class="fas fa-mobile-alt"></i>
-                            <select id="device" name="device" required>
-                                <option value="">Choose device</option>
-                            </select>
+                    <form id="homeSearchForm">
+
+                        <div class="search-layout">
+
+                            <!-- DEVICE CATEGORY -->
+                            <div class="search-field category-field">
+                                <label>Device Category</label>
+
+                                <div class="category-options">
+                                    <label class="category-option">
+                                        <input type="radio" name="category" value="phone" required>
+                                        <span>
+                                            <i class="fas fa-mobile-alt"></i>
+                                            Household Electronic
+                                        </span>
+                                    </label>
+
+                                    <label class="category-option">
+                                        <input type="radio" name="category" value="laptop">
+                                        <span>
+                                            <i class="fas fa-laptop"></i>
+                                            Personal Technology
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+
+
+                            <!-- LOCATION -->
+                            <div class="search-field">
+                                <label for="location">Township</label>
+
+                                <div class="input-wrapper">
+                                    <i class="fas fa-map-marker-alt"></i>
+
+                                    <select id="location" name="location" required>
+                                        <option value="">Choose township</option>
+                                        <option value="Tamwe">Tamwe</option>
+                                        <option value="Sanchaung">Sanchaung</option>
+                                        <option value="Bahan">Bahan</option>
+                                        <option value="Kamayut">Kamayut</option>
+                                    </select>
+                                </div>
+                            </div>
+
+
+                            <!-- DEVICE -->
+                            <div class="search-field">
+                                <label for="device">Your Device</label>
+
+                                <div class="input-wrapper">
+                                    <i class="fas fa-mobile-alt"></i>
+
+                                    <select id="device" name="device" required disabled>
+                                        <option value="">Choose category first</option>
+                                    </select>
+                                </div>
+                            </div>
+
                         </div>
+
+
+                        <div class="search-submit">
+                            <button type="submit" class="btn btn-primary search-button">
+                                <i class="fas fa-search"></i>
+                                Find Repair Shops
+                                <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+
+                    </form>
+
+                    <!-- RESULTS -->
+                    <div id="homeSearchResults" class="home-search-results" hidden>
+                        <div class="home-search-results-heading">
+                            <div>
+                                <span class="search-results-label">SEARCH RESULTS</span>
+                                <h3 id="homeSearchResultsTitle">Available Repair Shops</h3>
+                            </div>
+
+                            <p id="homeSearchResultsCount"></p>
+                        </div>
+
+                        <div id="homeSearchResultsList"></div>
                     </div>
 
                 </div>
-
-            </div>
-
-            <div class="search-submit">
-                <button type="submit" class="btn btn-primary search-button">
-                    <i class="fas fa-search"></i>
-                    Search Repair Shops
-                    <i class="fas fa-arrow-right"></i>
-                </button>
-            </div>
-
-        </form>
-
-    </div>
-</div>
-
             </div>
         </section>
 
