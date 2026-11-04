@@ -46,137 +46,133 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 /*index.html*/
-    // QUICK REPAIR SEARCH
+    /* =========================================
+   QUICK REPAIR SEARCH — HOME PAGE
+========================================= */
+
+(() => {
+
+    const homeSearchForm = document.getElementById("homeSearchForm");
+
+    if (!homeSearchForm) return;
 
     const categoryRadios = document.querySelectorAll(
         'input[name="category"]'
     );
 
     const deviceSelect = document.getElementById("device");
-    const locationInput = document.getElementById("location");
+    const locationSelect = document.getElementById("location");
+
+
+    /* =========================================
+       DEVICE OPTIONS
+    ========================================= */
 
     const devices = {
-        household: [
-            "Fan",
-            "Refrigerator",
-            "Washing Machine",
-            "Television",
-            "Microwave",
-            "Rice Cooker",
-            "Air Conditioner",
-            "Other Household Appliance"
+
+        phone: [
+            { value: "smartphone", label: "Mobile Phone" }
         ],
 
-        personal: [
-            "Mobile Phone",
-            "Laptop",
-            "Tablet",
-            "Desktop Computer",
-            "Computer Accessories",
-            "Other Personal Device"
+        laptop: [
+            { value: "laptop", label: "Laptop" }
         ]
+
     };
 
-    function updateDevices(category, selectedDevice = "") {
-        if (!deviceSelect) return;
+
+    /* =========================================
+       UPDATE DEVICE DROPDOWN
+    ========================================= */
+
+    function updateDevices(category) {
 
         deviceSelect.innerHTML = "";
 
         const defaultOption = document.createElement("option");
+
         defaultOption.value = "";
-        defaultOption.textContent = category
-            ? "Choose device"
-            : "Choose category first";
+        defaultOption.textContent = "Choose device";
 
         deviceSelect.appendChild(defaultOption);
 
         if (!category || !devices[category]) {
+
             deviceSelect.disabled = true;
+            defaultOption.textContent = "Choose category first";
+
             return;
         }
 
         deviceSelect.disabled = false;
 
         devices[category].forEach((device) => {
+
             const option = document.createElement("option");
 
-            option.value = device.toLowerCase().replace(/[^a-z0-9]+/g, "-");
-            option.textContent = device;
-
-            if (option.value === selectedDevice) {
-                option.selected = true;
-            }
+            option.value = device.value;
+            option.textContent = device.label;
 
             deviceSelect.appendChild(option);
+
         });
+
     }
 
-    function getSelectedCategory() {
-        const selected = document.querySelector(
+
+    /* =========================================
+       CATEGORY CHANGE
+    ========================================= */
+
+    categoryRadios.forEach((radio) => {
+
+        radio.addEventListener("change", () => {
+
+            updateDevices(radio.value);
+
+        });
+
+    });
+
+
+    /* =========================================
+       SUBMIT SEARCH
+    ========================================= */
+
+    homeSearchForm.addEventListener("submit", (event) => {
+
+        event.preventDefault();
+
+        const selectedCategory = document.querySelector(
             'input[name="category"]:checked'
         );
 
-        return selected ? selected.value : "";
-    }
+        const category = selectedCategory
+            ? selectedCategory.value
+            : "";
 
-    if (categoryRadios.length && deviceSelect) {
-        categoryRadios.forEach((radio) => {
-            radio.addEventListener("change", () => {
-                updateDevices(radio.value);
-            });
-        });
+        const device = deviceSelect.value;
+        const location = locationSelect.value;
 
-        const params = new URLSearchParams(window.location.search);
+        if (!category || !device || !location) {
 
-        const initialCategory = params.get("category");
-        const initialDevice = params.get("device");
-        const initialLocation = params.get("location");
+            homeSearchForm.reportValidity();
+            return;
 
-        if (initialCategory && devices[initialCategory]) {
-            const initialRadio = document.querySelector(
-                `input[name="category"][value="${initialCategory}"]`
-            );
-
-            if (initialRadio) {
-                initialRadio.checked = true;
-                updateDevices(initialCategory, initialDevice || "");
-            } else {
-                updateDevices("");
-            }
-        } else {
-            updateDevices("");
         }
 
-        if (locationInput && initialLocation) {
-            locationInput.value = initialLocation;
-        }
-    }
-
-    const homeSearchForm = document.getElementById("homeSearchForm");
-
-    if (homeSearchForm) {
-        homeSearchForm.addEventListener("submit", (event) => {
-            event.preventDefault();
-
-            const category = getSelectedCategory();
-            const device = deviceSelect ? deviceSelect.value : "";
-            const location = locationInput ? locationInput.value.trim() : "";
-
-            if (!category || !device || !location) {
-                homeSearchForm.reportValidity();
-                return;
-            }
-
-            const params = new URLSearchParams({
-                category,
-                device,
-                location
-            });
-
-            window.location.href =
-                `repair-shops.html?${params.toString()}`;
+        const params = new URLSearchParams({
+            category: category,
+            device: device,
+            location: location
         });
-    }
+
+        window.location.href =
+            `repair-shops.html?${params.toString()}`;
+
+    });
+
+})();
 
 
     // REPAIR OR REPLACE CALCULATOR
@@ -728,413 +724,396 @@ document.addEventListener("DOMContentLoaded", function () {
 
     "use strict";
 
+
     /* =========================================
-       1. PAGE CHECK
+       1. PAGE INITIALISATION
     ========================================= */
 
-    const shopPage = document.querySelector(".shop-page");
+    const page = document.querySelector(".shop-page");
 
-    if (!shopPage) return;
+    if (!page) return;
 
 
     /* =========================================
-       2. DEVICE OPTIONS
+       2. ELEMENT REFERENCES
+    ========================================= */
+
+    const searchForm = document.getElementById("shopSearchForm");
+
+    const locationSelect = document.getElementById("shopLocation");
+    const deviceSelect = document.getElementById("shopDevice");
+    const problemSelect = document.getElementById("shopProblem");
+    const budgetInput = document.getElementById("shopBudget");
+
+    const deliveryCheckbox = document.getElementById("shopDelivery");
+
+    const sortSelect = document.getElementById("shopSort");
+
+    const categoryButtons = page.querySelectorAll(
+        ".shop-category-option"
+    );
+
+    const resultFilterButtons = page.querySelectorAll(
+        ".shop-filter-button"
+    );
+
+    const resultsContainer = document.getElementById("shopResults");
+    const resultsSummary = document.getElementById("shopResultsSummary");
+
+    const emptyState = document.getElementById("shopEmptyState");
+
+    const resetButton = document.getElementById("resetShopFilters");
+    const emptyResetButton = document.getElementById("shopEmptyReset");
+
+    const detailsSection = document.getElementById("shopDetails");
+    const detailContent = document.getElementById("shopDetailContent");
+
+    const mapElement = document.getElementById("shopMap");
+
+    const locationButton = document.getElementById("shopUseMyLocation");
+    const locationStatus = document.getElementById("shopLocationStatus");
+
+
+    /* =========================================
+       3. DEVICE CATALOGUE
     ========================================= */
 
     const deviceOptions = {
 
-        all: [
-            "Smartphone",
-            "Laptop"
+        household: [
+            { value: "refrigerator", label: "Refrigerator" },
+            { value: "washing-machine", label: "Washing Machine" },
+            { value: "television", label: "Television" },
+            { value: "microwave", label: "Microwave" },
+            { value: "rice-cooker", label: "Rice Cooker" },
+            { value: "air-conditioner", label: "Air Conditioner" },
+            { value: "fan", label: "Electric Fan" }
         ],
 
-        phone: [
-            "Smartphone"
-        ],
-
-        laptop: [
-            "Laptop"
+        personal: [
+            { value: "smartphone", label: "Smartphone" },
+            { value: "laptop", label: "Laptop" },
+            { value: "tablet", label: "Tablet" },
+            { value: "desktop", label: "Desktop Computer" },
+            { value: "monitor", label: "Monitor" },
+            { value: "printer", label: "Printer" }
         ]
 
     };
 
 
     /* =========================================
-       3. SAMPLE REPAIR SHOP DATA
-
-       3 Phone Repair Shops
-       3 Laptop Repair Shops
-
-       Four Yangon Townships:
-       Tamwe, Sanchaung, Bahan, Kamayut
-
-       All details are prototype information.
+       4. PROBLEM LABELS
     ========================================= */
 
-    const repairShops = [
+    const problemLabels = {
 
-        /* PHONE REPAIR 1 */
+        power: "Power or Charging",
+        screen: "Screen or Display",
+        water: "Water Damage",
+        performance: "Performance or Software",
+        mechanical: "Mechanical Fault",
+        other: "Other / Not Sure"
+
+    };
+
+
+    /* =========================================
+       5. SHOP DATABASE
+
+       All shops are fictional sample listings.
+
+       LOW BUDGET:
+       0–50,000 MMK
+
+       MEDIUM BUDGET:
+       50,001–100,000 MMK
+
+       HIGH BUDGET:
+       100,001–1,000,000 MMK
+    ========================================= */
+
+    const shops = [
+
+        /* LOW BUDGET — SHOP 1 */
 
         {
             id: 1,
-            name: "Mobile Care Workshop",
-            category: "phone",
-            township: "Sanchaung",
-            city: "Yangon",
-            address: "Sanchaung Township, Yangon, Myanmar",
 
-            latitude: 16.8053,
-            longitude: 96.1320,
+            name: "Home Appliance Care",
 
-            description:
-                "A sample smartphone repair service offering general mobile device inspection and troubleshooting.",
+            category: "household",
 
-            devices: ["Smartphone"],
+            township: "Tamwe",
+
+            address: "Sample Road, Tamwe Township, Yangon",
+
+            devices: [
+                "rice-cooker",
+                "fan",
+                "microwave"
+            ],
 
             problems: [
                 "power",
-                "screen",
-                "water",
-                "performance"
+                "mechanical",
+                "other"
             ],
 
-            price: 25000,
-            delivery: true,
-            phone: "+95 9 123 456 701",
+            priceMin: 0,
+            priceMax: 50000,
 
-            icon: "fa-mobile-screen-button",
-            badge: "Phone Repair",
+            collection: true,
+            delivery: false,
 
-            services:
-                "Screen inspection, charging diagnosis, battery assessment and general smartphone servicing.",
+            rating: 4.5,
 
-            hours: "9:00 AM – 6:00 PM"
+            description:
+                "A sample household appliance repair service for everyday electrical and mechanical problems.",
+
+            latitude: 16.8065,
+            longitude: 96.1875
         },
 
 
-        /* PHONE REPAIR 2 */
+        /* LOW BUDGET — SHOP 2 */
 
         {
             id: 2,
-            name: "Smart Phone Repair Centre",
-            category: "phone",
-            township: "Tamwe",
-            city: "Yangon",
-            address: "Tamwe Township, Yangon, Myanmar",
 
-            latitude: 16.8065,
-            longitude: 96.1780,
+            name: "Smart Device Service",
 
-            description:
-                "A sample mobile repair listing for common smartphone hardware and software problems.",
+            category: "personal",
 
-            devices: ["Smartphone"],
+            township: "Sanchaung",
 
-            problems: [
-                "power",
-                "screen",
-                "performance"
+            address: "Sample Street, Sanchaung Township, Yangon",
+
+            devices: [
+                "smartphone",
+                "laptop",
+                "tablet"
             ],
 
-            price: 30000,
-            delivery: false,
-            phone: "+95 9 123 456 702",
+            problems: [
+                "screen",
+                "power",
+                "performance",
+                "water"
+            ],
 
-            icon: "fa-mobile-screen",
-            badge: "Phone Repair",
+            priceMin: 0,
+            priceMax: 50000,
 
-            services:
-                "Display inspection, charging port diagnosis, software troubleshooting and mobile device maintenance.",
+            collection: false,
+            delivery: true,
 
-            hours: "10:00 AM – 7:00 PM"
+            rating: 4.6,
+
+            description:
+                "A sample personal technology repair service for smartphones, laptops and tablets.",
+
+            latitude: 16.8050,
+            longitude: 96.1330
         },
 
 
-        /* PHONE REPAIR 3 */
+        /* MEDIUM BUDGET — SHOP 3 */
 
         {
             id: 3,
-            name: "Digital Mobile Solutions",
-            category: "phone",
+
+            name: "Home Electronics Workshop",
+
+            category: "household",
+
             township: "Bahan",
-            city: "Yangon",
-            address: "Bahan Township, Yangon, Myanmar",
 
-            latitude: 16.8100,
-            longitude: 96.1600,
+            address: "Sample Avenue, Bahan Township, Yangon",
 
-            description:
-                "A sample smartphone service listing providing general mobile device diagnostics and repair support.",
-
-            devices: ["Smartphone"],
+            devices: [
+                "refrigerator",
+                "washing-machine",
+                "television"
+            ],
 
             problems: [
                 "power",
-                "screen",
                 "water",
+                "mechanical",
                 "other"
             ],
 
-            price: 35000,
+            priceMin: 50001,
+            priceMax: 100000,
+
+            collection: true,
             delivery: true,
-            phone: "+95 9 123 456 703",
 
-            icon: "fa-mobile-screen-button",
-            badge: "Phone Repair",
+            rating: 4.7,
 
-            services:
-                "Mobile screen diagnosis, battery inspection, water damage assessment and general troubleshooting.",
+            description:
+                "A sample appliance repair service for larger household electronics and common appliance faults.",
 
-            hours: "9:00 AM – 5:30 PM"
+            latitude: 16.8110,
+            longitude: 96.1590
         },
 
 
-        /* LAPTOP REPAIR 1 */
+        /* MEDIUM BUDGET — SHOP 4 */
 
         {
             id: 4,
-            name: "Laptop Care Service",
-            category: "laptop",
+
+            name: "Computer & Mobile Care",
+
+            category: "personal",
+
             township: "Kamayut",
-            city: "Yangon",
-            address: "Kamayut Township, Yangon, Myanmar",
 
-            latitude: 16.8250,
-            longitude: 96.1350,
+            address: "Sample Road, Kamayut Township, Yangon",
 
-            description:
-                "A sample laptop repair listing for computer hardware inspection and software troubleshooting.",
-
-            devices: ["Laptop"],
+            devices: [
+                "smartphone",
+                "laptop",
+                "desktop",
+                "monitor"
+            ],
 
             problems: [
                 "power",
-                "performance",
                 "screen",
+                "performance",
                 "other"
             ],
 
-            price: 45000,
-            delivery: true,
-            phone: "+95 9 123 456 704",
+            priceMin: 50001,
+            priceMax: 100000,
 
-            icon: "fa-laptop",
-            badge: "Laptop Repair",
+            collection: true,
+            delivery: false,
 
-            services:
-                "Laptop diagnostics, keyboard inspection, operating system troubleshooting and hardware maintenance.",
+            rating: 4.8,
 
-            hours: "9:00 AM – 6:00 PM"
+            description:
+                "A sample computer and mobile repair service for hardware, display and software problems.",
+
+            latitude: 16.8270,
+            longitude: 96.1335
         },
 
 
-        /* LAPTOP REPAIR 2 */
+        /* HIGH BUDGET — SHOP 5 */
 
         {
             id: 5,
-            name: "Computer Tech Workshop",
-            category: "laptop",
-            township: "Sanchaung",
-            city: "Yangon",
-            address: "Sanchaung Township, Yangon, Myanmar",
 
-            latitude: 16.8105,
-            longitude: 96.1370,
+            name: "Advanced Appliance Solutions",
 
-            description:
-                "A sample computer repair service for common laptop hardware and performance issues.",
+            category: "household",
 
-            devices: ["Laptop"],
+            township: "Bahan",
 
-            problems: [
-                "power",
-                "performance",
-                "screen"
+            address: "Sample Street, Bahan Township, Yangon",
+
+            devices: [
+                "refrigerator",
+                "washing-machine",
+                "air-conditioner"
             ],
 
-            price: 55000,
-            delivery: false,
-            phone: "+95 9 123 456 705",
-
-            icon: "fa-laptop",
-            badge: "Laptop Repair",
-
-            services:
-                "Laptop hardware inspection, cooling system maintenance, display diagnosis and software support.",
-
-            hours: "9:30 AM – 6:00 PM"
-        },
-
-
-        /* LAPTOP REPAIR 3 */
-
-        {
-            id: 6,
-            name: "Advanced Laptop Solutions",
-            category: "laptop",
-            township: "Tamwe",
-            city: "Yangon",
-            address: "Tamwe Township, Yangon, Myanmar",
-
-            latitude: 16.8000,
-            longitude: 96.1800,
-
-            description:
-                "A sample laptop service listing offering computer diagnostics and general repair assistance.",
-
-            devices: ["Laptop"],
-
             problems: [
                 "power",
-                "performance",
+                "water",
+                "mechanical",
                 "other"
             ],
 
-            price: 65000,
+            priceMin: 100001,
+            priceMax: 1000000,
+
+            collection: true,
             delivery: true,
-            phone: "+95 9 123 456 706",
 
-            icon: "fa-computer",
-            badge: "Laptop Repair",
+            rating: 4.9,
 
-            services:
-                "Laptop diagnostics, hardware troubleshooting, software maintenance and general computer servicing.",
+            description:
+                "A sample service for more complex household appliance repairs and electrical faults.",
 
-            hours: "8:30 AM – 5:30 PM"
+            latitude: 16.8190,
+            longitude: 96.1660
+        },
+
+
+        /* HIGH BUDGET — SHOP 6 */
+
+        {
+            id: 6,
+
+            name: "Advanced Technology Repair",
+
+            category: "personal",
+
+            township: "Tamwe",
+
+            address: "Sample Avenue, Tamwe Township, Yangon",
+
+            devices: [
+                "smartphone",
+                "laptop",
+                "desktop",
+                "monitor",
+                "printer"
+            ],
+
+            problems: [
+                "power",
+                "screen",
+                "performance",
+                "mechanical",
+                "other"
+            ],
+
+            priceMin: 100001,
+            priceMax: 1000000,
+
+            collection: true,
+            delivery: true,
+
+            rating: 4.9,
+
+            description:
+                "A sample technology repair service for more complex computer and personal device issues.",
+
+            latitude: 16.8000,
+            longitude: 96.1950
         }
 
     ];
 
 
     /* =========================================
-       4. HTML ELEMENTS
+       6. APPLICATION STATE
     ========================================= */
 
-    const categoryButtons = shopPage.querySelectorAll(
-        ".shop-category-option"
-    );
+    let activeCategory = "";
 
-    const shopFilterButtons = shopPage.querySelectorAll(
-        ".shop-filter-button"
-    );
+    let activeResultFilter = "all";
 
-    const searchForm = shopPage.querySelector(
-        "#shopSearchForm"
-    );
-
-    const locationInput = shopPage.querySelector(
-        "#shopLocation"
-    );
-
-    const deviceSelect = shopPage.querySelector(
-        "#shopDevice"
-    );
-
-    const problemSelect = shopPage.querySelector(
-        "#shopProblem"
-    );
-
-    const budgetInput = shopPage.querySelector(
-        "#shopBudget"
-    );
-
-    const deliveryCheckbox = shopPage.querySelector(
-        "#shopDelivery"
-    );
-
-    const resultsContainer = shopPage.querySelector(
-        "#shopResults"
-    );
-
-    const resultsSummary = shopPage.querySelector(
-        "#shopResultsSummary"
-    );
-
-    const emptyState = shopPage.querySelector(
-        "#shopEmptyState"
-    );
-
-    const resetButton = shopPage.querySelector(
-        "#resetShopFilters"
-    );
-
-    const emptyResetButton = shopPage.querySelector(
-        "#shopEmptyReset"
-    );
-
-    const sortSelect = shopPage.querySelector(
-        "#shopSort"
-    );
-
-    const mapToggle = shopPage.querySelector(
-        "#shopMapToggle"
-    );
-
-    const resultsLayout = shopPage.querySelector(
-        ".shop-results-layout"
-    );
-
-    const detailContent = shopPage.querySelector(
-        "#shopDetailContent"
-    );
-
-    const currentYear = document.getElementById(
-        "currentYear"
-    );
-
-    const locationButton = shopPage.querySelector(
-        "#shopUseMyLocation"
-    );
-
-    const locationStatus = shopPage.querySelector(
-        "#shopLocationStatus"
-    );
-
-
-    /* =========================================
-       5. APPLICATION VARIABLES
-    ========================================= */
-
-    let activeShopFilter = "all";
-
-    let filteredShops = [...repairShops];
+    let filteredShops = [...shops];
 
     let shopMap = null;
 
-    let detailMap = null;
-
-    let mapMarkers = [];
-
-    let detailMarker = null;
+    let shopMarkers = [];
 
     let userLocationMarker = null;
 
-    let userLocationCircle = null;
-
-    const currencyFormatter = new Intl.NumberFormat("en-US");
+    let detailMap = null;
 
 
     /* =========================================
-       6. HELPER FUNCTIONS
+       7. HELPER FUNCTIONS
     ========================================= */
-
-    function formatPrice(price) {
-
-        return "MMK " + currencyFormatter.format(price);
-
-    }
-
-
-    function getShopById(shopId) {
-
-        return repairShops.find(function (shop) {
-
-            return shop.id === Number(shopId);
-
-        });
-
-    }
-
 
     function escapeHTML(value) {
 
@@ -1155,7 +1134,575 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
-    function closeDetailMap() {
+    function getCategoryName(category) {
+
+        return category === "household"
+            ? "Household Electronics"
+            : "Personal Technology";
+
+    }
+
+
+    function getDeviceName(deviceId) {
+
+        const allDevices = [
+            ...deviceOptions.household,
+            ...deviceOptions.personal
+        ];
+
+        const device = allDevices.find(function (item) {
+
+            return item.value === deviceId;
+
+        });
+
+        return device ? device.label : deviceId;
+
+    }
+
+
+    function getBudgetLabel(shop) {
+
+        if (shop.priceMax <= 50000) {
+            return "0–50,000 MMK";
+        }
+
+        if (shop.priceMax <= 100000) {
+            return "50,001–100,000 MMK";
+        }
+
+        return "100,001–1,000,000 MMK";
+
+    }
+
+
+    /* =========================================
+       8. CATEGORY SELECTION
+    ========================================= */
+
+    function updateCategoryButtons() {
+
+        categoryButtons.forEach(function (button) {
+
+            const isActive =
+                button.dataset.category === activeCategory;
+
+            button.classList.toggle("active", isActive);
+
+            button.setAttribute(
+                "aria-pressed",
+                String(isActive)
+            );
+
+        });
+
+    }
+
+
+    /* =========================================
+       9. DEVICE DROPDOWN
+    ========================================= */
+
+    function updateDeviceOptions() {
+
+        if (!deviceSelect) return;
+
+
+        if (!activeCategory) {
+
+            deviceSelect.innerHTML = `
+                <option value="">Choose a category first</option>
+            `;
+
+            deviceSelect.disabled = true;
+
+            return;
+
+        }
+
+
+        const availableDevices = deviceOptions[activeCategory] || [];
+
+        const previousValue = deviceSelect.value;
+
+
+        deviceSelect.innerHTML = `
+
+            <option value="">Any Device</option>
+
+            ${availableDevices.map(function (device) {
+
+                return `
+                    <option value="${escapeHTML(device.value)}">
+                        ${escapeHTML(device.label)}
+                    </option>
+                `;
+
+            }).join("")}
+
+        `;
+
+
+        deviceSelect.disabled = false;
+
+
+        const previousValueExists = availableDevices.some(function (device) {
+
+            return device.value === previousValue;
+
+        });
+
+
+        deviceSelect.value = previousValueExists
+            ? previousValue
+            : "";
+
+    }
+
+
+    categoryButtons.forEach(function (button) {
+
+        button.addEventListener("click", function () {
+
+            const selectedCategory = button.dataset.category;
+
+            if (
+                selectedCategory !== "household" &&
+                selectedCategory !== "personal"
+            ) {
+                return;
+            }
+
+
+            activeCategory = selectedCategory;
+
+            updateCategoryButtons();
+
+            updateDeviceOptions();
+
+            renderShops();
+
+        });
+
+    });
+
+
+    /* =========================================
+       10. RESULT FILTER BUTTONS
+
+       All Shops
+       Phone Repair
+       Laptop Repair
+    ========================================= */
+
+    function updateResultFilterButtons() {
+
+        resultFilterButtons.forEach(function (button) {
+
+            const isActive =
+                button.dataset.shopFilter === activeResultFilter;
+
+            button.classList.toggle("active", isActive);
+
+            button.setAttribute(
+                "aria-pressed",
+                String(isActive)
+            );
+
+        });
+
+    }
+
+
+    resultFilterButtons.forEach(function (button) {
+
+        button.addEventListener("click", function () {
+
+            const selectedFilter = button.dataset.shopFilter;
+
+            if (
+                !["all", "phone", "laptop"].includes(selectedFilter)
+            ) {
+                return;
+            }
+
+
+            activeResultFilter = selectedFilter;
+
+            updateResultFilterButtons();
+
+            renderShops();
+
+        });
+
+    });
+
+
+    /* =========================================
+       11. SEARCH FILTERING
+    ========================================= */
+
+    function getFilteredShops() {
+
+        const selectedLocation = locationSelect
+            ? locationSelect.value
+            : "";
+
+        const selectedDevice = deviceSelect
+            ? deviceSelect.value
+            : "";
+
+        const selectedProblem = problemSelect
+            ? problemSelect.value
+            : "";
+
+        const selectedBudget = budgetInput
+            ? budgetInput.value.trim()
+            : "";
+
+        const selectedDelivery = deliveryCheckbox
+            ? deliveryCheckbox.checked
+            : false;
+
+
+        let budget = null;
+
+
+        if (selectedBudget !== "") {
+
+            budget = Number(selectedBudget);
+
+            if (
+                !Number.isFinite(budget) ||
+                budget < 0 ||
+                budget > 1000000
+            ) {
+                return [];
+            }
+
+        }
+
+
+        return shops.filter(function (shop) {
+
+
+            /* CATEGORY FILTER */
+
+            if (
+                activeCategory &&
+                shop.category !== activeCategory
+            ) {
+                return false;
+            }
+
+
+            /* PHONE / LAPTOP FILTER */
+
+            if (activeResultFilter === "phone") {
+
+                if (!shop.devices.includes("smartphone")) {
+                    return false;
+                }
+
+            }
+
+
+            if (activeResultFilter === "laptop") {
+
+                if (!shop.devices.includes("laptop")) {
+                    return false;
+                }
+
+            }
+
+
+            /* TOWNSHIP FILTER */
+
+            if (
+                selectedLocation &&
+                shop.township !== selectedLocation
+            ) {
+                return false;
+            }
+
+
+            /* DEVICE FILTER */
+
+            if (
+                selectedDevice &&
+                !shop.devices.includes(selectedDevice)
+            ) {
+                return false;
+            }
+
+
+            /* PROBLEM FILTER */
+
+            if (
+                selectedProblem &&
+                !shop.problems.includes(selectedProblem)
+            ) {
+                return false;
+            }
+
+
+            /* BUDGET FILTER */
+
+            if (budget !== null) {
+
+                if (
+                    budget < shop.priceMin ||
+                    budget > shop.priceMax
+                ) {
+                    return false;
+                }
+
+            }
+
+
+            /* COLLECTION / DELIVERY FILTER */
+
+            if (
+                selectedDelivery &&
+                !shop.collection &&
+                !shop.delivery
+            ) {
+                return false;
+            }
+
+
+            return true;
+
+        });
+
+    }
+
+
+    /* =========================================
+       12. SORTING
+    ========================================= */
+
+    function sortShops(shopList) {
+
+        const sortValue = sortSelect
+            ? sortSelect.value
+            : "recommended";
+
+        const sortedShops = [...shopList];
+
+
+        if (sortValue === "cost") {
+
+            sortedShops.sort(function (a, b) {
+
+                return a.priceMin - b.priceMin;
+
+            });
+
+        } else if (sortValue === "cost-high") {
+
+            sortedShops.sort(function (a, b) {
+
+                return b.priceMax - a.priceMax;
+
+            });
+
+        } else {
+
+            sortedShops.sort(function (a, b) {
+
+                return b.rating - a.rating;
+
+            });
+
+        }
+
+
+        return sortedShops;
+
+    }
+
+
+    /* =========================================
+       13. RENDER SHOP CARDS
+    ========================================= */
+
+    function renderShopCards(shopList) {
+
+        if (!resultsContainer) return;
+
+
+        resultsContainer.innerHTML = shopList.map(function (shop) {
+
+            const supportedDevices = shop.devices.map(function (device) {
+
+                return getDeviceName(device);
+
+            });
+
+
+            const services = [];
+
+            if (shop.collection) {
+                services.push("Collection Available");
+            }
+
+            if (shop.delivery) {
+                services.push("Delivery Available");
+            }
+
+
+            return `
+
+                <article class="shop-result-card">
+
+                    <div class="shop-card-top">
+
+                        <span class="shop-category-tag">
+                            ${escapeHTML(getCategoryName(shop.category))}
+                        </span>
+
+                        <span class="shop-rating">
+                            ★ ${escapeHTML(shop.rating)}
+                        </span>
+
+                    </div>
+
+
+                    <div class="shop-card-content">
+
+                        <h3>
+                            ${escapeHTML(shop.name)}
+                        </h3>
+
+
+                        <p class="shop-card-location">
+
+                            <i class="fas fa-location-dot"></i>
+
+                            ${escapeHTML(shop.township)}, Yangon
+
+                        </p>
+
+
+                        <p class="shop-card-description">
+                            ${escapeHTML(shop.description)}
+                        </p>
+
+
+                        <div class="shop-card-devices">
+
+                            <strong>Supported Devices</strong>
+
+                            <p>
+                                ${supportedDevices.map(escapeHTML).join(", ")}
+                            </p>
+
+                        </div>
+
+
+                        <div class="shop-card-services">
+
+                            ${services.map(function (service) {
+
+                                return `
+                                    <span>${escapeHTML(service)}</span>
+                                `;
+
+                            }).join("")}
+
+                        </div>
+
+
+                        <button
+                            type="button"
+                            class="shop-view-details"
+                            data-shop-id="${shop.id}">
+
+                            View Shop Details
+
+                            <i class="fas fa-arrow-right"></i>
+
+                        </button>
+
+                    </div>
+
+                </article>
+
+            `;
+
+        }).join("");
+
+    }
+
+
+    /* =========================================
+       14. RENDER SEARCH RESULTS
+    ========================================= */
+
+    function renderShops() {
+
+        filteredShops = getFilteredShops();
+
+        filteredShops = sortShops(filteredShops);
+
+
+        /* RESULTS SUMMARY */
+
+        if (resultsSummary) {
+
+            resultsSummary.textContent =
+                filteredShops.length +
+                (filteredShops.length === 1
+                    ? " Shop Found"
+                    : " Shops Found");
+
+        }
+
+
+        /* EMPTY STATE */
+
+        if (filteredShops.length === 0) {
+
+            if (resultsContainer) {
+                resultsContainer.innerHTML = "";
+            }
+
+            if (emptyState) {
+                emptyState.hidden = false;
+            }
+
+        } else {
+
+            if (emptyState) {
+                emptyState.hidden = true;
+            }
+
+            renderShopCards(filteredShops);
+
+        }
+
+
+        /* UPDATE MAP */
+
+        updateMapMarkers();
+
+    }
+
+
+    /* =========================================
+       15. CLOSE SHOP DETAILS
+    ========================================= */
+
+    function closeShopDetails() {
+
+        if (detailsSection) {
+            detailsSection.hidden = true;
+        }
+
+        if (detailContent) {
+            detailContent.hidden = true;
+        }
 
         if (detailMap) {
 
@@ -1163,538 +1710,77 @@ document.addEventListener("DOMContentLoaded", function () {
 
             detailMap = null;
 
-            detailMarker = null;
-
-        }
-
-    }
-
-
-    function closeShopDetails() {
-
-        if (detailContent) {
-
-            detailContent.hidden = true;
-
-            detailContent.innerHTML = "";
-
-        }
-
-        closeDetailMap();
-
-    }
-
-
-    /* =========================================
-       7. DEVICE DROPDOWN
-    ========================================= */
-
-    function updateDeviceOptions() {
-
-        if (!deviceSelect) return;
-
-        const previousValue = deviceSelect.value;
-
-        const devices = deviceOptions[activeShopFilter] ||
-            deviceOptions.all;
-
-        deviceSelect.innerHTML =
-            '<option value="">All supported devices</option>';
-
-        devices.forEach(function (device) {
-
-            const option = document.createElement("option");
-
-            option.value = device;
-
-            option.textContent = device;
-
-            deviceSelect.appendChild(option);
-
-        });
-
-        if (devices.includes(previousValue)) {
-
-            deviceSelect.value = previousValue;
-
         }
 
     }
 
 
     /* =========================================
-       8. UPDATE FILTER BUTTONS
-    ========================================= */
-
-    function updateFilterButtons() {
-
-        shopFilterButtons.forEach(function (button) {
-
-            const isActive =
-                button.dataset.shopFilter === activeShopFilter;
-
-            button.classList.toggle("active", isActive);
-
-            button.setAttribute(
-                "aria-pressed",
-                String(isActive)
-            );
-
-        });
-
-        categoryButtons.forEach(function (button) {
-
-            const isActive =
-                button.dataset.category === activeShopFilter;
-
-            button.classList.toggle("active", isActive);
-
-            button.setAttribute(
-                "aria-pressed",
-                String(isActive)
-            );
-
-        });
-
-    }
-
-
-    /* =========================================
-       9. CATEGORY BUTTON EVENTS
-    ========================================= */
-
-    categoryButtons.forEach(function (button) {
-
-        button.addEventListener("click", function () {
-
-            const category = button.dataset.category;
-
-            if (!["phone", "laptop"].includes(category)) {
-                return;
-            }
-
-            activeShopFilter = category;
-
-            updateFilterButtons();
-
-            updateDeviceOptions();
-
-            applyFilters();
-
-        });
-
-    });
-
-
-    /* =========================================
-       10. SHOP TYPE FILTER
-    ========================================= */
-
-    shopFilterButtons.forEach(function (button) {
-
-        button.addEventListener("click", function () {
-
-            const filter = button.dataset.shopFilter;
-
-            if (!["all", "phone", "laptop"].includes(filter)) {
-                return;
-            }
-
-            activeShopFilter = filter;
-
-            updateFilterButtons();
-
-            updateDeviceOptions();
-
-            applyFilters();
-
-        });
-
-    });
-
-
-    /* =========================================
-       11. GET VISIBLE SHOPS
-    ========================================= */
-
-    function getVisibleShops() {
-
-        if (activeShopFilter === "phone") {
-
-            return filteredShops.filter(function (shop) {
-
-                return shop.category === "phone";
-
-            });
-
-        }
-
-        if (activeShopFilter === "laptop") {
-
-            return filteredShops.filter(function (shop) {
-
-                return shop.category === "laptop";
-
-            });
-
-        }
-
-        return filteredShops;
-
-    }
-
-
-    /* =========================================
-       12. APPLY SEARCH FILTERS
-    ========================================= */
-
-    function applyFilters() {
-
-        const location = locationInput
-            ? locationInput.value.trim().toLowerCase()
-            : "";
-
-        const device = deviceSelect
-            ? deviceSelect.value
-            : "";
-
-        const problem = problemSelect
-            ? problemSelect.value
-            : "";
-
-        const budget = budgetInput
-            ? budgetInput.value.trim()
-            : "";
-
-        const budgetNumber = Number(budget);
-
-        const deliveryOnly = deliveryCheckbox
-            ? deliveryCheckbox.checked
-            : false;
-
-
-        filteredShops = repairShops.filter(function (shop) {
-
-
-            /* SHOP TYPE */
-
-            const categoryMatch =
-                activeShopFilter === "all" ||
-                shop.category === activeShopFilter;
-
-
-            /* TOWNSHIP */
-
-            const locationMatch =
-                !location ||
-                shop.township.toLowerCase() === location;
-
-
-            /* DEVICE */
-
-            const deviceMatch =
-                !device ||
-                shop.devices.includes(device);
-
-
-            /* PROBLEM */
-
-            const problemMatch =
-                !problem ||
-                shop.problems.includes(problem);
-
-
-            /* BUDGET */
-
-            const budgetMatch =
-                budget === "" ||
-                (
-                    Number.isFinite(budgetNumber) &&
-                    budgetNumber >= 0 &&
-                    shop.price <= budgetNumber
-                );
-
-
-            /* DELIVERY */
-
-            const deliveryMatch =
-                !deliveryOnly ||
-                shop.delivery;
-
-
-            return (
-                categoryMatch &&
-                locationMatch &&
-                deviceMatch &&
-                problemMatch &&
-                budgetMatch &&
-                deliveryMatch
-            );
-
-        });
-
-
-        sortShops();
-
-    }
-
-
-    /* =========================================
-       13. SORT SHOPS
-    ========================================= */
-
-    function sortShops() {
-
-        const sortValue = sortSelect
-            ? sortSelect.value
-            : "recommended";
-
-
-        if (sortValue === "cost") {
-
-            filteredShops.sort(function (a, b) {
-
-                return a.price - b.price;
-
-            });
-
-        } else if (sortValue === "cost-high") {
-
-            filteredShops.sort(function (a, b) {
-
-                return b.price - a.price;
-
-            });
-
-        } else {
-
-            filteredShops.sort(function (a, b) {
-
-                return a.id - b.id;
-
-            });
-
-        }
-
-        renderShops();
-
-    }
-
-
-    /* =========================================
-       14. RENDER SHOP CARDS
-    ========================================= */
-
-    function renderShops() {
-
-        if (!resultsContainer) return;
-
-        resultsContainer.innerHTML = "";
-
-        const visibleShops = getVisibleShops();
-
-
-        /* RESULTS COUNT */
-
-        if (resultsSummary) {
-
-            resultsSummary.textContent =
-                visibleShops.length + " Shops Found";
-
-        }
-
-
-        /* EMPTY STATE */
-
-        if (emptyState) {
-
-            emptyState.hidden =
-                visibleShops.length !== 0;
-
-        }
-
-
-        /* SHOP CARDS */
-
-        visibleShops.forEach(function (shop) {
-
-            const card = document.createElement("article");
-
-            card.className = "shop-card";
-
-            const deviceTags = shop.devices
-                .map(function (device) {
-
-                    return `
-                        <span class="shop-card-tag">
-                            ${escapeHTML(device)}
-                        </span>
-                    `;
-
-                })
-                .join("");
-
-
-            card.innerHTML = `
-
-                <div class="shop-card-image">
-
-                    <i
-                        class="fas ${escapeHTML(shop.icon)}"
-                        aria-hidden="true">
-                    </i>
-
-                    <span class="shop-card-badge">
-                        ${escapeHTML(shop.badge)}
-                    </span>
-
-                </div>
-
-
-                <div class="shop-card-content">
-
-                    <h3>
-                        ${escapeHTML(shop.name)}
-                    </h3>
-
-
-                    <div class="shop-card-location">
-
-                        <i class="fas fa-location-dot"></i>
-
-                        <span>
-                            ${escapeHTML(shop.township)},
-                            ${escapeHTML(shop.city)}
-                        </span>
-
-                    </div>
-
-
-                    <p class="shop-card-description">
-                        ${escapeHTML(shop.description)}
-                    </p>
-
-
-                    <div class="shop-card-tags">
-                        ${deviceTags}
-                    </div>
-
-
-                    <div class="shop-card-price">
-
-                        <span>
-                            Estimated starting cost
-                        </span>
-
-                        <strong>
-                            ${formatPrice(shop.price)}
-                        </strong>
-
-                    </div>
-
-
-                    <div class="shop-card-actions">
-
-                        <button
-                            type="button"
-                            class="shop-details-button"
-                            data-shop-id="${shop.id}">
-
-                            <i class="fas fa-circle-info"></i>
-                            Details
-
-                        </button>
-
-
-                        <button
-                            type="button"
-                            class="shop-contact-button"
-                            data-shop-id="${shop.id}">
-
-                            <i class="fas fa-phone"></i>
-                            Contact
-
-                        </button>
-
-
-                        <button
-                            type="button"
-                            class="shop-directions-button"
-                            data-shop-id="${shop.id}">
-
-                            <i class="fas fa-diamond-turn-right"></i>
-                            Directions
-
-                        </button>
-
-                    </div>
-
-                </div>
-
-            `;
-
-            resultsContainer.appendChild(card);
-
-        });
-
-
-        updateMapMarkers(visibleShops);
-
-    }
-
-
-    /* =========================================
-       15. SHOW SHOP DETAILS
+       16. SHOP DETAILS
     ========================================= */
 
     function showShopDetails(shopId) {
 
-        const shop = getShopById(shopId);
+        const shop = shops.find(function (item) {
 
-        if (!shop || !detailContent) return;
+            return item.id === Number(shopId);
 
-        closeDetailMap();
-
-        detailContent.hidden = false;
+        });
 
 
-        const deviceTags = shop.devices
-            .map(function (device) {
+        if (!shop || !detailContent || !detailsSection) return;
 
-                return `
-                    <span>
-                        <i class="fas fa-check"></i>
-                        ${escapeHTML(device)}
-                    </span>
-                `;
 
-            })
-            .join("");
+        /* DEVICE INFORMATION */
 
+        const deviceNames = shop.devices.map(function (device) {
+
+            return getDeviceName(device);
+
+        });
+
+
+        /* PROBLEM INFORMATION */
+
+        const problemNames = shop.problems.map(function (problem) {
+
+            return problemLabels[problem] || problem;
+
+        });
+
+
+        /* GOOGLE MAPS DIRECTIONS */
+
+        const directionsURL =
+            `https://www.google.com/maps/dir/?api=1&destination=${shop.latitude},${shop.longitude}`;
+
+
+        /* DETAIL CONTENT */
 
         detailContent.innerHTML = `
 
             <div class="shop-detail-layout">
 
 
+                <!-- LEFT COLUMN -->
+
                 <div class="shop-detail-left">
 
 
-                    <div class="shop-detail-header">
+                    <!-- SHOP HEADER -->
 
+                    <div class="shop-detail-header">
 
                         <div class="shop-detail-image">
 
-                            <i
-                                class="fas ${escapeHTML(shop.icon)}"
-                                aria-hidden="true">
-                            </i>
+                            <img
+                                src="assets/images/repair-shop.jpg"
+                                alt="Illustrative repair shop">
 
                         </div>
 
 
                         <div class="shop-detail-basic">
-
 
                             <div class="shop-detail-name">
 
@@ -1717,8 +1803,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                                 <i class="fas fa-location-dot"></i>
 
-                                ${escapeHTML(shop.township)},
-                                ${escapeHTML(shop.city)}
+                                ${escapeHTML(shop.township)}, Yangon
 
                             </p>
 
@@ -1728,16 +1813,27 @@ document.addEventListener("DOMContentLoaded", function () {
                                 <span>Supported Devices</span>
 
                                 <div class="shop-device-tags">
-                                    ${deviceTags}
+
+                                    ${deviceNames.map(function (device) {
+
+                                        return `
+                                            <span>
+                                                ${escapeHTML(device)}
+                                            </span>
+                                        `;
+
+                                    }).join("")}
+
                                 </div>
 
                             </div>
-
 
                         </div>
 
                     </div>
 
+
+                    <!-- ABOUT SHOP -->
 
                     <div class="shop-detail-about">
 
@@ -1748,11 +1844,14 @@ document.addEventListener("DOMContentLoaded", function () {
                         </p>
 
                         <p>
-                            ${escapeHTML(shop.services)}
+                            This is an illustrative sample listing for the
+                            re:power repair shop finder demonstration.
                         </p>
 
                     </div>
 
+
+                    <!-- SHOP MAP -->
 
                     <div class="shop-detail-map-section">
 
@@ -1764,10 +1863,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                         </h3>
 
-                        <div
-                            id="shopDetailMap"
-                            aria-label="Map showing the sample repair shop location">
-                        </div>
+                        <div id="shopDetailMap"></div>
 
                     </div>
 
@@ -1775,31 +1871,53 @@ document.addEventListener("DOMContentLoaded", function () {
                 </div>
 
 
+                <!-- COLUMN DIVIDER -->
+
                 <div class="shop-detail-divider"></div>
 
+
+                <!-- RIGHT COLUMN -->
 
                 <div class="shop-detail-right">
 
 
+                    <!-- SUPPORTED PROBLEMS -->
+
                     <div class="shop-info-group">
 
                         <h3>
+
                             <i class="fas fa-screwdriver-wrench"></i>
-                            Available Services
+
+                            Supported Problems
+
                         </h3>
 
-                        <p>
-                            ${escapeHTML(shop.services)}
-                        </p>
+                        <ul>
+
+                            ${problemNames.map(function (problem) {
+
+                                return `
+                                    <li>${escapeHTML(problem)}</li>
+                                `;
+
+                            }).join("")}
+
+                        </ul>
 
                     </div>
 
 
+                    <!-- ADDRESS -->
+
                     <div class="shop-info-group">
 
                         <h3>
+
                             <i class="fas fa-location-dot"></i>
+
                             Address
+
                         </h3>
 
                         <p>
@@ -1809,101 +1927,115 @@ document.addEventListener("DOMContentLoaded", function () {
                     </div>
 
 
+                    <!-- COLLECTION AND DELIVERY -->
+
                     <div class="shop-info-group">
 
                         <h3>
-                            <i class="fas fa-clock"></i>
-                            Opening Hours
+
+                            <i class="fas fa-hand-holding"></i>
+
+                            Collection & Delivery
+
                         </h3>
 
-                        <div class="shop-opening-hours">
+                        <ul>
 
-                            <div>
+                            <li>
+                                Collection:
+                                ${shop.collection ? "Available" : "Not Available"}
+                            </li>
 
-                                <span>Opening time</span>
+                            <li>
+                                Delivery:
+                                ${shop.delivery ? "Available" : "Not Available"}
+                            </li>
 
-                                <strong>
-                                    ${escapeHTML(shop.hours)}
-                                </strong>
-
-                            </div>
-
-                        </div>
+                        </ul>
 
                     </div>
 
 
+                    <!-- SAMPLE RATING -->
+
                     <div class="shop-info-group">
 
                         <h3>
+
+                            <i class="fas fa-star"></i>
+
+                            Sample Rating
+
+                        </h3>
+
+                        <p>
+                            ★ ${escapeHTML(shop.rating)} / 5
+                        </p>
+
+                    </div>
+
+
+                    <!-- PRICE INFORMATION -->
+
+                    <div class="shop-info-group">
+
+                        <h3>
+
                             <i class="fas fa-money-bill-wave"></i>
-                            Price Notes
+
+                            Price Information
+
                         </h3>
 
                         <p>
-                            Estimated starting cost:
-                            <strong>${formatPrice(shop.price)}</strong>
+                            This shop belongs to the
+                            ${escapeHTML(getBudgetLabel(shop))}
+                            sample budget group.
                         </p>
 
                         <p>
-                            Final prices may vary depending on the device model,
-                            condition and required replacement parts.
+                            The final repair cost depends on the device,
+                            parts required and damage condition. Contact
+                            a repair provider for an actual quotation.
                         </p>
 
                     </div>
 
 
-                    <div class="shop-info-group">
-
-                        <h3>
-                            <i class="fas fa-address-book"></i>
-                            Contact Details
-                        </h3>
-
-                        <p>
-                            <i class="fas fa-phone"></i>
-                            ${escapeHTML(shop.phone)}
-                        </p>
-
-                    </div>
-
-
-                    <div class="shop-info-group">
-
-                        <h3>
-                            <i class="fas fa-truck"></i>
-                            Collection and Delivery
-                        </h3>
-
-                        <p>
-                            ${
-                                shop.delivery
-                                    ? "Collection and delivery are listed as available in this sample listing."
-                                    : "Collection and delivery are not listed as available in this sample listing."
-                            }
-                        </p>
-
-                    </div>
-
+                    <!-- PROTOTYPE NOTICE -->
 
                     <div class="shop-last-checked">
 
                         <i class="fas fa-circle-info"></i>
 
-                        Prototype sample information.
-                        Shop details, contact numbers, locations and prices
-                        have not been independently verified.
+                        Illustrative prototype information
 
                     </div>
 
 
+                    <!-- DIRECTIONS BUTTON -->
+
+                    <a
+                        href="${directionsURL}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="shop-primary-button">
+
+                        <i class="fas fa-diamond-turn-right"></i>
+
+                        Get Directions
+
+                    </a>
+
+
+                    <!-- CLOSE BUTTON -->
+
                     <button
                         type="button"
-                        class="shop-report-button"
+                        class="shop-detail-close"
                         id="closeShopDetails">
 
-                        <i class="fas fa-times"></i>
-                        Close Details
+                        Close Shop Details
 
                     </button>
 
@@ -1915,166 +2047,61 @@ document.addEventListener("DOMContentLoaded", function () {
         `;
 
 
-        initialiseDetailMap(shop);
+        /* SHOW DETAIL CONTENT */
+
+        detailContent.hidden = false;
+
+        detailsSection.hidden = false;
 
 
-        const detailsSection = shopPage.querySelector(
-            "#shopDetails"
+        /* IMAGE FALLBACK */
+
+        const shopImage = detailContent.querySelector(
+            ".shop-detail-image img"
         );
 
-        if (detailsSection) {
+        if (shopImage) {
 
-            detailsSection.scrollIntoView({
+            shopImage.addEventListener("error", function () {
 
-                behavior: "smooth",
-
-                block: "start"
+                this.style.display = "none";
 
             });
 
         }
 
-    }
+
+        /* SCROLL TO DETAILS */
+
+        detailsSection.scrollIntoView({
+
+            behavior: "smooth",
+
+            block: "start"
+
+        });
 
 
-    /* =========================================
-       16. DETAIL MAP
-    ========================================= */
+        /* INITIALISE DETAIL MAP */
 
-    function initialiseDetailMap(shop) {
-
-        const detailMapElement = shopPage.querySelector(
-            "#shopDetailMap"
-        );
-
-        if (!detailMapElement) return;
-
-        if (typeof L === "undefined") {
-
-            detailMapElement.innerHTML = `
-                <p class="shop-map-error">
-                    Map could not be loaded.
-                    Please check your internet connection.
-                </p>
-            `;
-
-            return;
-
-        }
-
-
-        detailMap = L.map(detailMapElement).setView(
-            [shop.latitude, shop.longitude],
-            15
-        );
-
-
-        L.tileLayer(
-            "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-            {
-                attribution:
-                    '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-
-                maxZoom: 19
-            }
-        ).addTo(detailMap);
-
-
-        detailMarker = L.marker([
-            shop.latitude,
-            shop.longitude
-        ]).addTo(detailMap);
-
-
-        detailMarker.bindPopup(
-            `<strong>${escapeHTML(shop.name)}</strong>`
-        ).openPopup();
-
-
-        setTimeout(function () {
-
-            if (detailMap) {
-                detailMap.invalidateSize();
-            }
-
-        }, 300);
+        initialiseDetailMap(shop);
 
     }
 
 
     /* =========================================
-       17. SHOP CARD BUTTON EVENTS
+       17. VIEW DETAILS BUTTON
     ========================================= */
 
     if (resultsContainer) {
 
         resultsContainer.addEventListener("click", function (event) {
 
-            const detailsButton = event.target.closest(
-                ".shop-details-button"
-            );
+            const button = event.target.closest(".shop-view-details");
 
-            const contactButton = event.target.closest(
-                ".shop-contact-button"
-            );
+            if (!button) return;
 
-            const directionsButton = event.target.closest(
-                ".shop-directions-button"
-            );
-
-
-            /* DETAILS */
-
-            if (detailsButton) {
-
-                showShopDetails(
-                    detailsButton.dataset.shopId
-                );
-
-                return;
-
-            }
-
-
-            /* CONTACT */
-
-            if (contactButton) {
-
-                const shop = getShopById(
-                    contactButton.dataset.shopId
-                );
-
-                if (!shop) return;
-
-                window.location.href =
-                    "tel:" + shop.phone.replace(/[^\d+]/g, "");
-
-                return;
-
-            }
-
-
-            /* DIRECTIONS */
-
-            if (directionsButton) {
-
-                const shop = getShopById(
-                    directionsButton.dataset.shopId
-                );
-
-                if (!shop) return;
-
-                const destination =
-                    shop.latitude + "," + shop.longitude;
-
-                window.open(
-                    "https://www.google.com/maps/dir/?api=1&destination=" +
-                    encodeURIComponent(destination),
-                    "_blank",
-                    "noopener,noreferrer"
-                );
-
-            }
+            showShopDetails(button.dataset.shopId);
 
         });
 
@@ -2082,18 +2109,20 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* =========================================
-       18. CLOSE SHOP DETAILS
+       18. CLOSE DETAILS BUTTON
     ========================================= */
 
     if (detailContent) {
 
         detailContent.addEventListener("click", function (event) {
 
-            if (event.target.closest("#closeShopDetails")) {
+            const closeButton = event.target.closest(
+                "#closeShopDetails"
+            );
 
-                closeShopDetails();
+            if (!closeButton) return;
 
-            }
+            closeShopDetails();
 
         });
 
@@ -2101,67 +2130,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* =========================================
-       19. RESET FILTERS
-    ========================================= */
-
-    function resetFilters() {
-
-        activeShopFilter = "all";
-
-
-        if (locationInput) {
-            locationInput.value = "";
-        }
-
-        if (problemSelect) {
-            problemSelect.value = "";
-        }
-
-        if (budgetInput) {
-            budgetInput.value = "";
-        }
-
-        if (deliveryCheckbox) {
-            deliveryCheckbox.checked = false;
-        }
-
-        if (sortSelect) {
-            sortSelect.value = "recommended";
-        }
-
-        updateFilterButtons();
-
-        updateDeviceOptions();
-
-        closeShopDetails();
-
-        applyFilters();
-
-    }
-
-
-    if (resetButton) {
-
-        resetButton.addEventListener(
-            "click",
-            resetFilters
-        );
-
-    }
-
-
-    if (emptyResetButton) {
-
-        emptyResetButton.addEventListener(
-            "click",
-            resetFilters
-        );
-
-    }
-
-
-    /* =========================================
-       20. SEARCH FORM
+       19. SEARCH FORM SUBMISSION
     ========================================= */
 
     if (searchForm) {
@@ -2170,15 +2139,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
             event.preventDefault();
 
-            applyFilters();
+            closeShopDetails();
 
-            const resultsSection = shopPage.querySelector(
-                ".shop-results-section"
-            );
+            renderShops();
 
-            if (resultsSection) {
 
-                resultsSection.scrollIntoView({
+            document.querySelector(".shop-results-section")
+                ?.scrollIntoView({
 
                     behavior: "smooth",
 
@@ -2186,22 +2153,20 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 });
 
-            }
-
         });
 
     }
 
 
     /* =========================================
-       21. SORT CONTROL
+       20. SORTING
     ========================================= */
 
     if (sortSelect) {
 
         sortSelect.addEventListener("change", function () {
 
-            sortShops();
+            renderShops();
 
         });
 
@@ -2209,24 +2174,77 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* =========================================
-       22. INITIALISE MAIN MAP
+       21. RESET FILTERS
+    ========================================= */
+
+    function resetFilters() {
+
+        if (searchForm) {
+            searchForm.reset();
+        }
+
+
+        activeCategory = "";
+
+        activeResultFilter = "all";
+
+
+        updateCategoryButtons();
+
+        updateResultFilterButtons();
+
+        updateDeviceOptions();
+
+        closeShopDetails();
+
+
+        if (locationStatus) {
+
+            locationStatus.textContent =
+                "Allow location access to find repair shops near you.";
+
+        }
+
+
+        renderShops();
+
+    }
+
+
+    if (resetButton) {
+
+        resetButton.addEventListener("click", resetFilters);
+
+    }
+
+
+    if (emptyResetButton) {
+
+        emptyResetButton.addEventListener("click", resetFilters);
+
+    }
+
+
+    /* =========================================
+       22. INITIALISE MAIN LEAFLET MAP
     ========================================= */
 
     function initialiseMap() {
 
-        const mapElement = shopPage.querySelector(
-            "#shopMap"
-        );
-
         if (!mapElement) return;
+
 
         if (typeof L === "undefined") {
 
             mapElement.innerHTML = `
+
                 <p class="shop-map-error">
-                    The map could not be loaded.
-                    Please check your internet connection.
+
+                    Map is currently unavailable.
+                    Please check your Leaflet library connection.
+
                 </p>
+
             `;
 
             return;
@@ -2235,63 +2253,53 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
         shopMap = L.map(mapElement).setView(
-            [16.8150, 96.1550],
+
+            [16.8100, 96.1550],
+
             12
+
         );
 
 
         L.tileLayer(
+
             "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+
             {
-
-                attribution:
-                    '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-
-                maxZoom: 19
-
+                attribution: "&copy; OpenStreetMap contributors"
             }
+
         ).addTo(shopMap);
 
 
-        updateMapMarkers(getVisibleShops());
-
-
-        setTimeout(function () {
-
-            if (shopMap) {
-                shopMap.invalidateSize();
-            }
-
-        }, 300);
+        updateMapMarkers();
 
     }
 
 
     /* =========================================
-       23. UPDATE MAP MARKERS
+       23. UPDATE MAIN MAP MARKERS
     ========================================= */
 
-    function updateMapMarkers(
-        shopsToShow = getVisibleShops()
-    ) {
+    function updateMapMarkers() {
 
         if (!shopMap || typeof L === "undefined") return;
 
 
         /* REMOVE OLD SHOP MARKERS */
 
-        mapMarkers.forEach(function (marker) {
+        shopMarkers.forEach(function (marker) {
 
             shopMap.removeLayer(marker);
 
         });
 
-        mapMarkers = [];
+        shopMarkers = [];
 
 
-        /* ADD SHOP MARKERS */
+        /* ADD FILTERED SHOP MARKERS */
 
-        shopsToShow.forEach(function (shop) {
+        filteredShops.forEach(function (shop) {
 
             const marker = L.marker([
 
@@ -2304,61 +2312,58 @@ document.addEventListener("DOMContentLoaded", function () {
 
             marker.bindPopup(`
 
-                <strong>
-                    ${escapeHTML(shop.name)}
-                </strong>
+                <div class="shop-map-popup">
 
-                <br>
+                    <strong>
+                        ${escapeHTML(shop.name)}
+                    </strong>
 
-                ${escapeHTML(shop.township)}, Yangon
+                    <p>
+                        ${escapeHTML(shop.township)}, Yangon
+                    </p>
 
-                <br>
+                    <small>
+                        Sample repair shop
+                    </small>
 
-                <span>
-                    ${formatPrice(shop.price)}
-                </span>
-
-                <br>
-
-                <button
-                    type="button"
-                    class="shop-popup-details"
-                    data-shop-id="${shop.id}">
-
-                    View Details
-
-                </button>
+                </div>
 
             `);
 
 
-            marker.on("click", function () {
-
-                showShopDetails(shop.id);
-
-            });
-
-
-            mapMarkers.push(marker);
+            shopMarkers.push(marker);
 
         });
 
 
-        /* FIT MAP TO VISIBLE SHOPS */
+        /* FIT MAP TO MARKERS */
 
-        if (mapMarkers.length > 0) {
+        if (shopMarkers.length > 0) {
 
-            const group = L.featureGroup(mapMarkers);
+            const markerGroup = L.featureGroup(shopMarkers);
 
             shopMap.fitBounds(
-                group.getBounds().pad(0.15)
+
+                markerGroup.getBounds(),
+
+                {
+
+                    padding: [30, 30],
+
+                    maxZoom: 14
+
+                }
+
             );
 
         } else {
 
             shopMap.setView(
-                [16.8150, 96.1550],
+
+                [16.8100, 96.1550],
+
                 12
+
             );
 
         }
@@ -2367,106 +2372,114 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* =========================================
-       24. MAP POPUP BUTTON
+       24. INITIALISE DETAIL MAP
     ========================================= */
 
-    document.addEventListener("click", function (event) {
+    function initialiseDetailMap(shop) {
 
-        const popupButton = event.target.closest(
-            ".shop-popup-details"
+        const detailMapElement =
+            document.getElementById("shopDetailMap");
+
+
+        if (!detailMapElement || typeof L === "undefined") return;
+
+
+        /* REMOVE PREVIOUS DETAIL MAP */
+
+        if (detailMap) {
+
+            detailMap.remove();
+
+            detailMap = null;
+
+        }
+
+
+        /* CREATE NEW DETAIL MAP */
+
+        detailMap = L.map(detailMapElement).setView(
+
+            [shop.latitude, shop.longitude],
+
+            15
+
         );
 
-        if (!popupButton) return;
 
-        showShopDetails(
-            popupButton.dataset.shopId
-        );
+        L.tileLayer(
 
-    });
+            "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
 
+            {
 
-    /* =========================================
-       25. MAP TOGGLE
-    ========================================= */
-
-    if (mapToggle && resultsLayout) {
-
-        mapToggle.addEventListener("click", function () {
-
-            const isHidden =
-                resultsLayout.classList.toggle("map-hidden");
-
-
-            mapToggle.setAttribute(
-                "aria-expanded",
-                String(!isHidden)
-            );
-
-
-            mapToggle.innerHTML = isHidden
-
-                ? '<i class="fas fa-map"></i> Show Map'
-
-                : '<i class="fas fa-map"></i> Hide Map';
-
-
-            if (!isHidden && shopMap) {
-
-                setTimeout(function () {
-
-                    shopMap.invalidateSize();
-
-                    if (mapMarkers.length > 0) {
-
-                        const group = L.featureGroup(mapMarkers);
-
-                        shopMap.fitBounds(
-                            group.getBounds().pad(0.15)
-                        );
-
-                    }
-
-                }, 300);
+                attribution: "&copy; OpenStreetMap contributors"
 
             }
 
-        });
+        ).addTo(detailMap);
+
+
+        /* SHOP MARKER */
+
+        L.marker([
+
+            shop.latitude,
+
+            shop.longitude
+
+        ])
+
+            .addTo(detailMap)
+
+            .bindPopup(escapeHTML(shop.name))
+
+            .openPopup();
+
+
+        /* FIX MAP DISPLAY SIZE */
+
+        setTimeout(function () {
+
+            if (detailMap) {
+
+                detailMap.invalidateSize();
+
+            }
+
+        }, 200);
 
     }
 
 
     /* =========================================
-       26. USER CURRENT LOCATION
+       25. USER CURRENT LOCATION
     ========================================= */
 
-    if (locationButton && locationStatus) {
+    if (locationButton) {
 
         locationButton.addEventListener("click", function () {
 
+
             if (!navigator.geolocation) {
 
-                locationStatus.textContent =
-                    "Your browser does not support location access.";
+                if (locationStatus) {
+
+                    locationStatus.textContent =
+                        "Your browser does not support location services.";
+
+                }
 
                 return;
 
             }
 
 
-            if (!shopMap) {
+            if (locationStatus) {
 
                 locationStatus.textContent =
-                    "The map is not ready. Please try again.";
-
-                return;
+                    "Getting your current location...";
 
             }
-
-
-            locationButton.disabled = true;
-
-            locationStatus.textContent =
-                "Requesting your location permission...";
 
 
             navigator.geolocation.getCurrentPosition(
@@ -2477,10 +2490,33 @@ document.addEventListener("DOMContentLoaded", function () {
 
                     const longitude = position.coords.longitude;
 
-                    const accuracy = position.coords.accuracy;
+
+                    if (!shopMap || typeof L === "undefined") {
+
+                        if (locationStatus) {
+
+                            locationStatus.textContent =
+                                "Your location was found, but the map is unavailable.";
+
+                        }
+
+                        return;
+
+                    }
 
 
-                    /* REMOVE PREVIOUS USER LOCATION */
+                    /* CENTRE MAP */
+
+                    shopMap.setView(
+
+                        [latitude, longitude],
+
+                        14
+
+                    );
+
+
+                    /* REMOVE PREVIOUS USER MARKER */
 
                     if (userLocationMarker) {
 
@@ -2488,127 +2524,43 @@ document.addEventListener("DOMContentLoaded", function () {
 
                     }
 
-                    if (userLocationCircle) {
 
-                        shopMap.removeLayer(userLocationCircle);
+                    /* ADD USER MARKER */
+
+                    userLocationMarker = L.marker([
+
+                        latitude,
+
+                        longitude
+
+                    ]).addTo(shopMap);
+
+
+                    userLocationMarker
+
+                        .bindPopup("Your Current Location")
+
+                        .openPopup();
+
+
+                    if (locationStatus) {
+
+                        locationStatus.textContent =
+                            "Map centred on your current location.";
 
                     }
-
-
-                    /* USER LOCATION MARKER */
-
-                    userLocationMarker = L.circleMarker(
-
-                        [latitude, longitude],
-
-                        {
-
-                            radius: 9,
-
-                            color: "#ffffff",
-
-                            weight: 3,
-
-                            fillColor: "#247653",
-
-                            fillOpacity: 1
-
-                        }
-
-                    ).addTo(shopMap);
-
-
-                    userLocationMarker.bindPopup(
-                        "<strong>Your Current Location</strong>"
-                    );
-
-
-                    /* LOCATION ACCURACY AREA */
-
-                    userLocationCircle = L.circle(
-
-                        [latitude, longitude],
-
-                        {
-
-                            radius: accuracy,
-
-                            color: "#247653",
-
-                            fillColor: "#247653",
-
-                            fillOpacity: 0.10,
-
-                            weight: 1
-
-                        }
-
-                    ).addTo(shopMap);
-
-
-                    /* MOVE MAP */
-
-                    shopMap.setView(
-
-                        [latitude, longitude],
-
-                        15,
-
-                        { animate: true }
-
-                    );
-
-
-                    userLocationMarker.openPopup();
-
-
-                    locationStatus.textContent =
-                        "Your location has been found. The map is centred on your current location.";
-
-
-                    locationButton.disabled = false;
 
                 },
 
 
-                function (error) {
+                function () {
 
-                    let message = "";
+                    if (locationStatus) {
 
-                    switch (error.code) {
-
-                        case error.PERMISSION_DENIED:
-
-                            message =
-                                "Location permission was denied. Please allow location access in your browser settings.";
-
-                            break;
-
-                        case error.POSITION_UNAVAILABLE:
-
-                            message =
-                                "Your current location is unavailable. Please try again.";
-
-                            break;
-
-                        case error.TIMEOUT:
-
-                            message =
-                                "Location request timed out. Please try again.";
-
-                            break;
-
-                        default:
-
-                            message =
-                                "Unable to access your location.";
+                        locationStatus.textContent =
+                            "Unable to access your location. Please check your browser permissions.";
 
                     }
-
-
-                    locationStatus.textContent = message;
-
-                    locationButton.disabled = false;
 
                 },
 
@@ -2617,9 +2569,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                     enableHighAccuracy: true,
 
-                    timeout: 15000,
-
-                    maximumAge: 60000
+                    timeout: 10000
 
                 }
 
@@ -2631,45 +2581,84 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* =========================================
-       27. CURRENT YEAR
+       26. INITIAL PAGE SETUP
     ========================================= */
 
-    if (currentYear) {
+    activeCategory = "";
 
-        currentYear.textContent =
-            new Date().getFullYear();
+    activeResultFilter = "all";
+
+
+    updateCategoryButtons();
+
+    updateResultFilterButtons();
+
+    updateDeviceOptions();
+
+
+    /* BUDGET INPUT SETTINGS */
+
+    if (budgetInput) {
+
+        budgetInput.min = "0";
+
+        budgetInput.max = "1000000";
+
+        budgetInput.step = "1000";
+
+        budgetInput.placeholder =
+            "Enter budget (0–1,000,000 MMK)";
 
     }
 
 
-    /* =========================================
-       28. INITIALISE APPLICATION
-    ========================================= */
+    /* HIDE DETAILS INITIALLY */
 
-    updateFilterButtons();
+    if (detailsSection) {
+        detailsSection.hidden = true;
+    }
 
-    updateDeviceOptions();
+    if (detailContent) {
+        detailContent.hidden = true;
+    }
 
-    applyFilters();
+
+    /* INITIALISE MAP */
 
     initialiseMap();
 
 
+    /* DISPLAY INITIAL RESULTS */
+
+    renderShops();
+
+
 });
 
+
+
 /* weather-device-care.html */
+/* =========================================
+   PAGE 4 — WEATHER & DEVICE CARE
+========================================= */
+
 (() => {
 
     "use strict";
 
-    /* PAGE INITIALISATION */
+
+    /* =========================================
+       PAGE INITIALISATION
+    ========================================= */
 
     const page = document.querySelector(".weather-care-page");
 
     if (!page) return;
 
 
-    /* ELEMENT REFERENCES */
+    /* =========================================
+       ELEMENT REFERENCES
+    ========================================= */
 
     const filterButtons = page.querySelectorAll(
         ".weather-filter-btn"
@@ -2696,34 +2685,46 @@ document.addEventListener("DOMContentLoaded", function () {
     );
 
 
-    /* STATE */
+    /* =========================================
+       STATE
+    ========================================= */
 
     let activeGuide = null;
 
 
-    /* HELPER: GET GUIDE DETAIL */
+    /* =========================================
+       GET GUIDE DETAIL
+    ========================================= */
 
     function getGuideDetail(guideName) {
 
         return Array.from(guideDetails).find(detail => {
+
             return detail.dataset.detail === guideName;
+
         });
 
     }
 
 
-    /* HELPER: GET GUIDE BUTTON */
+    /* =========================================
+       GET GUIDE BUTTON
+    ========================================= */
 
     function getGuideButton(guideName) {
 
         return Array.from(readButtons).find(button => {
+
             return button.dataset.openGuide === guideName;
+
         });
 
     }
 
 
-    /* HELPER: GET GUIDE CARD */
+    /* =========================================
+       GET GUIDE CARD
+    ========================================= */
 
     function getGuideCard(guideName) {
 
@@ -2736,7 +2737,9 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
-    /* UPDATE GUIDE BUTTON */
+    /* =========================================
+       UPDATE BUTTON APPEARANCE
+    ========================================= */
 
     function updateGuideButton(button, isOpen) {
 
@@ -2772,12 +2775,28 @@ document.addEventListener("DOMContentLoaded", function () {
                 ? "Close Guide"
                 : "Read Guide";
 
+        } else {
+
+            button.childNodes.forEach(node => {
+
+                if (node.nodeType === Node.TEXT_NODE) {
+
+                    node.textContent = isOpen
+                        ? "Close Guide "
+                        : "Read Guide ";
+
+                }
+
+            });
+
         }
 
     }
 
 
-    /* CLOSE ALL GUIDE DETAILS */
+    /* =========================================
+       CLOSE ALL GUIDES
+    ========================================= */
 
     function closeAllGuides() {
 
@@ -2798,7 +2817,9 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
-    /* OPEN SELECTED GUIDE */
+    /* =========================================
+       OPEN SELECTED GUIDE
+    ========================================= */
 
     function openGuide(guideName) {
 
@@ -2808,7 +2829,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
         const selectedCard = getGuideCard(guideName);
 
-        // Stop if the guide does not exist.
+
+        // Check that the selected guide exists.
 
         if (
             !selectedDetail ||
@@ -2816,10 +2838,13 @@ document.addEventListener("DOMContentLoaded", function () {
             !selectedCard ||
             selectedCard.hidden
         ) {
+
             return;
+
         }
 
-        // Close the current guide if it is already open.
+
+        // Clicking the currently open guide closes it.
 
         if (activeGuide === guideName) {
 
@@ -2829,11 +2854,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
         }
 
-        // Close any previously opened guide.
+
+        // Close previously opened guides.
 
         closeAllGuides();
 
-        // Display the selected guide.
+
+        // Open the selected guide.
 
         selectedDetail.hidden = false;
 
@@ -2865,7 +2892,9 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
-    /* GUIDE BUTTON EVENTS */
+    /* =========================================
+       READ GUIDE BUTTON EVENTS
+    ========================================= */
 
     readButtons.forEach(button => {
 
@@ -2882,7 +2911,9 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 
-    /* OPTIONAL CLOSE BUTTON EVENTS */
+    /* =========================================
+       CLOSE GUIDE BUTTON EVENTS
+    ========================================= */
 
     closeButtons.forEach(button => {
 
@@ -2895,14 +2926,16 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 
-    /* DEVICE FILTERING */
+    /* =========================================
+       DEVICE FILTERING
+    ========================================= */
 
     function filterGuides(device) {
 
         let visibleCount = 0;
 
 
-        // Update the active filter button.
+        // Update active filter button.
 
         filterButtons.forEach(button => {
 
@@ -2918,7 +2951,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
 
-        // Show or hide matching guide cards.
+        // Filter guide cards.
 
         guideCards.forEach(card => {
 
@@ -2944,16 +2977,16 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
 
-        // Display the empty message when no guides match.
+        // Show or hide empty message.
 
         if (emptyMessage) {
 
-            emptyMessage.hidden = visibleCount !== 0;
+            emptyMessage.hidden = visibleCount > 0;
 
         }
 
 
-        // Close the guide if its card is no longer visible.
+        // Close the guide if its card is filtered out.
 
         if (activeGuide) {
 
@@ -2970,7 +3003,9 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
-    /* FILTER BUTTON EVENTS */
+    /* =========================================
+       FILTER BUTTON EVENTS
+    ========================================= */
 
     filterButtons.forEach(button => {
 
@@ -2987,19 +3022,23 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 
-    /* KEYBOARD ACCESSIBILITY */
+    /* =========================================
+       ESCAPE KEY
+    ========================================= */
 
     page.addEventListener("keydown", event => {
 
         if (event.key === "Escape" && activeGuide) {
 
+            // Save the button before closing the guide.
+
+            const previousButton = getGuideButton(activeGuide);
+
             closeAllGuides();
 
-            const button = getGuideButton(activeGuide);
+            if (previousButton) {
 
-            if (button) {
-
-                button.focus();
+                previousButton.focus();
 
             }
 
@@ -3008,19 +3047,17 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 
-    /* PDF DOWNLOAD LINKS */
+    /* =========================================
+       PDF DOWNLOAD LINKS
+    ========================================= */
 
     const downloadLinks = page.querySelectorAll(
-        ".weather-download-btn, " +
-        ".weather-detail-download-btn, " +
-        ".weather-guide-actions .weather-download-btn"
+        ".weather-download-btn, .weather-detail-download-btn"
     );
 
     downloadLinks.forEach(link => {
 
         const destination = link.getAttribute("href");
-
-        // Prevent placeholder links from doing nothing.
 
         if (
             !destination ||
@@ -3041,7 +3078,9 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 
-    /* REPAIR SUPPORT LINKS */
+    /* =========================================
+       REPAIR SUPPORT LINKS
+    ========================================= */
 
     const repairLinks = page.querySelectorAll(
         'a[href="repair-shops.html"]'
@@ -3061,7 +3100,9 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 
-    /* INITIALISE GUIDE BUTTONS */
+    /* =========================================
+       INITIALISE GUIDE BUTTONS
+    ========================================= */
 
     readButtons.forEach(button => {
 
@@ -3069,8 +3110,6 @@ document.addEventListener("DOMContentLoaded", function () {
             "aria-expanded",
             "false"
         );
-
-        // Preserve the existing button icon and text.
 
         const label = button.querySelector(
             ".weather-button-text"
@@ -3085,7 +3124,9 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 
-    /* INITIAL PAGE STATE */
+    /* =========================================
+       INITIAL PAGE STATE
+    ========================================= */
 
     closeAllGuides();
 
