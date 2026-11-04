@@ -5259,3 +5259,601 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 
+/* 
+   RE:POWER WEATHER CARE and SMART ASSISTANT
+   Weather: Open-Meteo API // and Assistant JavaScript prototype only
+*/
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    // =====================================
+    // 1. WEATHER ELEMENTS
+    // =====================================
+
+    const weatherLocation = document.getElementById("weather-location");
+    const weatherTemperature = document.getElementById("weather-temperature");
+    const weatherDescription = document.getElementById("weather-description");
+    const weatherFeelsLike = document.getElementById("weather-feels-like");
+    const weatherIcon = document.getElementById("weather-icon");
+    const weatherHumidity = document.getElementById("weather-humidity");
+    const weatherRainfall = document.getElementById("weather-rainfall");
+    const weatherWind = document.getElementById("weather-wind");
+    const weatherRainChance = document.getElementById("weather-rain-chance");
+    const weatherAlert = document.getElementById("weather-alert");
+    const weatherUpdated = document.getElementById("weather-updated");
+    const refreshButton = document.getElementById("refresh-weather");
+
+    const ecoReminderList = document.getElementById("eco-reminder-list");
+    const assistantWeatherContext = document.getElementById(
+        "assistant-weather-context"
+    );
+
+    let currentWeather = null;
+
+
+    // =====================================
+    // 2. WEATHER CODE DESCRIPTIONS
+    // =====================================
+
+    function getWeatherInfo(code) {
+
+        const weatherTypes = {
+            0:  { description: "Clear sky", icon: "☀️" },
+            1:  { description: "Mainly clear", icon: "🌤️" },
+            2:  { description: "Partly cloudy", icon: "⛅" },
+            3:  { description: "Overcast", icon: "☁️" },
+            45: { description: "Foggy", icon: "🌫️" },
+            48: { description: "Depositing rime fog", icon: "🌫️" },
+            51: { description: "Light drizzle", icon: "🌦️" },
+            53: { description: "Moderate drizzle", icon: "🌦️" },
+            55: { description: "Heavy drizzle", icon: "🌧️" },
+            61: { description: "Slight rain", icon: "🌧️" },
+            63: { description: "Moderate rain", icon: "🌧️" },
+            65: { description: "Heavy rain", icon: "🌧️" },
+            71: { description: "Slight snowfall", icon: "🌨️" },
+            73: { description: "Moderate snowfall", icon: "🌨️" },
+            75: { description: "Heavy snowfall", icon: "❄️" },
+            80: { description: "Rain showers", icon: "🌦️" },
+            81: { description: "Moderate rain showers", icon: "🌧️" },
+            82: { description: "Heavy rain showers", icon: "⛈️" },
+            95: { description: "Thunderstorm", icon: "⛈️" },
+            96: { description: "Thunderstorm with hail", icon: "⛈️" },
+            99: { description: "Severe thunderstorm with hail", icon: "⛈️" }
+        };
+
+        return weatherTypes[code] || {
+            description: "Weather information unavailable",
+            icon: "🌤️"
+        };
+    }
+
+
+    // =====================================
+    // 3. GET USER LOCATION
+    // =====================================
+
+    function getWeatherLocation() {
+
+        if (!navigator.geolocation) {
+            loadWeather(16.8409, 96.1735, "Yangon (fallback)");
+            return;
+        }
+
+        weatherLocation.textContent = "Detecting your location...";
+
+        navigator.geolocation.getCurrentPosition(
+
+            position => {
+                const latitude = position.coords.latitude;
+                const longitude = position.coords.longitude;
+
+                loadWeather(latitude, longitude, "Your current area");
+            },
+
+            () => {
+                weatherLocation.textContent =
+                    "Location unavailable · Showing Yangon weather";
+
+                loadWeather(16.8409, 96.1735, "Yangon (fallback)");
+            },
+
+            {
+                enableHighAccuracy: false,
+                timeout: 10000,
+                maximumAge: 300000
+            }
+        );
+    }
+
+
+    // =====================================
+    // 4. FETCH WEATHER FROM OPEN-METEO
+    // =====================================
+
+    async function loadWeather(latitude, longitude, locationName) {
+
+        weatherLocation.textContent = "Updating weather...";
+
+        const apiURL =
+            `https://api.open-meteo.com/v1/forecast` +
+            `?latitude=${latitude}` +
+            `&longitude=${longitude}` +
+            `&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m` +
+            `&daily=precipitation_probability_max` +
+            `&forecast_days=1` +
+            `&timezone=auto`;
+
+        try {
+
+            const response = await fetch(apiURL);
+
+            if (!response.ok) {
+                throw new Error("Weather API request failed.");
+            }
+
+            const data = await response.json();
+
+            const current = data.current;
+            const daily = data.daily;
+
+            const weatherInfo = getWeatherInfo(current.weather_code);
+
+            const rainChance =
+                daily.precipitation_probability_max?.[0] ?? 0;
+
+            currentWeather = {
+                temperature: current.temperature_2m,
+                feelsLike: current.apparent_temperature,
+                humidity: current.relative_humidity_2m,
+                rainfall: current.precipitation,
+                wind: current.wind_speed_10m,
+                rainChance: rainChance,
+                condition: weatherInfo.description,
+                location: locationName
+            };
+
+            // Display live weather
+            weatherLocation.textContent = `📍 ${locationName}`;
+
+            weatherTemperature.textContent =
+                `${Math.round(current.temperature_2m)}°C`;
+
+            weatherDescription.textContent =
+                weatherInfo.description;
+
+            weatherFeelsLike.textContent =
+                `Feels like ${Math.round(current.apparent_temperature)}°C`;
+
+            weatherIcon.innerHTML =
+                `<span>${weatherInfo.icon}</span>`;
+
+            weatherHumidity.textContent =
+                `${current.relative_humidity_2m}%`;
+
+            weatherRainfall.textContent =
+                `${current.precipitation} mm`;
+
+            weatherWind.textContent =
+                `${current.wind_speed_10m} km/h`;
+
+            weatherRainChance.textContent =
+                `${rainChance}%`;
+
+            weatherUpdated.textContent =
+                `Updated at ${new Date().toLocaleTimeString([], {
+                    hour: "2-digit",
+                    minute: "2-digit"
+                })}`;
+
+            // Generate recommendations
+            updateEcoReminders(currentWeather);
+            updateWeatherAlert(currentWeather);
+            updateWellbeing(currentWeather);
+
+            // Share weather context with the assistant
+            assistantWeatherContext.textContent =
+                `${weatherInfo.description}, ${Math.round(current.temperature_2m)}°C. ` +
+                `Humidity: ${current.relative_humidity_2m}%.`;
+
+            window.repowerWeatherContext = currentWeather;
+
+        } catch (error) {
+
+            console.error("Weather error:", error);
+
+            weatherLocation.textContent = "Weather unavailable";
+            weatherDescription.textContent =
+                "Unable to retrieve live weather data.";
+
+            weatherAlert.innerHTML = `
+                <span>⚠️</span>
+                <p>Please check your internet connection and try refreshing.</p>
+            `;
+
+            weatherUpdated.textContent = "Unable to update weather.";
+        }
+    }
+
+
+    // =====================================
+    // 5. DYNAMIC WEATHER ALERTS
+    // =====================================
+
+    function updateWeatherAlert(weather) {
+
+        let message = "🌱 Enjoy your day and remember to care for your devices!";
+
+        if (weather.temperature >= 35) {
+
+            message =
+                "☀️ High temperature detected. Keep devices away from direct sunlight and hot surfaces.";
+
+        } else if (weather.rainfall >= 5 || weather.rainChance >= 70) {
+
+            message =
+                "🌧️ Rain is likely. Protect electronic devices from water and avoid charging them in wet areas.";
+
+        } else if ([95, 96, 99].includes(getCurrentWeatherCode())) {
+
+            message =
+                "⛈️ Thunderstorm conditions detected. Follow local safety guidance and consider unplugging sensitive electronics when safe to do so.";
+
+        } else if (weather.humidity >= 80) {
+
+            message =
+                "💧 High humidity detected. Keep electronic devices in a dry, ventilated place.";
+
+        }
+
+        weatherAlert.innerHTML = `
+            <span>🌿</span>
+            <p>${message}</p>
+        `;
+    }
+
+
+    function getCurrentWeatherCode() {
+        // The condition text is used here because the weather object
+        // stores the readable condition rather than the numeric code.
+        const condition = currentWeather?.condition?.toLowerCase() || "";
+
+        if (condition.includes("thunderstorm")) return 95;
+
+        return 0;
+    }
+
+
+    // =====================================
+    // 6. DYNAMIC ECO REMINDERS
+    // =====================================
+
+    function updateEcoReminders(weather) {
+
+        const reminders = [];
+
+        if (weather.temperature >= 35) {
+
+            reminders.push({
+                icon: "☀️",
+                text: "Avoid leaving phones, laptops and batteries inside hot vehicles or under direct sunlight."
+            });
+
+            reminders.push({
+                icon: "🔋",
+                text: "Allow electronic devices to cool naturally before charging if they become unusually hot."
+            });
+
+        } else if (weather.temperature <= 20) {
+
+            reminders.push({
+                icon: "🌡️",
+                text: "Keep sensitive electronics away from extreme temperature changes."
+            });
+        }
+
+        if (weather.rainChance >= 60 || weather.rainfall >= 2) {
+
+            reminders.push({
+                icon: "🌧️",
+                text: "Protect reusable electronics and repair tools from rain and moisture."
+            });
+        }
+
+        if (weather.humidity >= 75) {
+
+            reminders.push({
+                icon: "💧",
+                text: "Keep electronic devices in a dry, ventilated space to reduce moisture exposure."
+            });
+        }
+
+        reminders.push({
+            icon: "♻️",
+            text: "Consider repairing a damaged device before replacing it to reduce electronic waste."
+        });
+
+        reminders.push({
+            icon: "🔌",
+            text: "Switch off and unplug unused devices when it is safe to do so."
+        });
+
+        ecoReminderList.innerHTML = reminders.slice(0, 4).map(item => `
+            <div class="rp-reminder-item">
+                <span>${item.icon}</span>
+                <p>${item.text}</p>
+            </div>
+        `).join("");
+    }
+
+
+    // =====================================
+    // 7. WELLBEING RECOMMENDATIONS
+    // =====================================
+
+    function updateWellbeing(weather) {
+
+        const recommendations = [];
+
+        if (weather.temperature >= 35) {
+
+            recommendations.push({
+                icon: "💧",
+                title: "Stay hydrated",
+                text: "Drink water regularly, especially in hot weather."
+            });
+
+            recommendations.push({
+                icon: "🌤️",
+                title: "Avoid excessive heat",
+                text: "Take breaks in a cool, shaded environment."
+            });
+
+        } else if (weather.temperature <= 18) {
+
+            recommendations.push({
+                icon: "🧥",
+                title: "Stay comfortable",
+                text: "Dress appropriately for cooler weather."
+            });
+        }
+
+        if (weather.rainChance >= 60 || weather.rainfall >= 2) {
+
+            recommendations.push({
+                icon: "☔",
+                title: "Plan ahead",
+                text: "Consider bringing an umbrella when going outside."
+            });
+        }
+
+        recommendations.push({
+            icon: "👀",
+            title: "Rest your eyes",
+            text: "Take regular breaks from screens and digital devices."
+        });
+
+        recommendations.push({
+            icon: "🌿",
+            title: "Take a little break",
+            text: "Stretch, relax and give yourself time away from screens."
+        });
+
+        const container =
+            document.getElementById("health-recommendations");
+
+        container.innerHTML = recommendations.slice(0, 4).map(item => `
+            <div class="rp-wellbeing-item">
+                <span>${item.icon}</span>
+                <div>
+                    <strong>${item.title}</strong>
+                    <p>${item.text}</p>
+                </div>
+            </div>
+        `).join("");
+    }
+
+
+    // =====================================
+    // 8. PROTOTYPE ASSISTANT
+    // =====================================
+
+    const chatForm = document.getElementById("ai-chat-form");
+    const questionInput = document.getElementById("ai-question");
+    const deviceSelect = document.getElementById("ai-device");
+    const chatMessages = document.getElementById("ai-chat-messages");
+    const sendButton = document.getElementById("ai-send-button");
+
+
+    function addMessage(message, sender) {
+
+        const messageElement = document.createElement("div");
+
+        messageElement.className =
+            sender === "user"
+                ? "rp-message user-message"
+                : "rp-message assistant-message";
+
+        const avatar = document.createElement("div");
+        avatar.className = "rp-message-avatar";
+        avatar.textContent = sender === "user" ? "👤" : "🌱";
+
+        const content = document.createElement("div");
+        content.className = "rp-message-content";
+
+        const paragraph = document.createElement("p");
+        paragraph.textContent = message;
+
+        const time = document.createElement("span");
+        time.className = "rp-message-time";
+        time.textContent = "Just now";
+
+        content.appendChild(paragraph);
+        content.appendChild(time);
+
+        messageElement.appendChild(avatar);
+        messageElement.appendChild(content);
+
+        chatMessages.appendChild(messageElement);
+
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+
+    // Predefined prototype responses
+    function getPrototypeAnswer(question, device) {
+
+        const text = question.toLowerCase();
+
+        const weather = currentWeather;
+
+        // Weather questions
+        if (
+            text.includes("weather") ||
+            text.includes("rain") ||
+            text.includes("temperature") ||
+            text.includes("hot") ||
+            text.includes("humidity")
+        ) {
+
+            if (weather) {
+                return `Your current weather is ${weather.condition} with a temperature of ${Math.round(weather.temperature)}°C and ${weather.humidity}% humidity. ${weather.temperature >= 35
+                    ? "Keep your devices away from direct sunlight and stay hydrated."
+                    : weather.rainChance >= 60
+                        ? "Rain may occur, so protect your devices from moisture."
+                        : "Remember to keep your devices clean and properly ventilated."
+                }`;
+            }
+
+            return "I cannot access weather information right now. Please refresh the weather card and try again.";
+        }
+
+
+        // Device care
+        if (
+            text.includes("hot") ||
+            text.includes("overheat") ||
+            text.includes("heating")
+        ) {
+
+            return device === "General"
+                ? "If an electronic device becomes unusually hot, stop using it and allow it to cool in a safe, ventilated place. Avoid covering its vents."
+                : `For your ${device}, stop using it if it becomes unusually hot. Let it cool naturally in a ventilated area. If overheating continues, consider professional repair.`;
+        }
+
+
+        if (
+            text.includes("battery") ||
+            text.includes("charging") ||
+            text.includes("charge")
+        ) {
+
+            return `For your ${device}, use a compatible charger and avoid charging it near water or excessive heat. If the battery is swollen, damaged or unusually hot, stop using the device and seek professional help.`;
+        }
+
+
+        if (
+            text.includes("slow") ||
+            text.includes("lag") ||
+            text.includes("performance")
+        ) {
+
+            return `If your ${device} is running slowly, try closing unused applications, checking available storage and restarting it. If the problem continues, a repair technician can inspect it.`;
+        }
+
+
+        if (
+            text.includes("repair") ||
+            text.includes("broken") ||
+            text.includes("damaged") ||
+            text.includes("fix")
+        ) {
+
+            return `Before replacing your ${device}, consider getting a repair assessment. 
+            A technician can identify the damaged component and help you compare repair costs with replacement costs.`;
+        }
+
+
+        // Sustainability
+        if (
+            text.includes("eco") ||
+            text.includes("environment") ||
+            text.includes("waste") ||
+            text.includes("recycle")
+        ) {
+
+            return "You can reduce electronic waste by repairing devices, donating working electronics, reusing accessories and sending unusable electronics to an appropriate e-waste collection point.";
+        }
+
+
+        // Wellbeing
+        if (
+            text.includes("health") ||
+            text.includes("tired") ||
+            text.includes("eye") ||
+            text.includes("stress") ||
+            text.includes("wellbeing") ||
+            text.includes("well-being")
+        ) {
+
+            return "Remember to take regular screen breaks, stretch your body and drink water throughout the day. If you have persistent or concerning symptoms, seek advice from a qualified healthcare professional.";
+        }
+
+
+        // Default response
+        return `Thanks for your question! 🌿 I can demonstrate basic advice about ${device.toLowerCase()} care, battery maintenance, weather protection, repair options, sustainability and everyday wellbeing. Try asking me about one of those topics!`;
+    }
+
+
+    // =====================================
+    // 9. SEND CHAT MESSAGE
+    // =====================================
+
+    chatForm.addEventListener("submit", event => {
+
+        event.preventDefault();
+
+        const question = questionInput.value.trim();
+        const selectedDevice = deviceSelect.value;
+
+        if (!question) return;
+
+        // Display user message
+        addMessage(question, "user");
+
+        questionInput.value = "";
+        sendButton.disabled = true;
+        sendButton.textContent = "...";
+
+        // Simulate assistant thinking
+        setTimeout(() => {
+
+            const answer = getPrototypeAnswer(
+                question,
+                selectedDevice
+            );
+
+            addMessage(answer, "assistant");
+
+            sendButton.disabled = false;
+            sendButton.textContent = "➤";
+
+        }, 700);
+    });
+
+
+    // =====================================
+    // 10. REFRESH WEATHER
+    // =====================================
+
+    refreshButton.addEventListener("click", () => {
+        getWeatherLocation();
+    });
+
+
+    // =====================================
+    // 11. START WEATHER
+    // =====================================
+
+    getWeatherLocation();
+
+});
