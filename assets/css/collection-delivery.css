@@ -873,30 +873,79 @@
     font-size: 10px;
 }
 
-/* FIX FINAL GREEN CTA TEXT */
 
-.cd-page .cd-final-cta {
+/* =========================================
+   FINAL REPAIR SHOP CTA - FIXED DESIGN
+========================================= */
+
+.cd-page section.cd-final-cta {
     background: #ffffff;
+    padding: 65px 20px;
+    margin: 0;
 }
 
-.cd-page .cd-final-cta-inner {
-    background: #003f2e;
-    border-radius: 14px;
+.cd-page section.cd-final-cta .cd-final-cta-inner {
+    background: #00432f;
+    border-radius: 18px;
+    padding: 55px 60px;
+    min-height: 250px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 35px;
+
+    max-width: 1280px;
+    margin: 0 auto;
+    box-sizing: border-box;
 }
 
-.cd-page .cd-final-cta-inner h2 {
+.cd-page section.cd-final-cta .cd-final-cta-inner > div {
+    flex: 1;
+    min-width: 0 ;
+}
+
+.cd-page section.cd-final-cta .cd-eyebrow {
+    display: block;
+    color: #b9e0b9;
+    margin-bottom: 15px;
+}
+
+.cd-page section.cd-final-cta h2 {
     color: #ffffff;
+    font-size: clamp(26px, 3vw, 40px);
+    line-height: 1.2;
+    margin: 0 0 15px;
     opacity: 1;
 }
 
-.cd-page .cd-final-cta-inner p {
+.cd-page section.cd-final-cta p {
     color: #e0eee5;
+    font-size: 15px;
+    line-height: 1.7;
+    margin: 0;
     opacity: 1;
 }
 
-.cd-page .cd-final-cta-inner .cd-eyebrow {
-    color: #a9d9b5;
-    opacity: 1;
+.cd-page section.cd-final-cta .cd-btn-orange {
+    flex-shrink: 0;
+    min-width: 200px;
+    justify-content: center;
+    text-align: center;
+}
+
+/* Mobile layout */
+@media (max-width: 768px) {
+    .cd-page section.cd-final-cta .cd-final-cta-inner {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 35px 25px;
+    }
+
+    .cd-page section.cd-final-cta .cd-btn-orange {
+        width: 100%;
+    }
 }
 
 @media(max-width:900px) {
