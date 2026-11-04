@@ -1815,375 +1815,738 @@ document.addEventListener("DOMContentLoaded", function () {
        16. SHOP DETAILS
     ========================================= */
 
-    function showShopDetails(shopId) {
+    /* =========================================
+   16. SHOP DETAILS
+========================================= */
 
-        const shop = shops.find(function (item) {
+function showShopDetails(shopId) {
 
-            return item.id === Number(shopId);
+    const shop = shops.find(function (item) {
 
-        });
+        return item.id === Number(shopId);
 
+    });
 
-        if (!shop || !detailContent || !detailsSection) return;
 
+    if (!shop || !detailContent || !detailsSection) return;
 
-        /* DEVICE INFORMATION */
 
-        const deviceNames = shop.devices.map(function (device) {
+    /* DEVICE INFORMATION */
 
-            return getDeviceName(device);
+    const deviceNames = shop.devices.map(function (device) {
 
-        });
+        return getDeviceName(device);
 
+    });
 
-        /* PROBLEM INFORMATION */
 
-        const problemNames = shop.problems.map(function (problem) {
+    /* PROBLEM INFORMATION */
 
-            return problemLabels[problem] || problem;
+    const problemNames = shop.problems.map(function (problem) {
 
-        });
+        return problemLabels[problem] || problem;
 
+    });
 
-        /* GOOGLE MAPS DIRECTIONS */
 
-        const directionsURL =
-            `https://www.google.com/maps/dir/?api=1&destination=${shop.latitude},${shop.longitude}`;
+    /* CUSTOMER FEEDBACK */
 
+    const feedbackList = shopFeedback[shop.id] || [];
 
-        /* DETAIL CONTENT */
+    const averageFeedback = feedbackList.length > 0
+        ? (
+            feedbackList.reduce(function (total, feedback) {
+                return total + feedback.rating;
+            }, 0) / feedbackList.length
+        ).toFixed(1)
+        : "0.0";
 
-        detailContent.innerHTML = `
 
-            <div class="shop-detail-layout">
+    /* STAR GENERATOR */
 
+    function generateStars(rating) {
 
-                <!-- LEFT COLUMN -->
+        return Array.from({ length: 5 }, function (_, index) {
 
-                <div class="shop-detail-left">
+            return `
+                <i class="fas fa-star ${index < rating ? "active" : "inactive"}"></i>
+            `;
 
-
-                    <!-- SHOP HEADER -->
-
-                    <div class="shop-detail-header">
-
-                        <div class="shop-detail-image">
-
-                            <img
-                                src="assets/images/repair-shop.jpg"
-                                alt="Illustrative repair shop">
-
-                        </div>
-
-
-                        <div class="shop-detail-basic">
-
-                            <div class="shop-detail-name">
-
-                                <h2>
-                                    ${escapeHTML(shop.name)}
-                                </h2>
-
-                                <span class="shop-partner-badge">
-
-                                    <i class="fas fa-circle-info"></i>
-
-                                    Sample Listing
-
-                                </span>
-
-                            </div>
-
-
-                            <p class="shop-detail-location">
-
-                                <i class="fas fa-location-dot"></i>
-
-                                ${escapeHTML(shop.township)}, Yangon
-
-                            </p>
-
-
-                            <div class="shop-supported-devices">
-
-                                <span>Supported Devices</span>
-
-                                <div class="shop-device-tags">
-
-                                    ${deviceNames.map(function (device) {
-
-                                        return `
-                                            <span>
-                                                ${escapeHTML(device)}
-                                            </span>
-                                        `;
-
-                                    }).join("")}
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-
-                    <!-- ABOUT SHOP -->
-
-                    <div class="shop-detail-about">
-
-                        <h3>About This Shop</h3>
-
-                        <p>
-                            ${escapeHTML(shop.description)}
-                        </p>
-
-                        <p>
-                            This is an illustrative sample listing for the
-                            re:power repair shop finder demonstration.
-                        </p>
-
-                    </div>
-
-
-                    <!-- SHOP MAP -->
-
-                    <div class="shop-detail-map-section">
-
-                        <h3>
-
-                            <i class="fas fa-map-marked-alt"></i>
-
-                            Shop Location
-
-                        </h3>
-
-                        <div id="shopDetailMap"></div>
-
-                    </div>
-
-
-                </div>
-
-
-                <!-- COLUMN DIVIDER -->
-
-                <div class="shop-detail-divider"></div>
-
-
-                <!-- RIGHT COLUMN -->
-
-                <div class="shop-detail-right">
-
-
-                    <!-- SUPPORTED PROBLEMS -->
-
-                    <div class="shop-info-group">
-
-                        <h3>
-
-                            <i class="fas fa-screwdriver-wrench"></i>
-
-                            Supported Problems
-
-                        </h3>
-
-                        <ul>
-
-                            ${problemNames.map(function (problem) {
-
-                                return `
-                                    <li>${escapeHTML(problem)}</li>
-                                `;
-
-                            }).join("")}
-
-                        </ul>
-
-                    </div>
-
-
-                    <!-- ADDRESS -->
-
-                    <div class="shop-info-group">
-
-                        <h3>
-
-                            <i class="fas fa-location-dot"></i>
-
-                            Address
-
-                        </h3>
-
-                        <p>
-                            ${escapeHTML(shop.address)}
-                        </p>
-
-                    </div>
-
-
-                    <!-- COLLECTION AND DELIVERY -->
-
-                    <div class="shop-info-group">
-
-                        <h3>
-
-                            <i class="fas fa-hand-holding"></i>
-
-                            Collection & Delivery
-
-                        </h3>
-
-                        <ul>
-
-                            <li>
-                                Collection:
-                                ${shop.collection ? "Available" : "Not Available"}
-                            </li>
-
-                            <li>
-                                Delivery:
-                                ${shop.delivery ? "Available" : "Not Available"}
-                            </li>
-
-                        </ul>
-
-                    </div>
-
-
-                    <!-- SAMPLE RATING -->
-
-                    <div class="shop-info-group">
-
-                        <h3>
-
-                            <i class="fas fa-star"></i>
-
-                            Sample Rating
-
-                        </h3>
-
-                        <p>
-                            ★ ${escapeHTML(shop.rating)} / 5
-                        </p>
-
-                    </div>
-
-
-                    <!-- PRICE INFORMATION -->
-
-                    <div class="shop-info-group">
-
-                        <h3>
-
-                            <i class="fas fa-money-bill-wave"></i>
-
-                            Price Information
-
-                        </h3>
-
-                        <p>
-                            This shop belongs to the
-                            ${escapeHTML(getBudgetLabel(shop))}
-                            sample budget group.
-                        </p>
-
-                        <p>
-                            The final repair cost depends on the device,
-                            parts required and damage condition. Contact
-                            a repair provider for an actual quotation.
-                        </p>
-
-                    </div>
-
-
-                    <!-- PROTOTYPE NOTICE -->
-
-                    <div class="shop-last-checked">
-
-                        <i class="fas fa-circle-info"></i>
-
-                        Illustrative prototype information
-
-                    </div>
-
-
-                    <!-- DIRECTIONS BUTTON -->
-
-                    <a
-                        href="${directionsURL}"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="shop-primary-button">
-
-                        <i class="fas fa-diamond-turn-right"></i>
-
-                        Get Directions
-
-                    </a>
-
-
-                    <!-- CLOSE BUTTON -->
-
-                    <button
-                        type="button"
-                        class="shop-detail-close"
-                        id="closeShopDetails">
-
-                        Close Shop Details
-
-                    </button>
-
-
-                </div>
-
-            </div>
-
-        `;
-
-
-        /* SHOW DETAIL CONTENT */
-
-        detailContent.hidden = false;
-
-        detailsSection.hidden = false;
-
-
-        /* IMAGE FALLBACK */
-
-        const shopImage = detailContent.querySelector(
-            ".shop-detail-image img"
-        );
-
-        if (shopImage) {
-
-            shopImage.addEventListener("error", function () {
-
-                this.style.display = "none";
-
-            });
-
-        }
-
-
-        /* SCROLL TO DETAILS */
-
-        detailsSection.scrollIntoView({
-
-            behavior: "smooth",
-
-            block: "start"
-
-        });
-
-
-        /* INITIALISE DETAIL MAP */
-
-        initialiseDetailMap(shop);
+        }).join("");
 
     }
 
+
+    /* GOOGLE MAPS DIRECTIONS */
+
+    const directionsURL =
+        `https://www.google.com/maps/dir/?api=1&destination=${shop.latitude},${shop.longitude}`;
+
+
+    /* DETAIL CONTENT */
+
+    detailContent.innerHTML = `
+
+        <div class="shop-detail-layout">
+
+
+            <!-- LEFT COLUMN -->
+
+            <div class="shop-detail-left">
+
+
+                <!-- SHOP HEADER -->
+
+                <div class="shop-detail-header">
+
+                    <div class="shop-detail-image">
+
+                        <img
+                            src="assets/images/repair-shop.jpg"
+                            alt="Illustrative repair shop">
+
+                    </div>
+
+
+                    <div class="shop-detail-basic">
+
+                        <div class="shop-detail-name">
+
+                            <h2>
+                                ${escapeHTML(shop.name)}
+                            </h2>
+
+                            <span class="shop-partner-badge">
+
+                                <i class="fas fa-circle-info"></i>
+
+                                Sample Listing
+
+                            </span>
+
+                        </div>
+
+
+                        <p class="shop-detail-location">
+
+                            <i class="fas fa-location-dot"></i>
+
+                            ${escapeHTML(shop.township)}, Yangon
+
+                        </p>
+
+
+                        <div class="shop-supported-devices">
+
+                            <span>Supported Devices</span>
+
+                            <div class="shop-device-tags">
+
+                                ${deviceNames.map(function (device) {
+
+                                    return `
+                                        <span>
+                                            ${escapeHTML(device)}
+                                        </span>
+                                    `;
+
+                                }).join("")}
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ABOUT SHOP -->
+
+                <div class="shop-detail-about">
+
+                    <h3>About This Shop</h3>
+
+                    <p>
+                        ${escapeHTML(shop.description)}
+                    </p>
+
+                    <p>
+                        This is an illustrative sample listing for the
+                        re:power repair shop finder demonstration.
+                    </p>
+
+                </div>
+
+
+                <!-- SHOP MAP -->
+
+                <div class="shop-detail-map-section">
+
+                    <h3>
+
+                        <i class="fas fa-map-marked-alt"></i>
+
+                        Shop Location
+
+                    </h3>
+
+                    <div id="shopDetailMap"></div>
+
+                </div>
+
+
+                <!-- CUSTOMER FEEDBACK -->
+
+                <section class="shop-feedback-section">
+
+                    <div class="shop-feedback-heading">
+
+                        <div>
+
+                            <span class="shop-feedback-eyebrow">
+                                CUSTOMER EXPERIENCES
+                            </span>
+
+                            <h3>Customer Feedback</h3>
+
+                            <p>
+                                Read sample feedback about this repair shop's
+                                service experience.
+                            </p>
+
+                        </div>
+
+
+                        <div class="shop-feedback-summary">
+
+                            <strong>${averageFeedback}</strong>
+
+                            <div class="shop-feedback-summary-stars">
+
+                                ${generateStars(Number(averageFeedback))}
+
+                            </div>
+
+                            <span>
+                                Sample average rating
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- FEEDBACK LIST -->
+
+                    <div class="shop-feedback-list">
+
+                        ${feedbackList.map(function (feedback) {
+
+                            return `
+
+                                <article class="shop-feedback-card">
+
+                                    <div class="shop-feedback-card-top">
+
+                                        <div class="shop-feedback-customer">
+
+                                            <div class="shop-feedback-avatar">
+
+                                                <i class="fas fa-user"></i>
+
+                                            </div>
+
+                                            <div>
+
+                                                <strong>
+                                                    ${escapeHTML(feedback.name)}
+                                                </strong>
+
+                                                <span>
+                                                    ${escapeHTML(feedback.date)}
+                                                </span>
+
+                                            </div>
+
+                                        </div>
+
+
+                                        <div class="shop-feedback-stars">
+
+                                            ${generateStars(feedback.rating)}
+
+                                        </div>
+
+                                    </div>
+
+
+                                    <p class="shop-feedback-comment">
+
+                                        ${escapeHTML(feedback.comment)}
+
+                                    </p>
+
+                                </article>
+
+                            `;
+
+                        }).join("")}
+
+                    </div>
+
+
+                    <p class="shop-feedback-notice">
+
+                        <i class="fas fa-circle-info"></i>
+
+                        These reviews are illustrative examples for the
+                        website prototype, not verified customer testimonials.
+
+                    </p>
+
+                </section>
+
+
+            </div>
+
+
+            <!-- VERTICAL DIVIDER -->
+
+            <div class="shop-detail-divider"></div>
+
+
+            <!-- RIGHT COLUMN -->
+
+            <div class="shop-detail-right">
+
+
+                <!-- SUPPORTED PROBLEMS -->
+
+                <div class="shop-info-group">
+
+                    <h3>
+
+                        <i class="fas fa-screwdriver-wrench"></i>
+
+                        Supported Problems
+
+                    </h3>
+
+                    <ul>
+
+                        ${problemNames.map(function (problem) {
+
+                            return `
+                                <li>${escapeHTML(problem)}</li>
+                            `;
+
+                        }).join("")}
+
+                    </ul>
+
+                </div>
+
+
+                <!-- ADDRESS -->
+
+                <div class="shop-info-group">
+
+                    <h3>
+
+                        <i class="fas fa-location-dot"></i>
+
+                        Address
+
+                    </h3>
+
+                    <p>
+                        ${escapeHTML(shop.address)}
+                    </p>
+
+                </div>
+
+
+                <!-- COLLECTION AND DELIVERY -->
+
+                <div class="shop-info-group">
+
+                    <h3>
+
+                        <i class="fas fa-hand-holding"></i>
+
+                        Collection & Delivery
+
+                    </h3>
+
+                    <ul>
+
+                        <li>
+                            Collection:
+                            ${shop.collection ? "Available" : "Not Available"}
+                        </li>
+
+                        <li>
+                            Delivery:
+                            ${shop.delivery ? "Available" : "Not Available"}
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <!-- SAMPLE RATING -->
+
+                <div class="shop-info-group">
+
+                    <h3>
+
+                        <i class="fas fa-star"></i>
+
+                        Sample Rating
+
+                    </h3>
+
+                    <p>
+                        ★ ${escapeHTML(String(shop.rating))} / 5
+                    </p>
+
+                    <p>
+                        Illustrative listing rating.
+                    </p>
+
+                </div>
+
+
+                <!-- PRICE INFORMATION -->
+
+                <div class="shop-info-group">
+
+                    <h3>
+
+                        <i class="fas fa-money-bill-wave"></i>
+
+                        Price Information
+
+                    </h3>
+
+                    <p>
+                        This shop belongs to the
+                        ${escapeHTML(getBudgetLabel(shop))}
+                        sample budget group.
+                    </p>
+
+                    <p>
+                        The final repair cost depends on the device,
+                        parts required and damage condition. Contact
+                        a repair provider for an actual quotation.
+                    </p>
+
+                </div>
+
+
+                <!-- PROTOTYPE NOTICE -->
+
+                <div class="shop-last-checked">
+
+                    <i class="fas fa-circle-info"></i>
+
+                    Illustrative prototype information
+
+                </div>
+
+
+                <!-- DIRECTIONS BUTTON -->
+
+                <a
+                    href="${directionsURL}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="shop-primary-button">
+
+                    <i class="fas fa-diamond-turn-right"></i>
+
+                    Get Directions
+
+                </a>
+
+
+                <!-- CLOSE BUTTON -->
+
+                <button
+                    type="button"
+                    class="shop-detail-close"
+                    id="closeShopDetails">
+
+                    Close Shop Details
+
+                </button>
+
+
+            </div>
+
+        </div>
+
+    `;
+
+
+    /* IMAGE FALLBACK */
+
+    const shopImage = detailContent.querySelector(
+        ".shop-detail-image img"
+    );
+
+    if (shopImage) {
+
+        shopImage.addEventListener("error", function () {
+
+            this.style.display = "none";
+
+        });
+
+    }
+
+
+    /* SHOW DETAIL CONTENT */
+
+    detailContent.hidden = false;
+
+    detailsSection.hidden = false;
+
+
+    /* SCROLL TO DETAILS */
+
+    detailsSection.scrollIntoView({
+
+        behavior: "smooth",
+
+        block: "start"
+
+    });
+
+
+    /* INITIALISE DETAIL MAP */
+
+    initialiseDetailMap(shop);
+
+}/* =========================================
+   SAMPLE CUSTOMER FEEDBACK
+   4–6 REVIEWS FOR EACH SHOP
+========================================= */
+
+const shopFeedback = {
+
+    // SHOP 1 — HOME APPLIANCE CARE
+    1: [
+        {
+            name: "Aung Kyaw Min",
+            rating: 5,
+            date: "20 October 2026",
+            comment: "The staff were friendly and explained the appliance problem clearly. I appreciated their helpful service."
+        },
+        {
+            name: "Thandar Hlaing",
+            rating: 4,
+            date: "23 October 2026",
+            comment: "The technician checked the appliance carefully and provided useful repair advice."
+        },
+        {
+            name: "Min Zaw Oo",
+            rating: 5,
+            date: "28 October 2026",
+            comment: "Good communication and professional customer support. The overall experience was pleasant."
+        },
+        {
+            name: "Su Myat Noe",
+            rating: 4,
+            date: "1 November 2026",
+            comment: "The staff were polite and helped me understand the possible repair options."
+        }
+    ],
+
+
+    // SHOP 2 — SMART DEVICE SERVICE
+    2: [
+        {
+            name: "Ei Ei Phyo",
+            rating: 4,
+            date: "18 October 2026",
+            comment: "The staff were helpful and provided useful information about my phone problem."
+        },
+        {
+            name: "Kyaw Zin Htet",
+            rating: 5,
+            date: "24 October 2026",
+            comment: "The service was organised and the repair options were explained clearly."
+        },
+        {
+            name: "May Thiri Aung",
+            rating: 4,
+            date: "30 October 2026",
+            comment: "A positive experience overall. I appreciated the friendly communication."
+        },
+        {
+            name: "Htet Naing Lin",
+            rating: 5,
+            date: "2 November 2026",
+            comment: "The technician was helpful and answered my questions about the device issue."
+        },
+        {
+            name: "Nandar Win",
+            rating: 4,
+            date: "3 November 2026",
+            comment: "Good customer support and clear explanations about the available services."
+        }
+    ],
+
+
+    // SHOP 3 — HOME ELECTRONICS WORKSHOP
+    3: [
+        {
+            name: "Aye Chan Mon",
+            rating: 5,
+            date: "16 October 2026",
+            comment: "The technician provided a clear explanation of the appliance issue and possible solutions."
+        },
+        {
+            name: "Thant Zin",
+            rating: 4,
+            date: "22 October 2026",
+            comment: "Good customer service. The staff answered my questions and explained the available options."
+        },
+        {
+            name: "Khin Wint Wah",
+            rating: 5,
+            date: "29 October 2026",
+            comment: "The overall experience was convenient and the staff were welcoming."
+        },
+        {
+            name: "Ye Yint Aung",
+            rating: 4,
+            date: "1 November 2026",
+            comment: "The staff were helpful and provided practical advice about appliance maintenance."
+        },
+        {
+            name: "Phyu Sin Htet",
+            rating: 5,
+            date: "3 November 2026",
+            comment: "Friendly communication and useful information about the repair process."
+        },
+        {
+            name: "Ko Ko Lwin",
+            rating: 4,
+            date: "4 November 2026",
+            comment: "A helpful experience. The technician explained the appliance problem in simple terms."
+        }
+    ],
+
+
+    // SHOP 4 — COMPUTER & MOBILE CARE
+    4: [
+        {
+            name: "Nay Lin Tun",
+            rating: 4,
+            date: "19 October 2026",
+            comment: "The shop provided useful advice and helped me understand what my laptop needed."
+        },
+        {
+            name: "Moe Thuzar",
+            rating: 5,
+            date: "25 October 2026",
+            comment: "Friendly staff and clear communication throughout the service."
+        },
+        {
+            name: "Htet Htet Aung",
+            rating: 4,
+            date: "31 October 2026",
+            comment: "A helpful experience. I received clear information before deciding on the repair."
+        },
+        {
+            name: "Zaw Min Khant",
+            rating: 5,
+            date: "2 November 2026",
+            comment: "The staff were professional and explained the computer repair options clearly."
+        }
+    ],
+
+
+    // SHOP 5 — ADVANCED APPLIANCE SOLUTIONS
+    5: [
+        {
+            name: "Chaw Su Mon",
+            rating: 5,
+            date: "17 October 2026",
+            comment: "The staff were patient and explained the possible repair solutions in a simple way."
+        },
+        {
+            name: "Aung Myo Thu",
+            rating: 4,
+            date: "26 October 2026",
+            comment: "Good communication and helpful support. The service information was easy to understand."
+        },
+        {
+            name: "Thet Thet Hnin",
+            rating: 5,
+            date: "1 November 2026",
+            comment: "I appreciated the attention given to my appliance and the helpful customer support."
+        },
+        {
+            name: "Pyae Phyo Aung",
+            rating: 4,
+            date: "2 November 2026",
+            comment: "The technician provided useful information about the appliance and its possible repair needs."
+        },
+        {
+            name: "Hnin Pwint",
+            rating: 5,
+            date: "4 November 2026",
+            comment: "A pleasant experience with clear explanations and friendly communication."
+        }
+    ],
+
+
+    // SHOP 6 — ADVANCED TECHNOLOGY REPAIR
+    6: [
+        {
+            name: "Kaung Myat",
+            rating: 4,
+            date: "21 October 2026",
+            comment: "The team were helpful and provided useful information about the computer repair process."
+        },
+        {
+            name: "Yoon Waddy",
+            rating: 5,
+            date: "27 October 2026",
+            comment: "Friendly customer support and clear explanations. Overall, a pleasant experience."
+        },
+        {
+            name: "Thura Aung",
+            rating: 4,
+            date: "2 November 2026",
+            comment: "The staff responded to my questions and helped me understand the device issue."
+        },
+        {
+            name: "Su Hlaing",
+            rating: 5,
+            date: "3 November 2026",
+            comment: "The service information was easy to understand and the staff were welcoming."
+        },
+        {
+            name: "Min Thant Kyaw",
+            rating: 4,
+            date: "4 November 2026",
+            comment: "A good sample service experience with helpful communication and repair advice."
+        },
+        {
+            name: "Nwe Nwe Aye",
+            rating: 5,
+            date: "4 November 2026",
+            comment: "The team provided clear information and made the repair process easy to understand."
+        }
+    ]
+
+};
 
     /* =========================================
        17. VIEW DETAILS BUTTON
@@ -2191,13 +2554,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (resultsContainer) {
 
-        resultsContainer.addEventListener("click", function (event) {
+    resultsContainer.addEventListener("click", function (event) {
 
-            const button = event.target.closest(".shop-view-details");
+        const button = event.target.closest(".shop-view-details");
 
-            if (!button) return;
+        if (!button) return;
 
-            showShopDetails(button.dataset.shopId);
+        showShopDetails(button.dataset.shopId);
 
         });
 
