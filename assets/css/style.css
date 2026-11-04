@@ -479,6 +479,7 @@ small {
     grid-template-columns: 1.25fr 1.3fr 1.2fr 1fr 1.4fr;
     gap: 32px;
     padding-bottom: 55px;
+    padding: 50px;
 }
 
 .footer-main > * {
@@ -753,6 +754,7 @@ small {
     .footer-main {
         grid-template-columns: repeat(3, minmax(0, 1fr));
         gap: 35px 25px;
+        padding: 50px;
     }
 
     .footer-brand {
@@ -811,6 +813,7 @@ small {
     .footer-main {
         grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 35px 25px;
+        padding: 50px;
     }
 
     .footer-brand,
@@ -859,6 +862,7 @@ small {
 
     .footer-main {
         padding-bottom: 40px;
+        padding: 50px;
     }
 
     .footer-campaign {
