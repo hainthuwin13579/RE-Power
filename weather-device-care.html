@@ -254,6 +254,291 @@
             </div>
         </section>
 
+        <!-- WEATHER CARE + SMART ASSISTANT -->
+<section class="rp-weather-section" id="weather-care">
+
+    <div class="rp-section-heading">
+        <span class="rp-eyebrow">SMARTER LIVING · GREENER PLANET</span>
+        <h2>Weather Care & Eco Reminder</h2>
+        <p>
+            Get local weather updates, protect your devices and discover
+            simple ways to care for yourself and the environment.
+        </p>
+    </div>
+
+    <!-- WEATHER AND ECO REMINDER -->
+    <div class="rp-weather-grid">
+
+        <!-- WEATHER CARD -->
+        <article class="rp-weather-card">
+
+            <div class="rp-card-heading">
+                <div>
+                    <span class="rp-small-label">LIVE WEATHER</span>
+                    <h3>Your Local Weather</h3>
+                </div>
+                <span class="rp-live-indicator">
+                    <span></span> Live
+                </span>
+            </div>
+
+            <p class="rp-location" id="weather-location">
+                Detecting your location...
+            </p>
+
+            <div class="rp-weather-main">
+                <div>
+                    <div class="rp-temperature" id="weather-temperature">
+                        --°
+                    </div>
+                    <p id="weather-description">Checking weather...</p>
+                    <p class="rp-feels-like" id="weather-feels-like">
+                        Feels like --°
+                    </p>
+                </div>
+
+                <div class="rp-weather-icon" id="weather-icon" aria-hidden="true">
+                    <span>🌤️</span>
+                </div>
+            </div>
+
+            <div class="rp-weather-details">
+                <div class="rp-weather-detail">
+                    <span>💧</span>
+                    <div>
+                        <small>Humidity</small>
+                        <strong id="weather-humidity">--%</strong>
+                    </div>
+                </div>
+
+                <div class="rp-weather-detail">
+                    <span>🌧️</span>
+                    <div>
+                        <small>Rainfall</small>
+                        <strong id="weather-rainfall">-- mm</strong>
+                    </div>
+                </div>
+
+                <div class="rp-weather-detail">
+                    <span>💨</span>
+                    <div>
+                        <small>Wind speed</small>
+                        <strong id="weather-wind">-- km/h</strong>
+                    </div>
+                </div>
+
+                <div class="rp-weather-detail">
+                    <span>☔</span>
+                    <div>
+                        <small>Rain chance</small>
+                        <strong id="weather-rain-chance">--%</strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="rp-weather-alert" id="weather-alert">
+                <span>🌱</span>
+                <p>Weather-based care suggestions will appear here.</p>
+            </div>
+
+            <div class="rp-weather-footer">
+                <span id="weather-updated">Waiting for weather data...</span>
+                <button type="button" id="refresh-weather">
+                    ↻ Refresh
+                </button>
+            </div>
+
+            <p class="rp-weather-source">
+                Weather data: Open-Meteo
+            </p>
+        </article>
+
+
+        <!-- ECO REMINDER CARD -->
+        <article class="rp-eco-card">
+
+            <div class="rp-card-heading">
+                <div>
+                    <span class="rp-small-label">DAILY SUSTAINABILITY</span>
+                    <h3>Eco Reminder</h3>
+                </div>
+                <span class="rp-eco-icon">🌿</span>
+            </div>
+
+            <p class="rp-eco-intro">
+                Small actions can make a meaningful difference.
+                Here are some suggestions based on your local weather.
+            </p>
+
+            <div id="eco-reminder-list" class="rp-reminder-list">
+                <div class="rp-reminder-item">
+                    <span>🌱</span>
+                    <p>Loading your eco-friendly reminders...</p>
+                </div>
+            </div>
+
+            <div class="rp-eco-bottom">
+                <span>♻️</span>
+                <p>Repair, reuse and reduce electronic waste.</p>
+            </div>
+        </article>
+
+    </div>
+
+
+    <!-- SMART ASSISTANT -->
+    <div class="rp-assistant-area">
+
+        <div class="rp-assistant-intro">
+            <span class="rp-eyebrow">YOUR EVERYDAY CARE COMPANION</span>
+            <h2>Meet Re:Care Assistant</h2>
+            <p>
+                Ask about device maintenance, weather-related care,
+                sustainable habits and everyday wellbeing.
+            </p>
+        </div>
+
+        <div class="rp-assistant-grid">
+
+            <!-- CHATBOX -->
+            <article class="rp-chat-card">
+
+                <div class="rp-chat-header">
+                    <div class="rp-assistant-avatar">🌱</div>
+
+                    <div>
+                        <h3>Re:Care Assistant</h3>
+                        <span class="rp-assistant-status">
+                            <span></span> Prototype assistant
+                        </span>
+                    </div>
+
+                    <span class="rp-demo-label">DEMO</span>
+                </div>
+
+                <div class="rp-chat-context">
+                    <span>🌤️</span>
+                    <p id="assistant-weather-context">
+                        Weather information will appear here.
+                    </p>
+                </div>
+
+                <div
+                    class="rp-chat-messages"
+                    id="ai-chat-messages"
+                    aria-live="polite"
+                >
+                    <div class="rp-message assistant-message">
+                        <div class="rp-message-avatar">🌱</div>
+                        <div class="rp-message-content">
+                            <p>
+                                Hello! I'm Re:Care, your everyday care
+                                companion. 🌿
+                            </p>
+                            <p>
+                                I can help you with device care,
+                                weather-related tips and simple
+                                wellbeing reminders.
+                            </p>
+                            <span class="rp-message-time">Just now</span>
+                        </div>
+                    </div>
+                </div>
+
+                <form id="ai-chat-form" class="rp-chat-form">
+
+                    <label for="ai-device" class="rp-input-label">
+                        Select a device (optional)
+                    </label>
+
+                    <select id="ai-device" class="rp-device-select">
+                        <option value="General">General advice</option>
+                        <option value="Smartphone">Smartphone</option>
+                        <option value="Laptop">Laptop</option>
+                        <option value="Tablet">Tablet</option>
+                        <option value="Television">Television</option>
+                        <option value="Refrigerator">Refrigerator</option>
+                        <option value="Washing machine">Washing machine</option>
+                        <option value="Other electronic device">Other device</option>
+                    </select>
+
+                    <div class="rp-chat-input-row">
+                        <input
+                            type="text"
+                            id="ai-question"
+                            placeholder="Ask me anything..."
+                            autocomplete="off"
+                            required
+                        >
+
+                        <button type="submit" id="ai-send-button"
+                            aria-label="Send message">
+                            ➤
+                        </button>
+                    </div>
+
+                    <p class="rp-chat-disclaimer">
+                        Prototype demonstration · Responses are simulated
+                        using predefined JavaScript rules.
+                    </p>
+                </form>
+
+            </article>
+
+
+            <!-- WELLBEING CARD -->
+            <article class="rp-wellbeing-card">
+
+                <div class="rp-wellbeing-heading">
+                    <span>💚</span>
+                    <div>
+                        <span class="rp-small-label">PERSONAL WELLBEING</span>
+                        <h3>Take Care of Yourself</h3>
+                    </div>
+                </div>
+
+                <p class="rp-wellbeing-intro">
+                    Your wellbeing matters too. Here are a few simple
+                    reminders for your day.
+                </p>
+
+                <div id="health-recommendations" class="rp-wellbeing-list">
+                    <div class="rp-wellbeing-item">
+                        <span>💧</span>
+                        <div>
+                            <strong>Stay hydrated</strong>
+                            <p>Remember to drink water throughout the day.</p>
+                        </div>
+                    </div>
+
+                    <div class="rp-wellbeing-item">
+                        <span>👀</span>
+                        <div>
+                            <strong>Rest your eyes</strong>
+                            <p>Take short breaks when using digital devices.</p>
+                        </div>
+                    </div>
+
+                    <div class="rp-wellbeing-item">
+                        <span>🌿</span>
+                        <div>
+                            <strong>Take a little break</strong>
+                            <p>Step away from your screen and relax.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="rp-wellbeing-note">
+                    These are general lifestyle reminders, not medical advice.
+                </div>
+
+            </article>
+
+        </div>
+    </div>
+
+</section>
+
 
         <!-- GUIDE LIBRARY -->
         <section class="weather-guides-section" id="weather-guides">
