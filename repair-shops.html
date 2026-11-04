@@ -204,195 +204,242 @@
 
             <!-- SEARCH SECTION -->
 
-            <section class="shop-search-section" id="shopSearch">
+            
+<section class="shop-search-section" id="shopSearch">
 
-                <div class="container">
+    <div class="container">
 
-                    <div class="shop-section-heading">
+        <div class="shop-section-heading">
 
-                        <div>
-                            <span class="shop-eyebrow">YOUR REPAIR, YOUR WAY</span>
-                            <h2>What needs fixing?</h2>
-                            <p>Select your device category and provide a few details to discover repair options.</p>
-                        </div>
+            <div>
+                <span class="shop-eyebrow">YOUR REPAIR, YOUR WAY</span>
 
-                        <span class="shop-step-label">
-                            01 <span>/</span> FIND A MATCH
-                        </span>
+                <h2>What needs fixing?</h2>
+
+                <p>
+                    Select your device category and provide a few details
+                    to discover repair options.
+                </p>
+            </div>
+
+            <span class="shop-step-label">
+                01 <span>/</span> FIND A MATCH
+            </span>
+
+        </div>
+
+
+        <!-- CATEGORY SELECTION -->
+
+        <div class="shop-category-switch">
+
+            <button
+                type="button"
+                class="shop-category-option active"
+                data-category="household"
+                aria-pressed="true">
+
+                <span class="shop-category-icon">
+                    <i class="fas fa-tv"></i>
+                </span>
+
+                <span class="shop-category-text">
+                    <strong>Household Electronics</strong>
+                    <small>Appliances and home devices</small>
+                </span>
+
+                <span class="shop-radio"></span>
+
+            </button>
+
+
+            <button
+                type="button"
+                class="shop-category-option"
+                data-category="personal"
+                aria-pressed="false">
+
+                <span class="shop-category-icon">
+                    <i class="fas fa-laptop"></i>
+                </span>
+
+                <span class="shop-category-text">
+                    <strong>Personal Technology</strong>
+                    <small>Phones, laptops and tablets</small>
+                </span>
+
+                <span class="shop-radio"></span>
+
+            </button>
+
+        </div>
+
+
+        <!-- SEARCH FILTER FORM -->
+
+        <form class="shop-filter-panel" id="shopSearchForm">
+
+            <div class="shop-filter-heading">
+
+                <div>
+                    <h3>Find your repair match</h3>
+                    <p>Enter your location and device information.</p>
+                </div>
+
+                <span class="shop-filter-number">SEARCH FILTERS</span>
+
+            </div>
+
+
+            <!-- FILTER INPUTS -->
+
+            <div class="shop-filter-grid">
+
+
+                <!-- LOCATION -->
+
+                <div class="shop-form-group">
+
+                    <label for="shopLocation">City or Township</label>
+
+                    <div class="shop-input-wrapper">
+
+                        <i class="fas fa-location-dot"></i>
+
+                        <select id="shopLocation" name="shopLocation">
+
+                            <option value="">Choose a township</option>
+                            <option value="Tamwe">Tamwe</option>
+                            <option value="Sanchaung">Sanchaung</option>
+                            <option value="Bahan">Bahan</option>
+                            <option value="Kamayut">Kamayut</option>
+
+                        </select>
 
                     </div>
-
-
-                    <!-- CATEGORY SELECTION -->
-
-                    <div class="shop-category-switch">
-
-                        <button type="button"
-                            class="shop-category-option active"
-                            data-category="household"
-                            aria-pressed="true">
-
-                            <span class="shop-category-icon">
-                                <i class="fas fa-tv"></i>
-                            </span>
-
-                            <span class="shop-category-text">
-                                <strong>Household Electronics</strong>
-                                <small>Appliances and home devices</small>
-                            </span>
-
-                            <span class="shop-radio"></span>
-
-                        </button>
-
-
-                        <button type="button"
-                            class="shop-category-option"
-                            data-category="personal"
-                            aria-pressed="false">
-
-                            <span class="shop-category-icon">
-                                <i class="fas fa-laptop"></i>
-                            </span>
-
-                            <span class="shop-category-text">
-                                <strong>Personal Technology</strong>
-                                <small>Phones, laptops and tablets</small>
-                            </span>
-
-                            <span class="shop-radio"></span>
-
-                        </button>
-
-                    </div>
-
-
-                    <!-- SEARCH FILTER FORM -->
-
-                    <form class="shop-filter-panel" id="shopSearchForm">
-
-                        <div class="shop-filter-heading">
-                            <div>
-                                <h3>Find your repair match</h3>
-                                <p>Enter your location and device information.</p>
-                            </div>
-
-                            <span class="shop-filter-number">SEARCH FILTERS</span>
-                        </div>
-
-
-                        <div class="shop-filter-grid">
-
-                            <div class="shop-form-group">
-
-                                <label for="shopLocation">City or Township</label>
-
-                                <div class="shop-input-wrapper">
-                                    <i class="fas fa-location-dot"></i>
-
-                                    <select id="shopLocation" name="shopLocation">
-                                        <option value="">Select a township</option>
-                                        <option value="Tamwe">Tamwe</option>
-                                        <option value="Sanchaung">Sanchaung</option>
-                                        <option value="Bahan">Bahan</option>
-                                        <option value="Kamayut">Kamayut</option>
-                                    </select>
-
-                                </div>
-
-                            </div>
-
-
-                            <div class="shop-form-group">
-
-                                <label for="shopDevice">Device Type</label>
-
-                                <select id="shopDevice">
-                                    <option value="">All supported devices</option>
-                                </select>
-
-                            </div>
-
-
-                            <div class="shop-form-group">
-
-                                <label for="shopProblem">Problem Type</label>
-
-                                <select id="shopProblem">
-
-                                    <option value="">Any problem</option>
-                                    <option value="power">Power or charging</option>
-                                    <option value="screen">Screen or display</option>
-                                    <option value="water">Water damage</option>
-                                    <option value="performance">Performance or software</option>
-                                    <option value="mechanical">Mechanical fault</option>
-                                    <option value="other">Other / Not sure</option>
-
-                                </select>
-
-                            </div>
-
-
-                            <div class="shop-form-group">
-
-                                <label for="shopBudget">Maximum Budget (MMK)</label>
-
-                                <div class="shop-input-wrapper">
-                                    <span class="currency-label">Ks</span>
-
-                                    <input type="number"
-                                        id="shopBudget"
-                                        min="0"
-                                        step="1000"
-                                        placeholder="Any budget">
-                                </div>
-
-                            </div>
-
-                        </div>
-
-
-                        <div class="shop-filter-footer">
-
-                            <label class="shop-checkbox">
-
-                                <input type="checkbox" id="shopDelivery">
-
-                                <span class="shop-custom-checkbox"></span>
-
-                                Offers delivery or collection
-
-                            </label>
-
-
-                            <div class="shop-filter-actions">
-
-                                <button type="button"
-                                    class="shop-reset-button"
-                                    id="resetShopFilters">
-
-                                    <i class="fas fa-rotate-left"></i>
-                                    Reset filters
-
-                                </button>
-
-
-                                <button type="submit" class="shop-search-button">
-
-                                    Search Shops
-                                    <i class="fas fa-arrow-right"></i>
-
-                                </button>
-
-                            </div>
-
-                        </div>
-
-                    </form>
 
                 </div>
 
-            </section>
+
+                <!-- DEVICE TYPE -->
+
+                <div class="shop-form-group">
+
+                    <label for="shopDevice">Device Type</label>
+
+                    <select id="shopDevice" name="shopDevice">
+
+                        <option value="">Choose a device</option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- PROBLEM TYPE -->
+
+                <div class="shop-form-group">
+
+                    <label for="shopProblem">Problem Type</label>
+
+                    <select id="shopProblem" name="shopProblem">
+
+                        <option value="">Choose a Problem</option>
+                        <option value="power">Power or charging</option>
+                        <option value="screen">Screen or display</option>
+                        <option value="water">Water damage</option>
+                        <option value="performance">Performance or software</option>
+                        <option value="mechanical">Mechanical fault</option>
+                        <option value="other">Other / Not sure</option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- SINGLE BUDGET INPUT -->
+
+                <div class="shop-form-group shop-budget-group">
+
+                    <label for="shopBudget">
+                        Estimated Budget (MMK)
+                    </label>
+
+                    <div class="shop-input-wrapper">
+
+                        <input
+                            type="number"
+                            id="shopBudget"
+                            name="shopBudget"
+                            min="0"
+                            step="1000"
+                            placeholder="Enter your budget">
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- FILTER FOOTER -->
+
+            <div class="shop-filter-footer">
+
+
+                <!-- DELIVERY OPTION -->
+
+                <label class="shop-checkbox">
+
+                    <input
+                        type="checkbox"
+                        id="shopDelivery"
+                        name="shopDelivery">
+
+                    <span class="shop-custom-checkbox"></span>
+
+                    Offers delivery or collection
+
+                </label>
+
+
+                <!-- ACTION BUTTONS -->
+
+                <div class="shop-filter-actions">
+
+                    <button
+                        type="button"
+                        class="shop-reset-button"
+                        id="resetShopFilters">
+
+                        <i class="fas fa-rotate-left"></i>
+
+                        Reset filters
+
+                    </button>
+
+
+                    <button
+                        type="submit"
+                        class="shop-search-button">
+
+                        Search Shops
+
+                        <i class="fas fa-arrow-right"></i>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</section>
+
 
 
             <!-- RESULTS SECTION -->
