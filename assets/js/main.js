@@ -5857,3 +5857,631 @@ document.addEventListener("DOMContentLoaded", () => {
     getWeatherLocation();
 
 });
+
+
+/* =====================================================
+   RE:POWER COLLECTION & DELIVERY
+   Frontend prototype: distance estimate + enquiry summary
+   No booking backend is connected.
+===================================================== */
+
+document.addEventListener("DOMContentLoaded", () => {
+    "use strict";
+
+    // Existing sample repair-shop records.
+    const REPAIR_SHOPS = [
+        { id: 1, name: "Home Appliance Care", category: "household", township: "Tamwe", address: "Sample Road, Tamwe Township, Yangon", devices: ["rice-cooker", "fan", "microwave"], collection: true, delivery: false, rating: 4.5, latitude: 16.8065, longitude: 96.1875 },
+        { id: 2, name: "Smart Device Service", category: "personal", township: "Sanchaung", address: "Sample Street, Sanchaung Township, Yangon", devices: ["smartphone", "laptop", "tablet"], collection: false, delivery: true, rating: 4.6, latitude: 16.8050, longitude: 96.1330 },
+        { id: 3, name: "Home Electronics Workshop", category: "household", township: "Bahan", address: "Sample Avenue, Bahan Township, Yangon", devices: ["refrigerator", "washing-machine", "television"], collection: true, delivery: true, rating: 4.7, latitude: 16.8110, longitude: 96.1590 },
+        { id: 4, name: "Computer & Mobile Care", category: "personal", township: "Kamayut", address: "Sample Road, Kamayut Township, Yangon", devices: ["smartphone", "laptop", "desktop", "monitor"], collection: true, delivery: false, rating: 4.8, latitude: 16.8270, longitude: 96.1335 },
+        { id: 5, name: "Advanced Appliance Solutions", category: "household", township: "Bahan", address: "Sample Street, Bahan Township, Yangon", devices: ["refrigerator", "washing-machine", "air-conditioner"], collection: true, delivery: true, rating: 4.9, latitude: 16.8190, longitude: 96.1660 },
+        { id: 6, name: "Advanced Technology Repair", category: "personal", township: "Tamwe", address: "Sample Avenue, Tamwe Township, Yangon", devices: ["smartphone", "laptop", "desktop", "monitor", "printer"], collection: true, delivery: true, rating: 4.9, latitude: 16.8000, longitude: 96.1950 }
+    ];
+
+    const $ = (id) => document.getElementById(id);
+
+    const shopSelect = $("cd-shop-select");
+    const shopFormSelect = $("cd-shop-form");
+    const townshipSelect = $("cd-pickup-township");
+    const addressInput = $("cd-pickup-address");
+    const floorSelect = $("cd-floor");
+    const distanceValue = $("cd-distance-value");
+    const feeValue = $("cd-fee-value");
+    const estimateNote = $("cd-estimate-note");
+    const locationStatus = $("cd-location-status");
+    const form = $("cd-collection-form");
+    const feedback = $("cd-form-feedback");
+
+    let pickupCoordinates = null;
+    let latestEstimate = null;
+
+    const money = (amount) =>
+        `${Math.round(amount).toLocaleString("en-US")} MMK`;
+
+    // Only show shops that currently have delivery enabled.
+    const deliveryShops = REPAIR_SHOPS.filter(
+        shop => shop.delivery
+    );
+
+    // 1. POPULATE REPAIR SHOP DROPDOWNS
+
+    function populateShopSelects() {
+
+        deliveryShops.forEach(shop => {
+
+            [shopSelect, shopFormSelect].forEach(select => {
+
+                const option = document.createElement("option");
+
+                option.value = String(shop.id);
+
+                option.textContent =
+                    `${shop.name} · ${shop.township} · ★ ${shop.rating}`;
+
+                select.appendChild(option);
+
+            });
+
+        });
+
+    }
+
+
+    function selectedShop() {
+
+        return deliveryShops.find(
+            shop => String(shop.id) === shopSelect.value
+        ) || null;
+
+    }
+
+
+    function syncShopSelection(value) {
+
+        if (!value) return;
+
+        shopSelect.value = value;
+        shopFormSelect.value = value;
+
+        updateSummary();
+        calculateEstimate();
+
+    }
+
+    // 2. RECEIVE DATA FROM REPAIR SHOP PAGE
+
+    function getQueryParameters() {
+
+        const params = new URLSearchParams(
+            window.location.search
+        );
+
+        const shopId = params.get("shopId");
+        const shopName = params.get("shopName");
+        const shopTownship = params.get("shopTownship");
+
+        if (
+            shopId &&
+            deliveryShops.some(shop => String(shop.id) === shopId)
+        ) {
+
+            syncShopSelection(shopId);
+
+        } else if (shopName) {
+
+            const match = deliveryShops.find(
+                shop => shop.name.toLowerCase() === shopName.toLowerCase()
+            );
+
+            if (match) {
+
+                syncShopSelection(String(match.id));
+
+            } else {
+
+                const note = $("cd-location-status");
+
+                if (note) {
+                    note.textContent =
+                        `${shopName} was passed from the repair page, but this shop is not currently listed as a delivery partner.`;
+                }
+
+            }
+
+        }
+
+        if (shopTownship) {
+
+            const matchingShop = deliveryShops.find(
+                shop => String(shop.id) === shopId
+            );
+
+            if (matchingShop) {
+                // Pickup township remains independent of shop township.
+            }
+
+        }
+
+        const tier = params.get("tier");
+
+        if (tier && $("cd-service-tier")) {
+            $("cd-service-tier").value = tier;
+        }
+
+        const device = params.get("device");
+
+        if (device && $("cd-device")) {
+            $("cd-device").value = device;
+        }
+
+    }
+
+    // 3. CALCULATE DISTANCE
+
+    // Haversine calculation gives straight-line distance,
+    // not actual road distance.
+
+    function haversineKm(lat1, lon1, lat2, lon2) {
+
+        const toRad = value => value * Math.PI / 180;
+
+        const R = 6371;
+
+        const dLat = toRad(lat2 - lat1);
+        const dLon = toRad(lon2 - lon1);
+
+        const a =
+            Math.sin(dLat / 2) ** 2 +
+            Math.cos(toRad(lat1)) *
+            Math.cos(toRad(lat2)) *
+            Math.sin(dLon / 2) ** 2;
+
+        return 2 * R *
+            Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+    }
+
+
+    // 4. DELIVERY PRICE ESTIMATOR
+
+
+    function estimateFee(distance, tier, journey, floor) {
+
+        // Prototype-only pricing assumptions.
+        // Replace with approved operational prices.
+
+        const base =
+            journey === "Collection to repair shop only"
+                ? 3000
+                : 5000;
+
+        const perKm = 650;
+
+        const floorExtra =
+            floor === "7+ floors" ? 2500 :
+                floor === "4–6 floors" ? 1500 :
+                    floor === "1–3 floors" ? 500 : 0;
+
+        const platinumExtra =
+            tier === "Platinum Care" ? 3500 : 0;
+
+        return Math.round(
+            (
+                base +
+                Math.max(0, distance - 2) * perKm +
+                floorExtra +
+                platinumExtra
+            ) / 500
+        ) * 500;
+
+    }
+
+    // 5. UPDATE DISTANCE AND PRICE DISPLAY
+
+    function calculateEstimate() {
+
+        const shop = selectedShop();
+
+        if (!shop) {
+
+            latestEstimate = null;
+
+            distanceValue.textContent = "—";
+
+            feeValue.textContent =
+                "Choose a delivery partner";
+
+            estimateNote.textContent =
+                "Select a participating shop to begin.";
+
+            updateSummary();
+
+            return;
+
+        }
+
+
+        if (!pickupCoordinates) {
+
+            distanceValue.textContent = "Location needed";
+
+            feeValue.textContent = "Not calculated";
+
+            estimateNote.textContent =
+                "Use your location to calculate an indicative distance. You can still submit an enquiry without sharing GPS.";
+
+            latestEstimate = null;
+
+            updateSummary();
+
+            return;
+
+        }
+
+
+        const distance = haversineKm(
+            pickupCoordinates.latitude,
+            pickupCoordinates.longitude,
+            shop.latitude,
+            shop.longitude
+        );
+
+        const tier =
+            $("cd-service-tier").value || "Standard Care";
+
+        const journey =
+            $("cd-journey").value ||
+            "Collection and return delivery";
+
+        const floor = floorSelect.value;
+
+        const fee = estimateFee(
+            distance,
+            tier,
+            journey,
+            floor
+        );
+
+        latestEstimate = {
+            distance,
+            fee,
+            shopId: shop.id,
+            tier
+        };
+
+        distanceValue.textContent =
+            `About ${distance.toFixed(1)} km`;
+
+        feeValue.textContent =
+            `From ${money(fee)}`;
+
+        estimateNote.textContent =
+            "Distance is straight-line GPS distance. Final road distance, access charge and fee require staff confirmation.";
+
+        updateSummary();
+
+    }
+
+
+    // 6. UPDATE SERVICE SUMMARY
+ 
+
+    function updateSummary() {
+
+        const shop = selectedShop();
+
+        $("cd-summary-shop").textContent =
+            shop ? shop.name : "Not selected";
+
+        $("cd-summary-tier").textContent =
+            $("cd-service-tier").value || "Not selected";
+
+        $("cd-summary-distance").textContent =
+            latestEstimate
+                ? `${latestEstimate.distance.toFixed(1)} km (estimate)`
+                : "Not calculated";
+
+        $("cd-summary-fee").textContent =
+            latestEstimate
+                ? `From ${money(latestEstimate.fee)}`
+                : "Quote to be confirmed";
+
+    }
+
+    // 7. GET CUSTOMER LOCATION
+
+    function setPickupCoordinates(latitude, longitude, label) {
+
+        pickupCoordinates = {
+            latitude,
+            longitude
+        };
+
+        locationStatus.textContent =
+            label || "Location received.";
+
+        calculateEstimate();
+
+    }
+
+
+    $("cd-use-location").addEventListener("click", () => {
+
+        if (!navigator.geolocation) {
+
+            locationStatus.textContent =
+                "Location is not supported by this browser.";
+
+            return;
+
+        }
+
+        locationStatus.textContent =
+            "Requesting location permission…";
+
+        navigator.geolocation.getCurrentPosition(
+
+            position => {
+
+                setPickupCoordinates(
+                    position.coords.latitude,
+                    position.coords.longitude,
+                    "Location received. Distance is approximate."
+                );
+
+            },
+
+            () => {
+
+                locationStatus.textContent =
+                    "Location permission was not granted. You can still submit your address for a manual quote.";
+
+            },
+
+            {
+                enableHighAccuracy: false,
+                timeout: 10000,
+                maximumAge: 300000
+            }
+
+        );
+
+    });
+
+    // 8. CONNECT BOTH SHOP DROPDOWNS
+
+    [shopSelect, shopFormSelect].forEach(select => {
+
+        select.addEventListener("change", () => {
+
+            if (select === shopFormSelect) {
+                shopSelect.value = shopFormSelect.value;
+            } else {
+                shopFormSelect.value = shopSelect.value;
+            }
+
+            latestEstimate = null;
+
+            calculateEstimate();
+
+        });
+
+    });
+
+    // 9. UPDATE ESTIMATE WHEN OPTIONS CHANGE
+
+
+    [
+        "cd-service-tier",
+        "cd-journey",
+        "cd-floor"
+    ].forEach(id => {
+
+        $(id).addEventListener("change", () => {
+
+            calculateEstimate();
+            updateSummary();
+
+        });
+
+    });
+
+
+    // Copy township and address into the enquiry form.
+
+    $("cd-pickup-township").addEventListener("change", () => {
+
+        $("cd-township").value = townshipSelect.value;
+
+    });
+
+    // 10. APPLY ESTIMATE TO ENQUIRY FORM
+
+    $("cd-apply-estimate").addEventListener("click", () => {
+
+        $("cd-township").value = townshipSelect.value;
+
+        $("cd-address").value = addressInput.value;
+
+        $("cd-floor-form").value = floorSelect.value;
+
+        $("cd-booking").scrollIntoView({
+            behavior: "smooth"
+        });
+
+    });
+
+    // 11. SELECT STANDARD OR PLATINUM
+   
+    document.querySelectorAll(".cd-select-tier").forEach(button => {
+
+        button.addEventListener("click", () => {
+
+            $("cd-service-tier").value =
+                button.dataset.tier;
+
+            calculateEstimate();
+            updateSummary();
+
+            $("cd-service-tier").scrollIntoView({
+                behavior: "smooth",
+                block: "center"
+            });
+
+        });
+
+    });
+
+    // 12. FORM FEEDBACK
+
+    function showFeedback(message, type) {
+
+        feedback.textContent = message;
+
+        feedback.className =
+            `cd-form-feedback is-visible ${type}`;
+
+    }
+
+
+ 
+    // 13. SUBMIT COLLECTION ENQUIRY
+    form.addEventListener("submit", event => {
+
+        event.preventDefault();
+
+        if (!form.reportValidity()) return;
+
+        const selected = deliveryShops.find(
+            shop => String(shop.id) === shopFormSelect.value
+        );
+
+        if (!selected) {
+
+            showFeedback(
+                "Please choose a participating repair shop that offers delivery.",
+                "error"
+            );
+
+            shopFormSelect.focus();
+
+            return;
+
+        }
+
+
+        const formData = new FormData(form);
+
+        const reference =
+            `RP-CD-${Date.now().toString().slice(-7)}`;
+
+
+        const summary = [
+
+            `Enquiry reference: ${reference}`,
+
+            `Name: ${formData.get("name")}`,
+
+            `Phone: ${formData.get("phone")}`,
+
+            `Pickup township: ${formData.get("township")}`,
+
+            `Device: ${formData.get("device")}`,
+
+            `Repair shop: ${selected.name} (${selected.township})`,
+
+            `Delivery service: ${formData.get("tier")}`,
+
+            `Journey: ${formData.get("journey")}`,
+
+            `Floor/access: ${formData.get("floor")} / ${formData.get("lift")}`,
+
+            `Date/time: ${formData.get("date")} / ${formData.get("time") || "Flexible"}`,
+
+            `Address: ${formData.get("address")}`,
+
+            `Condition/notes: ${formData.get("condition") || "Not supplied"}`,
+
+            `Estimate: ${latestEstimate
+                ? `${latestEstimate.distance.toFixed(1)} km, ${money(latestEstimate.fee)}`
+                : "Manual quote required"
+            }`,
+
+            `Protection: subject to written confirmation and approved service terms`
+
+        ].join("\n");
+
+
+        showFeedback(
+            `Your enquiry has been prepared in this prototype. Reference: ${reference}. No booking has been sent yet. You can copy the enquiry details below.`,
+            "success"
+        );
+
+
+        const summaryBox = document.createElement("pre");
+
+        summaryBox.className = "cd-enquiry-summary";
+
+        summaryBox.textContent = summary;
+
+        feedback.appendChild(summaryBox);
+
+
+        const copyButton = document.createElement("button");
+
+        copyButton.type = "button";
+
+        copyButton.className = "cd-btn cd-btn-outline";
+
+        copyButton.textContent = "Copy enquiry details";
+
+
+        copyButton.addEventListener("click", async () => {
+
+            try {
+
+                await navigator.clipboard.writeText(summary);
+
+                copyButton.textContent = "Copied!";
+
+            } catch {
+
+                copyButton.textContent =
+                    "Copy unavailable — select the text above";
+
+            }
+
+        });
+
+        feedback.appendChild(copyButton);
+
+    });
+
+    // 14. RESET FORM
+    form.addEventListener("reset", () => {
+
+        setTimeout(() => {
+
+            feedback.className = "cd-form-feedback";
+
+            feedback.textContent = "";
+
+            updateSummary();
+
+        }, 0);
+
+    });
+
+
+    // =====================================
+    // 15. INITIALISE PAGE
+    // =====================================
+
+    populateShopSelects();
+
+    getQueryParameters();
+
+    updateSummary();
+
+});
+
