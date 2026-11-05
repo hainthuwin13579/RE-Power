@@ -9,7 +9,7 @@
 }
 
 .cd-container {
-    width: min(1180px, 90%);
+    width: min(1520px, calc(90% - 48px));
     margin: 0 auto;
 }
 
